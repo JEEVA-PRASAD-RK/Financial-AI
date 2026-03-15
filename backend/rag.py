@@ -43,9 +43,12 @@ def add_document(text):
 # -----------------------------
 def build_index():
 
+    if len(vectors) == 0:
+        return None
+
     dimension = len(vectors[0])
 
-    index = faiss.IndexFlatIP(dimension)  # cosine similarity
+    index = faiss.IndexFlatIP(dimension)
 
     index.add(np.array(vectors, dtype=np.float32))
 
@@ -56,6 +59,9 @@ def build_index():
 # Search documents
 # -----------------------------
 def search(query, index, k=1):
+
+    if index is None:
+        return ["No documents available."]
 
     query_vector = model.encode(
         [query],

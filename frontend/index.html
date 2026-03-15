@@ -1,180 +1,1179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Financial AI Assistant</title>
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>FinanceTracker — Smart Finance Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-/* ===== Reset & Body ===== */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #0f172a;
-    color: #f1f5f9;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
+/* ── RESET & BASE ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Inter',sans-serif;background:#f4f6fb;color:#1a1a2e;overflow:hidden}
 
-/* ===== Chat Container ===== */
-.chat {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    scroll-behavior: smooth;
-}
+/* ── LAYOUT ── */
+.app{display:flex;height:100vh;overflow:hidden}
 
-/* ===== Message Bubbles ===== */
-.msg {
-    padding: 14px 18px;
-    margin: 10px 0;
-    border-radius: 12px;
-    max-width: 65%;
-    word-wrap: break-word;
-    line-height: 1.4;
-    font-size: 0.95rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    animation: fadeIn 0.3s ease-in-out;
+/* ══════════════════════════════
+   SIDEBAR
+══════════════════════════════ */
+.sidebar{
+  width:240px;flex-shrink:0;
+  background:#fff;
+  border-right:1px solid #e8ecf4;
+  display:flex;flex-direction:column;
+  padding:0;
+  box-shadow:2px 0 8px rgba(0,0,0,0.04);
+  z-index:10;
 }
-
-.user {
-    background: #2563eb;
-    margin-left: auto;
-    color: white;
+.sidebar-brand{
+  padding:22px 20px 18px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid #f0f2f8;
 }
-
-.bot {
-    background: #1e293b;
-    margin-right: auto;
-    color: #f1f5f9;
+.brand-icon{
+  width:42px;height:42px;border-radius:12px;
+  background:linear-gradient(135deg,#7c3aed,#4f46e5);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;color:#fff;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(124,58,237,0.35);
 }
+.brand-name{font-size:.95rem;font-weight:700;color:#1a1a2e;line-height:1.2}
+.brand-sub{font-size:.72rem;color:#8892a4;font-weight:400}
 
-/* ===== Input Area ===== */
-.input-bar {
-    display: flex;
-    padding: 12px 15px;
-    background: #1e293b;
-    align-items: center;
-    gap: 10px;
-    border-top: 1px solid #334155;
+.sidebar-nav{flex:1;padding:16px 12px}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 14px;border-radius:10px;
+  font-size:.875rem;font-weight:500;color:#5a6478;
+  cursor:pointer;transition:all 0.18s;margin-bottom:4px;
+  border:none;background:none;width:100%;text-align:left;
+  font-family:'Inter',sans-serif;
 }
-
-input[type=text] {
-    flex: 1;
-    padding: 12px 15px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-    background: #0f172a;
-    color: white;
+.nav-item:hover{background:#f4f6fb;color:#1a1a2e}
+.nav-item.active{
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  color:#fff;font-weight:600;
+  box-shadow:0 4px 14px rgba(79,70,229,0.35);
 }
+.nav-item .ni-icon{font-size:1.1rem;width:22px;text-align:center;flex-shrink:0}
 
-input[type=file] {
-    color: #f1f5f9;
+.sidebar-user{
+  padding:16px 16px 20px;
+  border-top:1px solid #f0f2f8;
 }
-
-button {
-    padding: 12px 20px;
-    border-radius: 8px;
-    border: none;
-    background: #2563eb;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
+.user-row{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 10px;border-radius:10px;
+  background:#f8f9fc;margin-bottom:8px;
 }
-
-button:hover {
-    background: #1d4ed8;
+.user-av{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;font-weight:700;color:#fff;flex-shrink:0;
 }
-
-/* ===== Scrollbar Styling ===== */
-.chat::-webkit-scrollbar {
-    width: 8px;
+.user-name{font-size:.83rem;font-weight:600;color:#1a1a2e}
+.user-email{font-size:.72rem;color:#8892a4}
+.logout-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 10px;border-radius:8px;
+  font-size:.83rem;font-weight:500;color:#ef4444;
+  cursor:pointer;border:none;background:none;
+  font-family:'Inter',sans-serif;transition:background 0.15s;
+  width:100%;
 }
+.logout-btn:hover{background:#fff5f5}
+.logout-btn .lo-icon{font-size:.9rem}
 
-.chat::-webkit-scrollbar-track {
-    background: #0f172a;
+/* ══════════════════════════════
+   MAIN CONTENT
+══════════════════════════════ */
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+
+/* ── PAGE SYSTEM ── */
+.page{display:none;flex:1}
+.page.active{display:flex;flex-direction:column}
+
+/* ══════════════════════════════
+   AI ADVISOR PAGE
+══════════════════════════════ */
+.ai-page{display:flex;flex-direction:column;height:100%}
+
+/* Gold ticker */
+.gold-ticker{
+  background:linear-gradient(135deg,#b45309,#d97706,#f59e0b);
+  padding:14px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;
 }
-
-.chat::-webkit-scrollbar-thumb {
-    background: #2563eb;
-    border-radius: 4px;
+.gold-items{display:flex;align-items:center;gap:32px}
+.gold-item{display:flex;align-items:center;gap:10px}
+.gold-symbol{
+  width:36px;height:36px;border-radius:8px;
+  background:rgba(255,255,255,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;font-weight:800;color:#fff;letter-spacing:-.5px;
 }
+.gold-name{font-size:.8rem;color:rgba(255,255,255,0.8);font-weight:500}
+.gold-price{font-size:.95rem;font-weight:700;color:#fff}
+.gold-divider{width:1px;height:32px;background:rgba(255,255,255,0.3)}
+.gold-cta{
+  display:flex;align-items:center;gap:8px;
+  font-size:.875rem;font-weight:600;color:#fff;cursor:pointer;
+}
+.gold-cta:hover{opacity:.85}
 
-/* ===== Fade-in Animation ===== */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Popular Topics */
+.topics-section{padding:24px 28px 0;flex-shrink:0}
+.topics-title{font-size:1rem;font-weight:600;color:#1a1a2e;margin-bottom:16px}
+.topics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.topic-card{
+  background:#fff;border:1px solid #e8ecf4;border-radius:12px;
+  padding:16px 18px;cursor:pointer;transition:all 0.18s;
+}
+.topic-card:hover{border-color:#4f46e5;box-shadow:0 4px 16px rgba(79,70,229,0.1);transform:translateY(-1px)}
+.topic-card-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.topic-icon{font-size:1.1rem}
+.topic-name{font-size:.875rem;font-weight:600;color:#4f46e5}
+.topic-desc{font-size:.78rem;color:#8892a4;line-height:1.4}
+
+/* Chat area */
+.chat-area{flex:1;display:flex;flex-direction:column;padding:16px 28px 0;min-height:0}
+.chat-messages{
+  flex:1;overflow-y:auto;background:#fff;border:1px solid #e8ecf4;
+  border-radius:14px;padding:20px;margin-bottom:0;
+}
+.chat-messages::-webkit-scrollbar{width:4px}
+.chat-messages::-webkit-scrollbar-thumb{background:#e0e4f0;border-radius:2px}
+.chat-msg{margin-bottom:16px}
+.chat-msg p{font-size:.875rem;color:#374151;line-height:1.65}
+.chat-msg p strong{font-weight:600;color:#1a1a2e}
+.chat-msg-time{font-size:.72rem;color:#b0b8cc;margin-top:6px}
+.chat-msg-list{list-style:none;padding:0}
+.chat-msg-list li{font-size:.875rem;color:#374151;padding:3px 0;display:flex;align-items:flex-start;gap:6px}
+.chat-msg-list li::before{content:'•';color:#4f46e5;font-weight:700;flex-shrink:0}
+
+/* AI bubble (blue-tinted) */
+.ai-bubble{
+  background:linear-gradient(135deg,#eef2ff,#f0f9ff);
+  border:1px solid #c7d2fe;border-radius:14px;border-bottom-left-radius:4px;
+  padding:16px 18px;max-width:85%;
+}
+.ai-bubble p,.ai-bubble li{font-size:.875rem;color:#374151;line-height:1.7}
+.ai-bubble strong{color:#1a1a2e}
+
+/* User bubble */
+.user-bubble{
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  border-radius:14px;border-bottom-right-radius:4px;
+  padding:12px 16px;max-width:75%;
+  align-self:flex-end;margin-left:auto;
+}
+.user-bubble p{font-size:.875rem;color:#fff;line-height:1.6}
+.msg-row{display:flex;flex-direction:column;margin-bottom:14px}
+.msg-row.user-row-msg{align-items:flex-end}
+
+/* Chat input */
+.chat-input-area{padding:14px 28px 20px;flex-shrink:0}
+.chat-input-box{
+  display:flex;align-items:center;
+  background:#fff;border:1.5px solid #e0e4f0;border-radius:12px;
+  padding:4px 6px 4px 16px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  transition:border-color 0.2s;
+}
+.chat-input-box:focus-within{border-color:#4f46e5;box-shadow:0 2px 12px rgba(79,70,229,0.12)}
+.chat-input-box input{
+  flex:1;border:none;outline:none;font-family:'Inter',sans-serif;
+  font-size:.875rem;color:#374151;background:transparent;padding:10px 0;
+}
+.chat-input-box input::placeholder{color:#b0b8cc}
+.send-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:9px 18px;border-radius:9px;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  color:#fff;font-size:.83rem;font-weight:600;
+  border:none;cursor:pointer;transition:all 0.18s;
+  font-family:'Inter',sans-serif;white-space:nowrap;
+  box-shadow:0 3px 10px rgba(79,70,229,0.3);
+}
+.send-btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(79,70,229,0.4)}
+.chat-tip{font-size:.72rem;color:#b0b8cc;padding:6px 16px 0;display:flex;align-items:center;gap:5px}
+
+/* Typing indicator */
+.typing-dots{display:flex;align-items:center;gap:4px;padding:4px 0}
+.typing-dot{width:7px;height:7px;border-radius:50%;background:#9ca3af;animation:ty 1.2s infinite}
+.typing-dot:nth-child(2){animation-delay:.18s}.typing-dot:nth-child(3){animation-delay:.36s}
+@keyframes ty{0%,80%,100%{transform:scale(1);opacity:.5}40%{transform:scale(1.3);opacity:1}}
+
+/* ══════════════════════════════
+   DASHBOARD PAGE
+══════════════════════════════ */
+.dash-page{padding:32px 28px}
+.dash-title{font-size:1.75rem;font-weight:800;color:#1a1a2e;margin-bottom:4px}
+.dash-sub{font-size:.875rem;color:#8892a4;margin-bottom:28px}
+.dash-cards-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  margin-bottom:16px;
+}
+.dash-card{
+  background:#fff;border:1px solid #e8ecf4;border-radius:16px;
+  padding:22px;cursor:pointer;transition:all 0.2s;position:relative;
+  overflow:hidden;
+}
+.dash-card:hover{box-shadow:0 8px 28px rgba(0,0,0,0.1);transform:translateY(-2px);border-color:#c7d2fe}
+.dash-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.dash-card-icon{
+  width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:1.35rem;
+}
+.dci-blue{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+.dci-purple{background:linear-gradient(135deg,#7c3aed,#a855f7)}
+.dci-orange{background:linear-gradient(135deg,#f97316,#ea580c)}
+.dci-pink{background:linear-gradient(135deg,#ec4899,#db2777)}
+.dash-card-arrow{
+  width:28px;height:28px;border-radius:8px;background:#f4f6fb;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;color:#8892a4;
+}
+.dash-card h3{font-size:1rem;font-weight:700;color:#1a1a2e;margin-bottom:4px}
+.dash-card-desc{font-size:.78rem;color:#8892a4;margin-bottom:16px}
+.dash-card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:14px;border-top:1px solid #f0f2f8;
+}
+.dash-card-stat{font-size:.9rem;font-weight:600;color:#374151}
+.dash-card-link{font-size:.78rem;color:#4f46e5;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:3px}
+.dash-card-link:hover{color:#3730a3}
+
+/* ── FINANCIAL OVERVIEW PANEL (drill-down) ── */
+.fo-panel{
+  background:#fff;border-radius:16px;padding:24px 28px;
+  flex:1;display:flex;flex-direction:column;
+}
+.fo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.fo-title{font-size:1.15rem;font-weight:700;color:#1a1a2e}
+.fo-sub{font-size:.8rem;color:#8892a4;margin-top:2px}
+.fo-close{
+  width:32px;height:32px;border-radius:8px;
+  background:#f4f6fb;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;color:#8892a4;transition:all 0.15s;
+}
+.fo-close:hover{background:#fee2e2;color:#ef4444}
+.fo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.fo-card{
+  background:#fff;border:1px solid #e8ecf4;border-radius:14px;padding:20px 22px;
+}
+.fo-card.blue{
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  border-color:transparent;
+  grid-column:span 1;
+}
+.fo-card-label{font-size:.78rem;color:#8892a4;margin-bottom:10px;font-weight:500}
+.fo-card.blue .fo-card-label{color:rgba(255,255,255,0.75)}
+.fo-card-val{font-size:1.5rem;font-weight:800;color:#1a1a2e;line-height:1}
+.fo-card.blue .fo-card-val{color:#fff;font-size:1.65rem}
+.fo-card-icon-wrap{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+}
+.fci-green{background:#dcfce7;color:#16a34a}
+.fci-red{background:#fee2e2;color:#dc2626}
+.fci-purple{background:#ede9fe;color:#7c3aed}
+.fci-blue{background:rgba(255,255,255,0.2);color:#fff}
+.fo-card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.fo-card-change{font-size:.75rem;margin-top:6px;font-weight:600}
+.fc-up{color:#16a34a}.fc-down{color:#dc2626}
+.fo-card.blue .fo-card-change{color:rgba(255,255,255,0.85)}
+.fo-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fo-card-sm{background:#fff;border:1px solid #e8ecf4;border-radius:14px;padding:20px 22px}
+
+/* ══════════════════════════════
+   PROFILE PAGE
+══════════════════════════════ */
+.profile-page{padding:32px 28px;overflow-y:auto}
+.profile-header{margin-bottom:28px}
+.profile-header h1{font-size:1.5rem;font-weight:800;color:#1a1a2e;margin-bottom:4px}
+.profile-header p{font-size:.875rem;color:#8892a4}
+.profile-form-card{
+  background:#fff;border:1px solid #e8ecf4;border-radius:16px;overflow:hidden;
+  max-width:700px;
+}
+.pf-section-head{
+  padding:16px 24px;background:#f8f9fc;border-bottom:1px solid #e8ecf4;
+  display:flex;align-items:center;gap:10px;
+}
+.pf-sec-icon{
+  width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#fff;
+}
+.pf-sec-title{font-size:.875rem;font-weight:700;color:#1a1a2e}
+.pf-sec-desc{font-size:.75rem;color:#8892a4}
+.pf-body{padding:20px 24px;border-bottom:1px solid #e8ecf4}
+.pf-body:last-of-type{border-bottom:none}
+.pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pf-group{display:flex;flex-direction:column;gap:5px}
+.pf-group.full{grid-column:1/-1}
+.pf-group label{font-size:.75rem;font-weight:600;color:#5a6478;letter-spacing:.01em}
+.pf-group input,.pf-group select{
+  background:#f8f9fc;border:1.5px solid #e0e4f0;border-radius:8px;
+  padding:10px 12px;color:#1a1a2e;font-family:'Inter',sans-serif;
+  font-size:.875rem;outline:none;transition:all 0.18s;appearance:none;
+}
+.pf-group input:focus,.pf-group select:focus{border-color:#4f46e5;background:#fff;box-shadow:0 0 0 3px rgba(79,70,229,.08)}
+.pf-group input::placeholder{color:#b0b8cc}
+.pf-group select option{background:#fff}
+.inp-pre-w{position:relative}
+.inp-pre{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:.83rem;color:#4f46e5;font-weight:600}
+.inp-pre-w input{padding-left:24px}
+.goal-grid-pf{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+.goal-pf{
+  border:1.5px solid #e0e4f0;border-radius:9px;padding:10px 12px;
+  cursor:pointer;transition:all 0.18s;display:flex;align-items:center;gap:8px;
+  background:#f8f9fc;
+}
+.goal-pf:hover{border-color:#a5b4fc}
+.goal-pf.sel{border-color:#4f46e5;background:#eef2ff}
+.goal-pf input{display:none}
+.g-cb{width:16px;height:16px;border-radius:4px;border:1.5px solid #cbd5e1;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;transition:all 0.15s;background:#fff}
+.goal-pf.sel .g-cb{background:#4f46e5;border-color:#4f46e5}
+.g-cb::after{content:'✓';font-size:.55rem;color:#fff;display:none;font-weight:800}
+.goal-pf.sel .g-cb::after{display:block}
+.g-em{font-size:.95rem}
+.g-tx{font-size:.78rem;font-weight:600;color:#374151}
+.pf-footer{padding:16px 24px;background:#f8f9fc;display:flex;justify-content:flex-end}
+.pf-submit{
+  padding:11px 28px;border-radius:9px;border:none;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;
+  font-family:'Inter',sans-serif;font-size:.875rem;font-weight:700;
+  cursor:pointer;transition:all 0.18s;
+  box-shadow:0 4px 14px rgba(79,70,229,0.3);
+  display:flex;align-items:center;gap:7px;
+}
+.pf-submit:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,70,229,0.4)}
+
+/* ══════════════════════════════
+   TOAST
+══════════════════════════════ */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:9999;
+  background:#1a1a2e;border-radius:12px;padding:12px 18px;
+  display:flex;align-items:center;gap:10px;
+  font-size:.83rem;font-weight:600;color:#fff;
+  box-shadow:0 8px 30px rgba(0,0,0,0.25);
+  transform:translateY(70px) scale(.95);opacity:0;
+  transition:all 0.4s cubic-bezier(.34,1.56,.64,1);
+}
+.toast.show{transform:translateY(0) scale(1);opacity:1}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media(max-width:900px){
+  .sidebar{width:190px}
+  .topics-grid{grid-template-columns:1fr 1fr}
+  .dash-cards-grid{grid-template-columns:1fr 1fr}
+  .fo-grid{grid-template-columns:1fr 1fr}
+  .pf-grid{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .sidebar{display:none}
+  .topics-grid{grid-template-columns:1fr}
+  .dash-cards-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
-
 <body>
+<div class="app">
 
-<div class="chat" id="chat"></div>
+  <!-- ════════════ SIDEBAR ════════════ -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">✦</div>
+      <div>
+        <div class="brand-name">FinanceTracker</div>
+        <div class="brand-sub">Smart Finance Assistant</div>
+      </div>
+    </div>
 
-<div class="input-bar">
-    <input type="file" id="file">
-    <input type="text" id="message" placeholder="Ask about finance...">
-    <button onclick="sendMessage()">Send</button>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" id="nav-ai" onclick="showPage('ai');setNav(this)">
+        <span class="ni-icon">✦</span> AI Advisor
+      </button>
+      <button class="nav-item" id="nav-dash" onclick="showPage('dashboard');setNav(this)">
+        <span class="ni-icon">⊞</span> Dashboard
+      </button>
+      <button class="nav-item" id="nav-profile" onclick="showPage('profile');setNav(this)">
+        <span class="ni-icon">◯</span> Profile
+      </button>
+    </nav>
+
+    <div class="sidebar-user">
+      <div class="user-row">
+        <div class="user-av" id="sidebar-av">JD</div>
+        <div>
+          <div class="user-name" id="sidebar-name">John Doe</div>
+          <div class="user-email" id="sidebar-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="385c5d5557785d40595548545d165b5755">[email&#160;protected]</a></div>
+        </div>
+      </div>
+      <button class="logout-btn">
+        <span class="lo-icon">→</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- ════════════ MAIN ════════════ -->
+  <main class="main">
+
+    <!-- ══ AI ADVISOR PAGE ══ -->
+    <div id="page-ai" class="page active ai-page">
+
+      <!-- Gold ticker -->
+      <div class="gold-ticker">
+        <div class="gold-items">
+          <div class="gold-item">
+            <div class="gold-symbol">Au</div>
+            <div>
+              <div class="gold-name">Gold 24K</div>
+              <div class="gold-price">₹6841.46/g</div>
+            </div>
+          </div>
+          <div class="gold-divider"></div>
+          <div class="gold-item">
+            <div class="gold-symbol" style="font-size:.7rem">Ag</div>
+            <div>
+              <div class="gold-name">Silver</div>
+              <div class="gold-price">₹81.73/g</div>
+            </div>
+          </div>
+        </div>
+        <div class="gold-cta">Click for details ↗️</div>
+      </div>
+
+      <!-- Popular Topics -->
+      <div class="topics-section">
+        <div class="topics-title">Popular Topics</div>
+        <div class="topics-grid">
+          <div class="topic-card" onclick="startTopic('Savings Strategy')">
+            <div class="topic-card-top">
+              <span class="topic-icon">🏦</span>
+              <span class="topic-name">Savings Strategy</span>
+            </div>
+            <div class="topic-desc">Learn how to save effectively</div>
+          </div>
+          <div class="topic-card" onclick="startTopic('Credit Score')">
+            <div class="topic-card-top">
+              <span class="topic-icon">💳</span>
+              <span class="topic-name">Credit Score</span>
+            </div>
+            <div class="topic-desc">Understanding credit scores</div>
+          </div>
+          <div class="topic-card" onclick="startTopic('Loan Guidance')">
+            <div class="topic-card-top">
+              <span class="topic-icon">🏠</span>
+              <span class="topic-name">Loan Guidance</span>
+            </div>
+            <div class="topic-desc">Types of loans explained</div>
+          </div>
+          <div class="topic-card" onclick="startTopic('Investment Basics')">
+            <div class="topic-card-top">
+              <span class="topic-icon">📈</span>
+              <span class="topic-name">Investment Basics</span>
+            </div>
+            <div class="topic-desc">Start investing wisely</div>
+          </div>
+          <div class="topic-card" onclick="startTopic('Budget Planning')">
+            <div class="topic-card-top">
+              <span class="topic-icon">🎯</span>
+              <span class="topic-name">Budget Planning</span>
+            </div>
+            <div class="topic-desc">Create effective budgets</div>
+          </div>
+          <div class="topic-card" onclick="startTopic('Financial Literacy')">
+            <div class="topic-card-top">
+              <span class="topic-icon">🎓</span>
+              <span class="topic-name">Financial Literacy</span>
+            </div>
+            <div class="topic-desc">Essential finance concepts</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat -->
+      <div class="chat-area">
+        <div class="chat-messages" id="chat">
+          <div class="msg-row">
+            <div class="ai-bubble">
+              <p>👋 Hi <strong id="ai-greet-name">there</strong>! I'm your Smart Finance Assistant. I can help you with:</p>
+              <ul class="chat-msg-list" style="margin-top:8px">
+                <li>"How much should I save each month?"</li>
+                <li>"Which loan is right for me?"</li>
+                <li>"How do I improve my CIBIL score?"</li>
+                <li>"What is the best SIP for beginners?"</li>
+              </ul>
+              <p style="margin-top:10px">I'm here to help you make informed financial decisions! 🎯</p>
+              <div class="chat-msg-time" id="ai-time">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="chat-input-area">
+        <!-- File preview pill (shown when file is attached) -->
+        <div id="file-preview" style="display:none;align-items:center;gap:8px;margin-bottom:8px;
+          background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:7px 12px;
+          font-size:.78rem;font-weight:600;color:#4f46e5;max-width:fit-content">
+          <span>📎</span>
+          <span id="file-preview-name">file.pdf</span>
+          <button onclick="clearFile()" style="border:none;background:none;cursor:pointer;
+            color:#9ca3af;font-size:.85rem;line-height:1;padding:0 2px;margin-left:4px">✕</button>
+        </div>
+        <div class="chat-input-box">
+          <!-- Hidden file input -->
+          <input type="file" id="file" style="display:none" accept=".pdf,.txt,.csv,.xlsx,.docx"
+            onchange="onFileSelected(this)"/>
+          <!-- Attach button -->
+          <button onclick="document.getElementById('file').click()" title="Attach a file"
+            style="border:none;background:none;cursor:pointer;padding:6px 8px;border-radius:7px;
+            color:#8892a4;font-size:1.1rem;transition:all 0.15s;flex-shrink:0"
+            onmouseover="this.style.background='#f4f6fb';this.style.color='#4f46e5'"
+            onmouseout="this.style.background='none';this.style.color='#8892a4'">📎</button>
+          <input type="text" id="message" placeholder="Ask me anything about finance, loans, investments, credit scores…"/>
+          <button class="send-btn" onclick="sendMessage()">
+            <span>✈️</span> Send
+          </button>
+        </div>
+        <div class="chat-tip">💡 Tip: Ask specific questions for better advice. Example: "How to improve CIBIL score?"</div>
+      </div>
+    </div><!-- /ai page -->
+
+    <!-- ══ DASHBOARD PAGE ══ -->
+    <div id="page-dashboard" class="page" style="overflow-y:auto">
+
+      <!-- Overview panel (hidden by default, shown on card click) -->
+      <div id="fo-panel-wrap" style="display:none;padding:24px 28px;flex:1">
+        <div class="fo-panel">
+          <div class="fo-header">
+            <div>
+              <div class="fo-title" id="fo-title">Financial Overview</div>
+              <div class="fo-sub" id="fo-sub">Balance, income &amp; expenses</div>
+            </div>
+            <button class="fo-close" onclick="closeFoPanel()">✕</button>
+          </div>
+          <div id="fo-content"></div>
+        </div>
+      </div>
+
+      <!-- Main dashboard -->
+      <div id="dash-main" class="dash-page">
+        <div class="dash-title">Welcome back, <span id="dash-name">John</span>!</div>
+        <div class="dash-sub">Select a section to view detailed insights</div>
+
+        <div class="dash-cards-grid">
+          <div class="dash-card" onclick="openPanel('fo')">
+            <div class="dash-card-top">
+              <div class="dash-card-icon dci-blue">💼</div>
+              <div class="dash-card-arrow">›</div>
+            </div>
+            <h3>Financial Overview</h3>
+            <div class="dash-card-desc">Balance, income &amp; expenses</div>
+            <div class="dash-card-footer">
+              <div class="dash-card-stat" id="dc-balance">₹20,35,001</div>
+              <div class="dash-card-link" onclick="event.stopPropagation();openPanel('fo')">View Details →</div>
+            </div>
+          </div>
+
+          <div class="dash-card" onclick="openPanel('sc')">
+            <div class="dash-card-top">
+              <div class="dash-card-icon dci-purple">📊</div>
+              <div class="dash-card-arrow">›</div>
+            </div>
+            <h3>Spending by Category</h3>
+            <div class="dash-card-desc">Track your expenses</div>
+            <div class="dash-card-footer">
+              <div class="dash-card-stat">6 Categories</div>
+              <div class="dash-card-link" onclick="event.stopPropagation();openPanel('sc')">View Details →</div>
+            </div>
+          </div>
+
+          <div class="dash-card" onclick="openPanel('bt')">
+            <div class="dash-card-top">
+              <div class="dash-card-icon dci-orange">🎯</div>
+              <div class="dash-card-arrow">›</div>
+            </div>
+            <h3>Budget Tracking</h3>
+            <div class="dash-card-desc">Monitor your budgets</div>
+            <div class="dash-card-footer">
+              <div class="dash-card-stat">4 Active</div>
+              <div class="dash-card-link" onclick="event.stopPropagation();openPanel('bt')">View Details →</div>
+            </div>
+          </div>
+
+          <div class="dash-card" onclick="openPanel('sg')">
+            <div class="dash-card-top">
+              <div class="dash-card-icon dci-pink">🐷</div>
+              <div class="dash-card-arrow">›</div>
+            </div>
+            <h3>Savings Goals</h3>
+            <div class="dash-card-desc">Track your progress</div>
+            <div class="dash-card-footer">
+              <div class="dash-card-stat" id="dc-goals">3 Goals</div>
+              <div class="dash-card-link" onclick="event.stopPropagation();openPanel('sg')">View Details →</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /dashboard -->
+
+    <!-- ══ PROFILE PAGE ══ -->
+    <div id="page-profile" class="page" style="overflow-y:auto">
+      <div class="profile-page">
+        <div class="profile-header">
+          <h1>My Profile</h1>
+          <p>Update your financial details so the AI can give you better advice</p>
+        </div>
+
+        <div class="profile-form-card">
+          <!-- Basic -->
+          <div class="pf-section-head">
+            <div class="pf-sec-icon">👤</div>
+            <div>
+              <div class="pf-sec-title">Basic Information</div>
+              <div class="pf-sec-desc">Your personal details</div>
+            </div>
+          </div>
+          <div class="pf-body">
+            <div class="pf-grid">
+              <div class="pf-group"><label>Full Name</label><input type="text" id="f-name" placeholder="John Doe"/></div>
+              <div class="pf-group"><label>Email</label><input type="email" id="f-email" placeholder="john@example.com"/></div>
+              <div class="pf-group"><label>Age</label><input type="number" id="f-age" placeholder="24" min="18" max="80"/></div>
+              <div class="pf-group">
+                <label>Employment</label>
+                <select id="f-emp">
+                  <option value="">Select status</option>
+                  <option>Salaried — Private</option>
+                  <option>Salaried — Government</option>
+                  <option>Self-Employed / Freelancer</option>
+                  <option>Business Owner</option>
+                  <option>Student</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Income -->
+          <div class="pf-section-head">
+            <div class="pf-sec-icon" style="background:linear-gradient(135deg,#059669,#10b981)">💰</div>
+            <div>
+              <div class="pf-sec-title">Income &amp; Savings</div>
+              <div class="pf-sec-desc">Monthly figures in ₹</div>
+            </div>
+          </div>
+          <div class="pf-body">
+            <div class="pf-grid">
+              <div class="pf-group"><label>Monthly Income</label><div class="inp-pre-w"><span class="inp-pre">₹</span><input type="number" id="f-income" placeholder="50000"/></div></div>
+              <div class="pf-group"><label>Monthly Expenses</label><div class="inp-pre-w"><span class="inp-pre">₹</span><input type="number" id="f-expenses" placeholder="30000"/></div></div>
+              <div class="pf-group"><label>Monthly Savings</label><div class="inp-pre-w"><span class="inp-pre">₹</span><input type="number" id="f-savings" placeholder="10000"/></div></div>
+              <div class="pf-group"><label>Total Savings</label><div class="inp-pre-w"><span class="inp-pre">₹</span><input type="number" id="f-tsavings" placeholder="200000"/></div></div>
+            </div>
+          </div>
+
+          <!-- Debt -->
+          <div class="pf-section-head">
+            <div class="pf-sec-icon" style="background:linear-gradient(135deg,#dc2626,#ef4444)">🏦</div>
+            <div>
+              <div class="pf-sec-title">Debts &amp; EMIs</div>
+              <div class="pf-sec-desc">Enter 0 if none</div>
+            </div>
+          </div>
+          <div class="pf-body">
+            <div class="pf-grid">
+              <div class="pf-group"><label>Total Debt</label><div class="inp-pre-w"><span class="inp-pre">₹</span><input type="number" id="f-debt" placeholder="0"/></div></div>
+              <div class="pf-group"><label>Monthly EMI</label><div class="inp-pre-w"><span class="inp-pre">₹</span><input type="number" id="f-emi" placeholder="0"/></div></div>
+            </div>
+          </div>
+
+          <!-- Goals -->
+          <div class="pf-section-head">
+            <div class="pf-sec-icon" style="background:linear-gradient(135deg,#d97706,#f59e0b)">🎯</div>
+            <div>
+              <div class="pf-sec-title">Financial Goals &amp; Risk</div>
+              <div class="pf-sec-desc">What are you working towards?</div>
+            </div>
+          </div>
+          <div class="pf-body">
+            <div class="pf-group full" style="margin-bottom:14px">
+              <label>Select your goals</label>
+              <div class="goal-grid-pf">
+                <label class="goal-pf" onclick="toggleGoal(this)"><input type="checkbox" value="emergency"/><div class="g-cb"></div><span class="g-em">🛡️</span><span class="g-tx">Emergency Fund</span></label>
+                <label class="goal-pf" onclick="toggleGoal(this)"><input type="checkbox" value="house"/><div class="g-cb"></div><span class="g-em">🏠</span><span class="g-tx">Buy a Home</span></label>
+                <label class="goal-pf" onclick="toggleGoal(this)"><input type="checkbox" value="invest"/><div class="g-cb"></div><span class="g-em">📈</span><span class="g-tx">Invest</span></label>
+                <label class="goal-pf" onclick="toggleGoal(this)"><input type="checkbox" value="debt"/><div class="g-cb"></div><span class="g-em">💳</span><span class="g-tx">Clear Debt</span></label>
+                <label class="goal-pf" onclick="toggleGoal(this)"><input type="checkbox" value="retire"/><div class="g-cb"></div><span class="g-em">🌴</span><span class="g-tx">Retirement</span></label>
+                <label class="goal-pf" onclick="toggleGoal(this)"><input type="checkbox" value="tax"/><div class="g-cb"></div><span class="g-em">💰</span><span class="g-tx">Save Tax</span></label>
+              </div>
+            </div>
+            <div class="pf-grid">
+              <div class="pf-group">
+                <label>Risk Tolerance</label>
+                <select id="f-risk">
+                  <option value="">Select</option>
+                  <option>Conservative</option>
+                  <option>Moderate</option>
+                  <option>Aggressive</option>
+                </select>
+              </div>
+              <div class="pf-group">
+                <label>Investment Horizon</label>
+                <select id="f-horizon">
+                  <option value="">Select</option>
+                  <option>Short-term (0–2 yr)</option>
+                  <option>Medium-term (2–5 yr)</option>
+                  <option>Long-term (5+ yr)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="pf-footer">
+            <button class="pf-submit" onclick="saveProfile()">
+              Save Profile <span>→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /profile -->
+
+  </main>
+</div><!-- /app -->
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="toast-icon">✅</span>
+  <span id="toast-text">Profile saved!</span>
 </div>
 
-<script>
-const messageInput = document.getElementById("message")
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ═════════════════════════
+   STATE
+═════════════════════════ */
+let P = {
+  name:'John', fullName:'John Doe', email:'demo@example.com',
+  age:28, employment:'Salaried — Private',
+  income:485000, expenses:271000, savings:214000, tsavings:2035000,
+  debt:0, emi:0, risk:'Moderate', horizon:'Long-term (5+ yr)',
+  goals:['invest','emergency']
+};
+let chatHistory = [];
 
-// Send on Enter
-messageInput.addEventListener("keypress", function(e){
-    if(e.key === "Enter"){
-        sendMessage()
-    }
-})
+/* ═════════════════════════
+   KNOWLEDGE BASE
+═════════════════════════ */
+const KB = `=== FINANCETRACKER AI KNOWLEDGE BASE ===
 
+## SAVINGS STRATEGY
+- 50-30-20 Rule: 50% needs, 30% wants, 20% savings
+- Pay yourself first: auto-debit savings on salary day
+- Emergency fund target: 6× monthly expenses
+- Best emergency fund vehicles: Liquid mutual funds (4-6% returns, 1-day withdrawal), high-yield savings (SFBs offer 7-9%)
+- Step-up SIP: Increase SIP by 10% every year; even ₹500/month at 12% for 25 years = ₹94 lakh
+
+## CREDIT SCORE (CIBIL)
+- Score range: 300–900; 750+ is excellent
+- Factors: Payment history (35%), credit utilization (30%), credit age (15%), credit mix (10%), new inquiries (10%)
+- To improve: Pay all EMIs/bills on time, keep credit utilization below 30%, avoid multiple loan applications
+- Checking CIBIL: Free once/year at CIBIL website; fintech apps show it for free anytime
+- DPD (Days Past Due): Even 1 DPD can drop score 50-100 points
+
+## LOANS
+- Home Loan: 8.5–9.5% p.a.; tenure up to 30 years; EMI = ~₹950/lakh at 9%/20yr
+- Personal Loan: 10.5–18% p.a.; unsecured; avoid for consumption
+- Education Loan: 8.5–12%; Section 80E interest fully deductible for 8 years
+- Car Loan: 8.5–10.5%; depreciation makes cars poor investments
+- Loan against Mutual Funds: 7.5–10.5%; smart option if you have MF corpus
+- Golden Rule: Home loan EMI ≤ 40% of take-home income
+
+## INVESTMENT BASICS
+- Start with index funds: Nifty 50 index fund, low cost (0.1% expense ratio)
+- SIP (Systematic Investment Plan): Invest fixed amount monthly; rupee cost averaging
+- ELSS: Tax saving + equity returns (12–15% historical); 3-year lock-in; 80C benefit
+- PPF: 7.1% tax-free, 15-year, EEE status; max ₹1.5L/year
+- NPS: Market-linked pension; extra ₹50K deduction under 80CCD(1B)
+- Gold ETF: 5–10% of portfolio for inflation hedge
+- FD: 6.5–7.5%; safe but tax-inefficient for high earners
+
+## BUDGET PLANNING
+- Track 3 months of expenses to find your baseline
+- Categorize: Housing, Food, Transport, Health, Entertainment, Savings
+- 50-30-20 is the foundation; adjust ratios based on income and goals
+- Digital tools: Walnut, Money View, ET Money for tracking
+- Envelope method: Allocate cash to categories; stop when envelope is empty
+
+## FINANCIAL LITERACY — KEY CONCEPTS
+- Inflation: Prices rise ~6% yearly in India; your money must beat inflation to grow
+- Compound interest: ₹10,000 at 12% for 30 years = ₹2.9 lakh; start early!
+- Rule of 72: Divide 72 by interest rate to find doubling time (72/12 = 6 years)
+- Term Insurance: 10–15× annual income; cheapest online (₹500/month for ₹1Cr cover at age 25)
+- Tax slabs (new regime 2024-25): 0% up to ₹3L, 5% ₹3-7L, 10% ₹7-10L, 15% ₹10-12L, 20% ₹12-15L, 30% above ₹15L
+- Section 80C: ₹1.5L deduction (PPF, ELSS, LIC, home loan principal)
+- Section 80D: ₹25,000 health insurance deduction
+
+## GOLD & SILVER MARKETS
+- Gold 24K: ₹6841.46/g (current)
+- Silver: ₹81.73/g (current)
+- Gold as investment: 5–10% of portfolio; better as ETF than physical
+- Sovereign Gold Bonds (SGB): 2.5% extra annual interest + gold price appreciation; best gold investment`;
+
+/* ═════════════════════════
+   ROUTING
+═════════════════════════ */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  if (name === 'ai') syncAiPage();
+  if (name === 'dashboard') syncDash();
+}
+function setNav(el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
+function syncAiPage() {
+  document.getElementById('ai-greet-name').textContent = P.name;
+  const now = new Date();
+  document.getElementById('ai-time').textContent =
+    now.toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'});
+}
+function syncDash() {
+  document.getElementById('dash-name').textContent = P.name;
+  document.getElementById('dc-balance').textContent = '₹' + P.tsavings.toLocaleString('en-IN');
+  const goals = P.goals.length;
+  document.getElementById('dc-goals').textContent = goals + ' Goal' + (goals !== 1 ? 's' : '');
+}
+syncAiPage(); syncDash();
+
+/* ═════════════════════════
+   DASHBOARD PANELS
+═════════════════════════ */
+function openPanel(type) {
+  document.getElementById('dash-main').style.display = 'none';
+  document.getElementById('fo-panel-wrap').style.display = 'block';
+
+  const t = {
+    fo: ['Financial Overview', 'Balance, income & expenses'],
+    sc: ['Spending by Category', 'Track your expenses'],
+    bt: ['Budget Tracking', 'Monitor your budgets'],
+    sg: ['Savings Goals', 'Track your progress'],
+  };
+  document.getElementById('fo-title').textContent = t[type][0];
+  document.getElementById('fo-sub').textContent = t[type][1];
+
+  const content = document.getElementById('fo-content');
+  if (type === 'fo') {
+    const sr = P.income > 0 ? ((P.savings / P.income) * 100).toFixed(1) : 0;
+    const avail = P.income - P.expenses;
+    content.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="fo-card blue">
+          <div class="fo-card-header">
+            <div class="fo-card-label">Total Balance</div>
+            <div class="fo-card-icon-wrap fci-blue">💼</div>
+          </div>
+          <div class="fo-card-val">₹${P.tsavings.toLocaleString('en-IN')}</div>
+          <div class="fo-card-change fc-up" style="color:rgba(255,255,255,.85)">↑ +8.5% from last month</div>
+        </div>
+        <div class="fo-card">
+          <div class="fo-card-header">
+            <div class="fo-card-label">Monthly Income</div>
+            <div class="fo-card-icon-wrap fci-green">↗️</div>
+          </div>
+          <div class="fo-card-val">₹${P.income.toLocaleString('en-IN')}</div>
+          <div class="fo-card-change fc-up">+12.3% vs last month</div>
+        </div>
+        <div class="fo-card">
+          <div class="fo-card-header">
+            <div class="fo-card-label">Monthly Expenses</div>
+            <div class="fo-card-icon-wrap fci-red">↘️</div>
+          </div>
+          <div class="fo-card-val">₹${P.expenses.toLocaleString('en-IN')}</div>
+          <div class="fo-card-change fc-down">+5.2% vs last month</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="fo-card-sm">
+          <div class="fo-card-header">
+            <div class="fo-card-label">Savings Rate</div>
+            <div class="fo-card-icon-wrap fci-purple">🐷</div>
+          </div>
+          <div class="fo-card-val">${sr}%</div>
+          <div class="fo-card-change" style="color:${parseFloat(sr)>=20?'#16a34a':'#d97706'}">${parseFloat(sr)>=20?'✓ Above target':'→ Target: 20%+'}</div>
+        </div>
+        <div class="fo-card-sm">
+          <div class="fo-card-header">
+            <div class="fo-card-label">Available to Spend</div>
+            <div class="fo-card-icon-wrap" style="background:#dbeafe;color:#2563eb">$</div>
+          </div>
+          <div class="fo-card-val">₹${avail.toLocaleString('en-IN')}</div>
+          <div class="fo-card-change" style="color:#8892a4">After essential expenses</div>
+        </div>
+      </div>`;
+  } else if (type === 'sc') {
+    const cats = [
+      {name:'Housing / Rent',pct:35,color:'#4f46e5',icon:'🏠'},
+      {name:'Food & Dining',pct:20,color:'#f97316',icon:'🍽️'},
+      {name:'Transport',pct:10,color:'#0ea5e9',icon:'🚗'},
+      {name:'Health',pct:8,color:'#10b981',icon:'💊'},
+      {name:'Entertainment',pct:12,color:'#a855f7',icon:'🎬'},
+      {name:'Others',pct:15,color:'#f59e0b',icon:'📦'},
+    ];
+    content.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:12px">
+        ${cats.map(c => `
+          <div style="background:#f8f9fc;border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:14px">
+            <div style="width:38px;height:38px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;box-shadow:0 1px 4px rgba(0,0,0,0.08)">${c.icon}</div>
+            <div style="flex:1">
+              <div style="font-size:.83rem;font-weight:600;color:#1a1a2e;margin-bottom:5px">${c.name}</div>
+              <div style="height:6px;background:#e8ecf4;border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:${c.pct}%;background:${c.color};border-radius:3px"></div>
+              </div>
+            </div>
+            <div style="font-size:.83rem;font-weight:700;color:${c.color};min-width:36px;text-align:right">${c.pct}%</div>
+          </div>`).join('')}
+      </div>`;
+  } else if (type === 'bt') {
+    const budgets = [
+      {name:'Groceries',spent:8200,limit:10000,color:'#10b981'},
+      {name:'Entertainment',spent:4800,limit:5000,color:'#f97316'},
+      {name:'Transport',spent:3100,limit:4000,color:'#0ea5e9'},
+      {name:'Health & Medical',spent:1200,limit:3000,color:'#a855f7'},
+    ];
+    content.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:12px">
+        ${budgets.map(b => {
+          const pct = Math.round((b.spent/b.limit)*100);
+          const over = pct > 90;
+          return `
+          <div style="background:#f8f9fc;border-radius:12px;padding:16px 18px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <div style="font-size:.86rem;font-weight:600;color:#1a1a2e">${b.name}</div>
+              <div style="font-size:.78rem;font-weight:600;color:${over?'#dc2626':'#5a6478'}">₹${b.spent.toLocaleString()} / ₹${b.limit.toLocaleString()}</div>
+            </div>
+            <div style="height:8px;background:#e8ecf4;border-radius:4px;overflow:hidden">
+              <div style="height:100%;width:${pct}%;background:${over?'#ef4444':b.color};border-radius:4px;transition:width 1s ease"></div>
+            </div>
+            <div style="font-size:.72rem;color:${over?'#dc2626':'#8892a4'};margin-top:5px">${pct}% used${over?' — Over budget!':''}</div>
+          </div>`;
+        }).join('')}
+      </div>`;
+  } else if (type === 'sg') {
+    const goals_data = [
+      {name:'Emergency Fund',target:300000,saved:180000,icon:'🛡️',color:'#4f46e5'},
+      {name:'Home Down Payment',target:1000000,saved:420000,icon:'🏠',color:'#10b981'},
+      {name:'Europe Trip',target:200000,saved:85000,icon:'✈️',color:'#f97316'},
+    ];
+    content.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:14px">
+        ${goals_data.map(g => {
+          const pct = Math.round((g.saved/g.target)*100);
+          return `
+          <div style="background:#f8f9fc;border-radius:12px;padding:16px 18px;display:flex;align-items:flex-start;gap:14px">
+            <div style="width:42px;height:42px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 2px 6px rgba(0,0,0,0.08);flex-shrink:0">${g.icon}</div>
+            <div style="flex:1">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                <div style="font-size:.875rem;font-weight:700;color:#1a1a2e">${g.name}</div>
+                <div style="font-size:.78rem;font-weight:700;color:${g.color}">${pct}%</div>
+              </div>
+              <div style="font-size:.75rem;color:#8892a4;margin-bottom:8px">₹${g.saved.toLocaleString()} of ₹${g.target.toLocaleString()}</div>
+              <div style="height:7px;background:#e8ecf4;border-radius:4px;overflow:hidden">
+                <div style="height:100%;width:${pct}%;background:${g.color};border-radius:4px"></div>
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>`;
+  }
+}
+
+function closeFoPanel() {
+  document.getElementById('dash-main').style.display = '';
+  document.getElementById('fo-panel-wrap').style.display = 'none';
+}
+
+/* ═════════════════════════
+   PROFILE
+═════════════════════════ */
+function toggleGoal(lbl) { lbl.classList.toggle('sel'); }
+
+function saveProfile() {
+  const goals = [...document.querySelectorAll('.goal-pf.sel')].map(l => l.querySelector('input').value);
+  const name = document.getElementById('f-name').value || P.fullName;
+  P = {
+    name: name.split(' ')[0] || P.name,
+    fullName: name,
+    email: document.getElementById('f-email').value || P.email,
+    age: parseInt(document.getElementById('f-age').value) || P.age,
+    employment: document.getElementById('f-emp').value || P.employment,
+    income: parseFloat(document.getElementById('f-income').value) || P.income,
+    expenses: parseFloat(document.getElementById('f-expenses').value) || P.expenses,
+    savings: parseFloat(document.getElementById('f-savings').value) || P.savings,
+    tsavings: parseFloat(document.getElementById('f-tsavings').value) || P.tsavings,
+    debt: parseFloat(document.getElementById('f-debt').value) || 0,
+    emi: parseFloat(document.getElementById('f-emi').value) || 0,
+    risk: document.getElementById('f-risk').value || P.risk,
+    horizon: document.getElementById('f-horizon').value || P.horizon,
+    goals: goals.length ? goals : P.goals,
+  };
+  // Update sidebar
+  document.getElementById('sidebar-name').textContent = P.fullName;
+  document.getElementById('sidebar-email').textContent = P.email;
+  document.getElementById('sidebar-av').textContent = P.fullName.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  syncDash(); syncAiPage();
+  showToast('✅', 'Profile saved successfully!');
+}
+
+/* ═════════════════════════
+   AI CHAT
+═════════════════════════ */
+
+// ── Enter key listener (matches your provided code) ──
+const messageInput = document.getElementById('message');
+messageInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') { sendMessage(); }
+});
+
+// ── File attachment helpers ──
+function onFileSelected(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const preview = document.getElementById('file-preview');
+  document.getElementById('file-preview-name').textContent = file.name;
+  preview.style.display = 'flex';
+}
+function clearFile() {
+  document.getElementById('file').value = '';
+  document.getElementById('file-preview').style.display = 'none';
+}
+
+// ── Topic shortcut ──
+function startTopic(topic) {
+  document.getElementById('message').value = 'Tell me about ' + topic;
+  sendMessage();
+}
+
+// ── addMessage (matches your provided API — returns the div) ──
+function addMessage(text, type) {
+  const wrap = document.getElementById('chat');
+  const d = document.createElement('div');
+  if (type === 'user') {
+    d.className = 'msg-row user-row-msg';
+    d.innerHTML = `<div class="user-bubble"><p>${escHtml(text)}</p></div>`;
+  } else {
+    // bot — render markdown-lite and return the inner <p> for live updates
+    d.className = 'msg-row';
+    d.innerHTML = `<div class="ai-bubble"><p id="bot-msg-${Date.now()}">${escHtml(text)}</p></div>`;
+  }
+  wrap.appendChild(d);
+  wrap.scrollTop = wrap.scrollHeight;
+  // Return the <p> element so callers can update it (matches: loading.innerText = data.reply)
+  return type === 'bot' ? d.querySelector('p') : d;
+}
+
+// ── addMsg (internal, used for rich HTML responses) ──
+function addMsg(role, html) {
+  const wrap = document.getElementById('chat');
+  const d = document.createElement('div');
+  d.className = 'msg-row' + (role === 'user' ? ' user-row-msg' : '');
+  d.innerHTML = role === 'user'
+    ? `<div class="user-bubble"><p>${html}</p></div>`
+    : `<div class="ai-bubble"><p>${html}</p></div>`;
+  wrap.appendChild(d);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function showTyping() {
+  const wrap = document.getElementById('chat');
+  const d = document.createElement('div');
+  d.className = 'msg-row'; d.id = 'typing-bubble';
+  d.innerHTML = `<div class="ai-bubble" style="padding:12px 16px"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  wrap.appendChild(d);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+// ── Main sendMessage — tries your backend first, falls back to Anthropic API ──
 async function sendMessage(){
-    let message = messageInput.value.trim()
-    let file = document.getElementById("file").files[0]
 
-    if(message === "" && !file){
-        return
-    }
+  const messageInput = document.getElementById("message");
+  const message = messageInput.value.trim();
+  const file = document.getElementById("file").files[0];
 
-    addMessage(message,"user")
-    messageInput.value=""
+  if(message === "" && !file) return;
 
-    let form = new FormData()
-    form.append("message",message)
-    if(file) form.append("file",file)
+  // Show user message
+  addMessage(message || `📎 ${file.name}`,"user");
+  messageInput.value="";
 
-    let loading = addMessage("Thinking...","bot")
+  // Prepare request
+  const form = new FormData();
+  form.append("message",message);
+  if(file) form.append("file",file);
 
-    try{
-        let res = await fetch("http://127.0.0.1:8000/chat",{
-            method:"POST",
-            body: form
-        })
+  // Show thinking bubble
+  const loading = addMessage("Thinking...","bot");
 
-        let data = await res.json()
-        loading.innerText = data.reply
+  try{
 
-    }catch(err){
-        loading.innerText = "Error connecting to AI server."
-    }
+      const res = await fetch("http://127.0.0.1:8000/chat",{
+          method:"POST",
+          body:form
+      });
+
+      const data = await res.json();
+
+      loading.innerHTML = formatReply(data.reply);
+
+      chatHistory.push({role:"user",content:message});
+      chatHistory.push({role:"assistant",content:data.reply});
+
+  }catch(err){
+
+      loading.innerText = "Error connecting to AI server.";
+
+  }
+
+  clearFile();
 }
 
-// Add message bubble
-function addMessage(text,type){
-    let div = document.createElement("div")
-    div.className = "msg " + type
-    div.innerText = text
-    document.getElementById("chat").appendChild(div)
+// ── sendChat alias (keeps topic shortcuts working) ──
+const sendChat = sendMessage;
 
-    // Auto scroll
-    document.getElementById("chat").scrollTop = document.getElementById("chat").scrollHeight
-    return div
+// ── Format plain text reply into styled HTML ──
+function formatReply(text) {
+  return escHtml(text)
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
 }
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ═════════════════════════
+   TOAST
+═════════════════════════ */
+function showToast(icon, msg) {
+  document.getElementById('toast-icon').textContent = icon;
+  document.getElementById('toast-text').textContent = msg;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+document.addEventListener("DOMContentLoaded", () => {
+  syncAiPage();
+  syncDash();
+});
 </script>
-
 </body>
 </html>

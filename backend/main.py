@@ -6,14 +6,15 @@ from dotenv import load_dotenv
 from pypdf import PdfReader
 import docx
 
-from rag import add_document, build_index, search
+from backend.rag import add_document, build_index, search
 
 # -----------------------------
 # Load API key
 # -----------------------------
-load_dotenv()
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 API_KEY = os.getenv("OPENROUTER_API_KEY")
+print("Loaded API KEY:", API_KEY)
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
@@ -43,7 +44,7 @@ conversation = [
 # Load documents
 # -----------------------------
 DOC_FOLDER = "documents"
-
+print("Using API key:", API_KEY[:20])
 for file in os.listdir(DOC_FOLDER):
 
     path = os.path.join(DOC_FOLDER, file)
@@ -94,8 +95,9 @@ async def chat(message: str = Form(...)):
 
     # Search relevant context
     context = search(message, index, k=1)
+    print("RAG context:", context)
 
-    if context:
+    if context and context[0] != "No documents available.":
 
         prompt = f"""
 Use the following financial document to answer the question.
@@ -133,14 +135,19 @@ Answer clearly based on the document.
                 OPENROUTER_URL,
                 headers={
                     "Authorization": f"Bearer {API_KEY}",
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": "http://localhost:8000",
+                    "X-Title": "AI Financial Advisor"
                 },
                 json=data
             )
 
             result = response.json()
 
-            reply = result["choices"][0]["message"]["content"]
+            if "choices" in result:
+                reply = result["choices"][0]["message"]["content"]
+            else:
+                reply = f"AI server error: {result}"
 
         except Exception as e:
 
