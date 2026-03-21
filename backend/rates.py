@@ -1,5 +1,4 @@
-#Hello Jeeva
-
+#JEEVA THE EREN
 import mysql.connector
 from datetime import datetime
 from collections import Counter
