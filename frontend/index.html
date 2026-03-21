@@ -1644,11 +1644,11 @@
       display: flex;
       align-items: center;
       padding: 10px 18px;
-      background: linear-gradient(135deg, #b45309, #d97706, #f59e0b);
+      background: linear-gradient(135deg, #D4AF37, #D4AF37, #f59e0b);
       border: 2px solid rgba(255, 255, 255, 0.4);
       border-radius: 30px;
       backdrop-filter: blur(12px);
-      box-shadow: 0 6px 25px rgba(180, 83, 9, 0.4);
+      box-shadow: 0 6px 25px #D4AF37(180, 83, 9, 0.4);
       font-weight: 800;
       color: #fff !important;
       font-size: 0.92rem;
@@ -2159,10 +2159,9 @@
       <nav class="sidebar-nav">
         <button class="nav-item active" id="nav-ai" onclick="showPage('ai');setNav(this)"><span class="ni-icon">✦</span>
           AI Advisor</button>
-        <button class="nav-item" id="nav-dash" onclick="showPage('dashboard');setNav(this)"><span
+        <button class="nav-item" id="nav-dash" onclick=" window.location.href = 'dashboard.html';setNav(this)"><span
             class="ni-icon">⊞</span> Dashboard</button>
-        <button class="nav-item" id="nav-profile" onclick="showPage('profile');setNav(this)"><span
-            class="ni-icon">◯</span> Profile</button>
+        
       </nav>
       <div class="sidebar-user">
         <div class="user-row-sb">
@@ -2284,7 +2283,7 @@
           </div>
         </div>
 
-      </div> ← THIS closes #page-ai correctly
+      
       <!-- DASHBOARD -->
       <div id="page-dashboard" class="page" style="overflow-y:auto">
         <div id="fo-panel-wrap" style="display:none;padding:22px 24px;flex:1">
