@@ -1,3 +1,6 @@
+
+#Pragadeesh
+
 """
 Finace — FastAPI Backend
 =================================
@@ -34,7 +37,7 @@ from backend.rag import add_document, build_index, search
 # ─────────────────────────────────────────────────────────
 #  API CONFIG
 # ─────────────────────────────────────────────────────────
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = "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"
 OPENROUTER_URL     = "https://openrouter.ai/api/v1/chat/completions"
 MODEL              = "openai/gpt-4o-mini"
 

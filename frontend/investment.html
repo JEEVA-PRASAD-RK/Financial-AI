@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Investments — Finace</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --indigo:#4f46e5;--violet:#7c3aed;--indigo-light:#eef2ff;--indigo-mid:#c7d2fe;
+  --sl50:#f8fafc;--sl100:#f1f5f9;--sl200:#e2e8f0;--sl300:#cbd5e1;
+  --sl500:#64748b;--sl900:#0f172a;
+  --green:#16a34a;--green-bg:#dcfce7;--green-bd:#86efac;
+  --red:#dc2626;--red-bg:#fee2e2;
+  --amber:#d97706;--amber-bg:#fef3c7;
+  --white:#fff;
+  --sh-sm:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --sh-md:0 4px 16px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04);
+  --sh-lg:0 10px 40px rgba(0,0,0,.12);
+  --sh-indigo:0 6px 20px rgba(79,70,229,.22);
+}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--sl100);color:var(--sl900);overflow-x:hidden}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;flex-shrink:0;background:var(--white);border-right:1px solid var(--sl200);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;box-shadow:2px 0 8px rgba(0,0,0,.04);z-index:10}
+.sb-brand{padding:22px 20px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--sl200)}
+.sb-name{font-size:.95rem;font-weight:700;color:var(--sl900);line-height:1.2}
+.sb-sub{font-size:.72rem;color:var(--sl500)}
+.sb-nav{flex:1;padding:16px 12px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;font-size:.875rem;font-weight:500;color:var(--sl500);cursor:pointer;transition:all .18s;margin-bottom:4px;border:none;background:none;width:100%;text-align:left;font-family:'Inter',sans-serif;text-decoration:none}
+.nav-item:hover{background:var(--sl100);color:var(--sl900)}
+.nav-item.active{background:linear-gradient(135deg,var(--indigo),var(--violet));color:#fff;font-weight:600;box-shadow:0 4px 14px rgba(79,70,229,.35)}
+.ni{font-size:1.1rem;width:22px;text-align:center;flex-shrink:0}
+.sb-user{padding:16px;border-top:1px solid var(--sl200)}
+.sb-user-row{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:var(--sl50);margin-bottom:8px}
+.sb-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--violet));display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:#fff;flex-shrink:0}
+.sb-uname{font-size:.83rem;font-weight:600;color:var(--sl900)}
+.sb-uemail{font-size:.71rem;color:var(--sl500);word-break:break-all}
+.sb-logout{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:.83rem;font-weight:500;color:var(--red);cursor:pointer;border:none;background:none;font-family:'Inter',sans-serif;width:100%;transition:background .15s}
+.sb-logout:hover{background:var(--red-bg)}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;overflow-y:auto}
+.top-nav{background:var(--white);border-bottom:1px solid var(--sl200);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:var(--sh-sm)}
+.top-nav-title{font-size:1rem;font-weight:700;color:var(--sl900);display:flex;align-items:center;gap:10px}
+.top-nav-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--indigo),var(--violet));display:flex;align-items:center;justify-content:center;font-size:.88rem;color:#fff}
+.tb-back{display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:8px;background:var(--indigo-light);border:1.5px solid var(--indigo-mid);color:var(--indigo);font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .18s}
+.tb-back:hover{background:var(--indigo-mid)}
+.content{padding:28px 28px 40px}
+.page-header{margin-bottom:26px}
+.page-header h1{font-family:'Sora',sans-serif;font-size:1.55rem;font-weight:800;color:var(--sl900);margin-bottom:4px}
+.page-header p{font-size:.86rem;color:var(--sl500)}
+.inv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.inv-card{background:var(--white);border:1px solid var(--sl200);border-radius:18px;padding:24px 20px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden}
+.inv-card:hover{transform:translateY(-4px);box-shadow:var(--sh-lg);border-color:var(--indigo-mid)}
+.inv-card-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:14px}
+.inv-card h3{font-size:.95rem;font-weight:700;color:var(--sl900);margin-bottom:4px}
+.inv-card-desc{font-size:.76rem;color:var(--sl500);line-height:1.5;margin-bottom:14px}
+.inv-card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--sl200)}
+.inv-card-footer span{font-size:.78rem;font-weight:600;color:var(--indigo)}
+.inv-card-arrow{font-size:.8rem;color:var(--sl500)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:10000;background:rgba(10,16,35,.55);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:22px;width:100%;max-width:560px;box-shadow:0 28px 70px rgba(0,0,0,.22);animation:popIn .28s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto;display:flex;flex-direction:column}
+@keyframes popIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 16px;border-bottom:1px solid var(--sl200);position:sticky;top:0;background:#fff;z-index:2;border-radius:22px 22px 0 0}
+.modal-header-left{display:flex;align-items:center;gap:12px}
+.modal-header-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.modal-header h2{font-size:1rem;font-weight:700;color:var(--sl900)}
+.modal-close{background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--sl500);padding:4px 8px;border-radius:6px}
+.modal-close:hover{color:var(--red);background:var(--red-bg)}
+.modal-body{padding:20px 24px 24px;flex:1;overflow-y:auto}
+.modal-desc{font-size:.85rem;color:#374151;line-height:1.7;margin-bottom:16px}
+.modal-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.modal-info-item{background:var(--sl50);border-radius:10px;padding:12px 14px}
+.modal-info-label{font-size:.7rem;font-weight:600;color:var(--sl500);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.modal-info-val{font-size:.88rem;font-weight:700;color:var(--sl900)}
+.modal-know-more{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:9px;background:linear-gradient(135deg,var(--indigo),var(--violet));border:none;color:#fff;font-family:'Inter',sans-serif;font-size:.84rem;font-weight:600;cursor:pointer;box-shadow:var(--sh-indigo);transition:all .18s;text-decoration:none}
+.modal-know-more:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(79,70,229,.35)}
+
+/* LIVE PRICE STRIP */
+.live-price-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:16px}
+.live-price-box{background:linear-gradient(135deg,var(--indigo),var(--violet));border-radius:12px;padding:12px 14px;color:#fff;text-align:center}
+.live-price-box .lp-label{font-size:.65rem;font-weight:600;opacity:.75;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.live-price-box .lp-val{font-family:'Sora',sans-serif;font-size:1rem;font-weight:800}
+.live-price-box.silver-box{background:linear-gradient(135deg,#475569,#334155)}
+
+/* CALC SECTION */
+.calc-section{margin-top:18px;padding-top:18px;border-top:2px solid var(--sl200)}
+.calc-title{font-size:.92rem;font-weight:700;color:var(--sl900);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.calc-row.full{grid-template-columns:1fr}
+.calc-field{display:flex;flex-direction:column;gap:5px}
+.calc-field label{font-size:.76rem;font-weight:600;color:var(--sl500)}
+.calc-field input,.calc-field select{padding:9px 12px;border:1.5px solid var(--sl200);border-radius:9px;font-family:'Inter',sans-serif;font-size:.84rem;color:var(--sl900);outline:none;background:var(--sl50);transition:border-color .18s}
+.calc-field input:focus,.calc-field select:focus{border-color:var(--indigo)}
+.calc-result{background:linear-gradient(135deg,var(--indigo),var(--violet));border-radius:14px;padding:16px 18px;margin-top:14px;color:#fff}
+.calc-results-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.calc-res-item{background:rgba(255,255,255,.12);border-radius:10px;padding:10px 12px}
+.calc-res-label{font-size:.65rem;font-weight:600;opacity:.7;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
+.calc-res-val{font-family:'Sora',sans-serif;font-size:1rem;font-weight:800}
+.calc-result-sub{font-size:.76rem;opacity:.8;margin-top:8px}
+.calc-range-wrap{margin-bottom:8px}
+.calc-range-label{display:flex;justify-content:space-between;font-size:.76rem;font-weight:600;color:var(--sl500);margin-bottom:6px}
+.calc-range-val{color:var(--indigo);font-weight:700;font-size:.86rem}
+input[type="range"]{width:100%;-webkit-appearance:none;height:6px;border-radius:3px;background:var(--sl200);outline:none}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--violet));cursor:pointer;box-shadow:0 2px 8px rgba(79,70,229,.4)}
+.toast{position:fixed;bottom:22px;right:22px;z-index:9999;background:var(--sl900);border-radius:12px;padding:11px 16px;display:flex;align-items:center;gap:9px;font-size:.82rem;font-weight:600;color:#fff;box-shadow:0 8px 30px rgba(0,0,0,.25);transform:translateY(70px) scale(.95);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1)}
+.toast.show{transform:translateY(0) scale(1);opacity:1}
+@media(max-width:1100px){.inv-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:860px){.sidebar{display:none}.inv-grid{grid-template-columns:repeat(2,1fr)}.content{padding:18px 14px}}
+@media(max-width:500px){.inv-grid{grid-template-columns:1fr}.calc-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="sb-brand">
+    <div style="width:42px;height:42px;border-radius:12px;overflow:hidden;flex-shrink:0">
+      <img src="FinaceLogo.jpeg" alt="Finace" style="width:42px;height:42px;object-fit:contain;border-radius:12px"/>
+    </div>
+    <div><div class="sb-name">Finace</div><div class="sb-sub">Smart Finance Assistant</div></div>
+  </div>
+  <nav class="sb-nav">
+    <a class="nav-item" href="index.html"><span class="ni">✦</span> AI Advisor</a>
+    <a class="nav-item" href="dashboard.html"><span class="ni">⊞</span> Dashboard</a>
+    <a class="nav-item active" href="investment.html"><span class="ni">📈</span> Investments</a>
+  </nav>
+  <div class="sb-user">
+    <div class="sb-user-row">
+      <div class="sb-av" id="sb-av">?</div>
+      <div><div class="sb-uname" id="sb-uname">Loading…</div><div class="sb-uemail" id="sb-uemail">—</div></div>
+    </div>
+    <button class="sb-logout" onclick="doLogout()">→ Logout</button>
+  </div>
+</aside>
+<div class="main">
+  <div class="top-nav">
+    <div class="top-nav-title"><div class="top-nav-icon">📈</div> Investment Plans</div>
+    <a class="tb-back" href="index.html">← AI Advisor</a>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <h1>Investment Plans 📊</h1>
+      <p>Explore, compare and track your investments — all in one place.</p>
+    </div>
+    <div class="inv-grid" id="inv-grid"></div>
+  </div>
+</div>
+</div>
+
+<!-- POPUP MODAL -->
+<div class="modal-overlay" id="inv-modal">
+  <div class="modal-box" id="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-header-icon" id="modal-icon"></div>
+        <h2 id="modal-title"></h2>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+<div class="toast" id="toast"><span id="toast-icon">✅</span> <span id="toast-text">Done!</span></div>
+
+<script>
+const API = 'http://127.0.0.1:8000';
+let metalRates = {}; // {Gold:{24KT:x,22KT:x,...}, Silver:{Silver:x}}
+
+async function fetchMetalRates(){
+  try{
+    const res = await fetch(API+'/metal-rates');
+    const data = await res.json();
+    if(data.rates){
+      data.rates.forEach(r=>{
+        if(!metalRates[r.metal]) metalRates[r.metal]={};
+        metalRates[r.metal][r.karat]=r.price;
+      });
+    }
+  }catch(e){console.warn('Metal rates fetch failed:',e.message);}
+}
+
+const INVESTMENTS = [
+  {id:'gold',name:'Gold',icon:'🪙',bg:'linear-gradient(135deg,#fef3c7,#fde68a)',
+   shortDesc:'Invest in physical gold, Gold ETFs, or Sovereign Gold Bonds. A timeless hedge against inflation.',
+   desc:'Gold is one of the oldest and most trusted investment assets in India. It acts as a hedge against inflation and currency depreciation. You can invest via physical gold, Gold ETFs, or Sovereign Gold Bonds (SGBs).',
+   returnRange:'8-12%',lockIn:'None',taxInfo:'LTCG 20% with indexation (>3yr)'},
+
+  {id:'silver',name:'Silver',icon:'⬜',bg:'linear-gradient(135deg,#f1f5f9,#e2e8f0)',
+   shortDesc:'A precious metal with growing industrial demand. Invest via physical silver or Silver ETFs.',
+   desc:'Silver is both a precious metal and an industrial commodity. It offers diversification and tends to perform well during economic uncertainty.',
+   returnRange:'6-14%',lockIn:'None',taxInfo:'LTCG 20% with indexation (>3yr)'},
+
+  {id:'bitcoin',name:'Bitcoin',icon:'₿',bg:'linear-gradient(135deg,#fef3c7,#fcd34d)',
+   shortDesc:'The world\'s leading cryptocurrency. High potential returns with significant volatility.',
+   desc:'Bitcoin is a decentralized digital currency and the most well-known cryptocurrency. It offers potentially high returns but comes with extreme volatility. In India, crypto gains are taxed at a flat 30%.',
+   returnRange:'Variable',lockIn:'None',taxInfo:'30% flat tax on gains + 1% TDS'},
+
+  {id:'mutual-funds',name:'Mutual Funds',icon:'📊',bg:'linear-gradient(135deg,#eef2ff,#c7d2fe)',
+   shortDesc:'Professionally managed investment pools. Choose from Equity, Debt, Hybrid or Index funds.',
+   desc:'Mutual funds pool money from multiple investors to invest in stocks, bonds, or other securities. They are managed by professional fund managers.',
+   returnRange:'10-15%',lockIn:'None (ELSS 3yr)',taxInfo:'LTCG >₹1L at 10%; STCG 15%'},
+
+  {id:'fd',name:'Fixed Deposit',icon:'🏦',bg:'linear-gradient(135deg,#dcfce7,#bbf7d0)',
+   shortDesc:'Guaranteed returns with zero market risk. India\'s most popular safe investment.',
+   desc:'Fixed Deposits are one of the safest investment instruments in India. Banks and NBFCs offer guaranteed returns for a fixed tenure.',
+   returnRange:'6.5-7.5%',lockIn:'Flexible (tax-saver: 5yr)',taxInfo:'Interest taxed per income slab; TDS applies'},
+
+  {id:'insurance',name:'Insurance',icon:'🛡️',bg:'linear-gradient(135deg,#fee2e2,#fecaca)',
+   shortDesc:'Financial protection for your family. Includes Term Life, Endowment, ULIPs, and Health plans.',
+   desc:'Insurance provides financial protection against life uncertainties. Types include Term Life, Endowment, ULIP, and Health insurance.',
+   returnRange:'4-8% (endowment)',lockIn:'Policy term (5-30yr)',taxInfo:'80C deduction; 10(10D) maturity exempt'},
+
+  {id:'sip',name:'SIP',icon:'📈',bg:'linear-gradient(135deg,#f3e8ff,#e9d5ff)',
+   shortDesc:'Invest a fixed amount monthly in mutual funds. Harnesses rupee cost averaging & compounding.',
+   desc:'Systematic Investment Plan (SIP) allows you to invest a fixed amount regularly in mutual funds. It leverages rupee cost averaging and the power of compounding.',
+   returnRange:'12-15%',lockIn:'None (ELSS 3yr)',taxInfo:'Equity LTCG >₹1L at 10%; STCG 15%'},
+
+  {id:'swp',name:'SWP',icon:'💸',bg:'linear-gradient(135deg,#e0f2fe,#bae6fd)',
+   shortDesc:'Withdraw a fixed amount regularly from your mutual fund. Ideal for creating passive income.',
+   desc:'Systematic Withdrawal Plan (SWP) lets you withdraw a fixed amount regularly from your mutual fund investment, providing a steady income stream.',
+   returnRange:'8-12%',lockIn:'None',taxInfo:'Gains taxed per fund type and holding period'}
+];
+
+/* ── RENDER CARDS (no risk badges) ── */
+function renderCards(){
+  document.getElementById('inv-grid').innerHTML = INVESTMENTS.map(inv=>`
+    <div class="inv-card" onclick="openModal('${inv.id}')">
+      <div class="inv-card-icon" style="background:${inv.bg}">${inv.icon}</div>
+      <h3>${inv.name}</h3>
+      <div class="inv-card-desc">${inv.shortDesc}</div>
+      <div class="inv-card-footer">
+        <span>View Details</span>
+        <span class="inv-card-arrow">→</span>
+      </div>
+    </div>`).join('');
+}
+
+/* ── MODAL ── */
+function openModal(id){
+  const inv = INVESTMENTS.find(i=>i.id===id);
+  if(!inv) return;
+  document.getElementById('modal-icon').style.background = inv.bg;
+  document.getElementById('modal-icon').textContent = inv.icon;
+  document.getElementById('modal-title').textContent = inv.name;
+
+  let bodyHTML = `<div class="modal-desc">${inv.desc}</div>
+    <div class="modal-info-grid">
+      <div class="modal-info-item"><div class="modal-info-label">Expected Returns</div><div class="modal-info-val">${inv.returnRange}</div></div>
+      <div class="modal-info-item"><div class="modal-info-label">Lock-in Period</div><div class="modal-info-val">${inv.lockIn}</div></div>
+      <div class="modal-info-item"><div class="modal-info-label">Taxation</div><div class="modal-info-val" style="font-size:.76rem">${inv.taxInfo}</div></div>
+    </div>`;
+
+  // Custom calculator per type
+  if(id==='gold') bodyHTML += buildGoldCalc();
+  else if(id==='silver') bodyHTML += buildSilverCalc();
+  else if(id==='mutual-funds') bodyHTML += buildMFCalc();
+  else if(id==='fd') bodyHTML += buildFDCalc();
+  else if(id==='sip') bodyHTML += buildSIPCalc();
+  else if(id==='swp') bodyHTML += buildSWPCalc();
+  // bitcoin & insurance: no calculator
+
+  bodyHTML += `<div style="margin-top:18px"><a class="modal-know-more" href="investment-detail.html?type=${id}">📖 Know More →</a></div>`;
+  document.getElementById('modal-body').innerHTML = bodyHTML;
+  document.getElementById('inv-modal').classList.add('open');
+}
+function closeModal(){document.getElementById('inv-modal').classList.remove('open');}
+
+/* ══════════════════════════════════════════
+   GOLD CALCULATOR — Live prices + gram calc
+   ══════════════════════════════════════════ */
+function buildGoldCalc(){
+  const g = metalRates['Gold']||{};
+  const priceStrip = Object.keys(g).length ? `
+    <div class="live-price-strip">
+      ${g['24KT']?`<div class="live-price-box"><div class="lp-label">24KT / 1g</div><div class="lp-val">₹${g['24KT'].toLocaleString('en-IN')}</div></div>`:''}
+      ${g['22KT']?`<div class="live-price-box"><div class="lp-label">22KT / 1g</div><div class="lp-val">₹${g['22KT'].toLocaleString('en-IN')}</div></div>`:''}
+      ${g['18KT']?`<div class="live-price-box"><div class="lp-label">18KT / 1g</div><div class="lp-val">₹${g['18KT'].toLocaleString('en-IN')}</div></div>`:''}
+    </div>` : '<p style="font-size:.82rem;color:var(--amber);margin-bottom:12px">⚠ Live prices unavailable. Run rates.py to fetch today\'s prices.</p>';
+
+  return `<div class="calc-section">
+    <div class="calc-title">🪙 Today's Gold Prices</div>
+    ${priceStrip}
+    <div class="calc-title" style="margin-top:14px">🧮 Gold Price Calculator</div>
+    <div class="calc-row">
+      <div class="calc-field"><label>Select Karat</label>
+        <select id="gold-karat" onchange="calcGold()">
+          ${g['22KT']?'<option value="22KT">22 KT</option>':''}
+          ${g['24KT']?'<option value="24KT">24 KT</option>':''}
+          ${g['18KT']?'<option value="18KT">18 KT</option>':''}
+          ${g['14KT']?'<option value="14KT">14 KT</option>':''}
+          ${!Object.keys(g).length?'<option value="">No prices available</option>':''}
+        </select></div>
+      <div class="calc-field"><label>Weight (grams)</label>
+        <input type="number" id="gold-grams" placeholder="e.g. 10" value="1" min="0.1" step="0.1" oninput="calcGold()"/></div>
+    </div>
+    <div class="calc-result" id="gold-result"><div style="text-align:center;opacity:.7;font-size:.82rem">Enter weight to see cost</div></div>
+  </div>`;
+}
+
+function calcGold(){
+  const g = metalRates['Gold']||{};
+  const karat = document.getElementById('gold-karat')?.value;
+  const grams = parseFloat(document.getElementById('gold-grams')?.value)||0;
+  const pricePerGram = g[karat]||0;
+  if(!pricePerGram||!grams){document.getElementById('gold-result').innerHTML='<div style="text-align:center;opacity:.7;font-size:.82rem">Enter weight to see cost</div>';return;}
+  const total = pricePerGram * grams;
+  document.getElementById('gold-result').innerHTML = `
+    <div class="calc-results-grid">
+      <div class="calc-res-item"><div class="calc-res-label">Price / gram</div><div class="calc-res-val">₹${pricePerGram.toLocaleString('en-IN')}</div></div>
+      <div class="calc-res-item"><div class="calc-res-label">Total for ${grams}g</div><div class="calc-res-val">₹${Math.round(total).toLocaleString('en-IN')}</div></div>
+    </div>
+    <div class="calc-result-sub">${karat} Gold · ${grams} gram${grams!==1?'s':''} · Today's rate</div>`;
+}
+
+/* ══════════════════════════════════════════
+   SILVER CALCULATOR — Live price + gram calc
+   ══════════════════════════════════════════ */
+function buildSilverCalc(){
+  const s = metalRates['Silver']||{};
+  const silverPrice = s['Silver']||0;
+  const priceStrip = silverPrice ? `
+    <div class="live-price-strip">
+      <div class="live-price-box silver-box"><div class="lp-label">Silver / 1g</div><div class="lp-val">₹${silverPrice.toLocaleString('en-IN')}</div></div>
+      <div class="live-price-box silver-box"><div class="lp-label">Silver / 1kg</div><div class="lp-val">₹${(silverPrice*1000).toLocaleString('en-IN')}</div></div>
+    </div>` : '<p style="font-size:.82rem;color:var(--amber);margin-bottom:12px">⚠ Live prices unavailable.</p>';
+
+  return `<div class="calc-section">
+    <div class="calc-title">⬜ Today's Silver Price</div>
+    ${priceStrip}
+    <div class="calc-title" style="margin-top:14px">🧮 Silver Price Calculator</div>
+    <div class="calc-row full">
+      <div class="calc-field"><label>Weight (grams)</label>
+        <input type="number" id="silver-grams" placeholder="e.g. 100" value="1" min="0.1" step="0.1" oninput="calcSilver()"/></div>
+    </div>
+    <div class="calc-result" id="silver-result"><div style="text-align:center;opacity:.7;font-size:.82rem">Enter weight to see cost</div></div>
+  </div>`;
+}
+
+function calcSilver(){
+  const s = metalRates['Silver']||{};
+  const pricePerGram = s['Silver']||0;
+  const grams = parseFloat(document.getElementById('silver-grams')?.value)||0;
+  if(!pricePerGram||!grams){document.getElementById('silver-result').innerHTML='<div style="text-align:center;opacity:.7;font-size:.82rem">Enter weight to see cost</div>';return;}
+  const total = pricePerGram * grams;
+  document.getElementById('silver-result').innerHTML = `
+    <div class="calc-results-grid">
+      <div class="calc-res-item"><div class="calc-res-label">Price / gram</div><div class="calc-res-val">₹${pricePerGram.toLocaleString('en-IN')}</div></div>
+      <div class="calc-res-item"><div class="calc-res-label">Total for ${grams}g</div><div class="calc-res-val">₹${Math.round(total).toLocaleString('en-IN')}</div></div>
+    </div>
+    <div class="calc-result-sub">Silver · ${grams} gram${grams!==1?'s':''} · Today's rate</div>`;
+}
+
+/* ══════════════════════════════════════════
+   MUTUAL FUND CALCULATOR — SIP / Lump Sum
+   ══════════════════════════════════════════ */
+function buildMFCalc(){
+  return `<div class="calc-section">
+    <div class="calc-title">🧮 Mutual Fund Returns Calculator</div>
+    <div class="calc-row">
+      <div class="calc-field"><label>Investment Mode</label>
+        <select id="mf-mode" onchange="calcMF()">
+          <option value="sip">SIP (Monthly)</option>
+          <option value="lumpsum">Lump Sum (One-time)</option>
+        </select></div>
+      <div class="calc-field"><label>Amount (₹)</label>
+        <input type="number" id="mf-amount" placeholder="e.g. 5000" oninput="calcMF()"/></div>
+    </div>
+    <div class="calc-row">
+      <div class="calc-field"><label>Expected Return Rate (% p.a.)</label>
+        <input type="number" id="mf-rate" placeholder="e.g. 12" value="12" step="0.5" oninput="calcMF()"/></div>
+      <div class="calc-field"><label>Tenure (Years)</label>
+        <input type="number" id="mf-tenure" placeholder="e.g. 10" value="10" min="1" max="40" oninput="calcMF()"/></div>
+    </div>
+    <div class="calc-result" id="mf-result"><div style="text-align:center;opacity:.7;font-size:.82rem">Fill inputs to see estimated returns</div></div>
+  </div>`;
+}
+
+function calcMF(){
+  const mode = document.getElementById('mf-mode')?.value;
+  const amt = parseFloat(document.getElementById('mf-amount')?.value)||0;
+  const rate = parseFloat(document.getElementById('mf-rate')?.value)||0;
+  const yrs = parseInt(document.getElementById('mf-tenure')?.value)||0;
+  if(!amt||!rate||!yrs){document.getElementById('mf-result').innerHTML='<div style="text-align:center;opacity:.7;font-size:.82rem">Fill inputs to see estimated returns</div>';return;}
+
+  let fv,invested;
+  if(mode==='sip'){
+    const r=rate/100/12, n=yrs*12;
+    fv = amt * ((Math.pow(1+r,n)-1)/r)*(1+r);
+    invested = amt*n;
+  } else {
+    fv = amt * Math.pow(1+rate/100, yrs);
+    invested = amt;
+  }
+  const gain = fv - invested;
+  document.getElementById('mf-result').innerHTML = `
+    <div class="calc-results-grid">
+      <div class="calc-res-item"><div class="calc-res-label">Invested Amount</div><div class="calc-res-val">₹${Math.round(invested).toLocaleString('en-IN')}</div></div>
+      <div class="calc-res-item"><div class="calc-res-label">Estimated Returns</div><div class="calc-res-val">₹${Math.round(gain).toLocaleString('en-IN')}</div></div>
+      <div class="calc-res-item"><div class="calc-res-label">Total Value</div><div class="calc-res-val">₹${Math.round(fv).toLocaleString('en-IN')}</div></div>
+      <div class="calc-res-item"><div class="calc-res-label">Wealth Gain</div><div class="calc-res-val">${Math.round(gain/invested*100)}%</div></div>
+    </div>
+    <div class="calc-result-sub">${mode==='sip'?'SIP ₹'+amt.toLocaleString('en-IN')+'/month':'Lump Sum ₹'+amt.toLocaleString('en-IN')} · ${rate}% p.a. · ${yrs} year${yrs>1?'s':''}</div>`;
+}
+
+/* ══════════════════════════════════════════
+   FD CALCULATOR
+   ══════════════════════════════════════════ */
+function buildFDCalc(){
+  return `<div class="calc-section">
+    <div class="calc-title">🧮 FD Returns Calculator</div>
+    <div class="calc-row">
+      <div class="calc-field"><label>Principal Amount (₹)</label>
+        <input type="number" id="fd-principal" placeholder="e.g. 500000" oninput="calcFD()"/></div>
+      <div class="calc-field"><label>Interest Rate (% p.a.)</label>
+        <input type="number" id="fd-rate" placeholder="e.g. 7" value="7" step="0.1" oninput="calcFD()"/></div>
+    </div>
+    <div class="calc-row full">
+      <div class="calc-range-wrap">
+        <div class="calc-range-label"><span>Tenure</span><span class="calc-range-val" id="fd-range-val">1 Year</span></div>
+        <input type="range" id="fd-tenure" min="1" max="10" value="1" oninput="calcFD()"/>
+      </div>
+    </div>
+    <div class="calc-result" id="fd-result"><div style="text-align:center;opacity:.7;font-size:.82rem">Fill inputs to see returns</div></div>
+  </div>`;
+}
+
+function calcFD(){
+  const p = parseFloat(document.getElementById('fd-principal')?.value)||0;
+  const r = parseFloat(document.getElementById('fd-rate')?.value)||0;
+  const y = parseInt(document.getElementById('fd-tenure')?.value)||1;
+  document.getElementById('fd-range-val').textContent = y + (y===1?' Year':' Years');
+  if(!p||!r){document.getElementById('fd-result').innerHTML='<div style="text-align:center;opacity:.7;font-size:.82rem">Fill inputs to see returns</div>';return;}
+  const fv = p * Math.pow(1+r/100, y);
+  const interest = fv - p;
+  document.getElementById('fd-result').innerHTML = `
+    <div class="calc-results-grid">
+      <div class="calc-res-item"><div class="calc-res-label">Principal</div><div class="calc-res-val">₹${Math.round(p).toLocaleString('en-IN')}</div></div>
+      <div class="calc-res-item"><div class="calc-res-label">Interest Earned</div><div class="calc-res-val">₹${Math.round(interest).toLocaleString('en-IN')}</div></div>
+      <div class="calc-res-item"><div class="calc-res-label">Maturity Amount</div><div class="calc-res-val">₹${Math.round(fv).toLocaleString('en-IN')}</div></div>
+      <div class="calc-res-item"><div class="calc-res-label">Effective Return</div><div class="calc-res-val">${Math.round(interest/p*100)}%</div></div>
+    </div>
+    <div class="calc-result-sub">₹${p.toLocaleString('en-IN')} @ ${r}% p.a. for ${y} year${y>1?'s':''} (annual compounding)</div>`;
+}
+
+/* ══════════════════════════════════════════
+   SIP CALCULATOR
+   ══════════════════════════════════════════ */
+function buildSIPCalc(){
+  return `<div class="calc-section">
+    <div class="calc-title">🧮 SIP Returns Calculator</div>
+    <div class="calc-row">
+      <div class="calc-field"><label>Monthly SIP Amount (₹)</label>
+        <input type="number" id="sip-amount" placeholder="e.g. 5000" oninput="calcSIP()"/></div>
+      <div class="calc-field"><label>Expected Return Rate (% p.a.)</label>
+        <input type="number" id="sip-rate" placeholder="e.g. 12" value="12" step="0.5" oninput="calcSIP()"/></div>
+    </div>
+    <div class="calc-row full">
+      <div class="calc-range-wrap">
+        <div class="calc-range-label"><span>Investment Period</span><span class="calc-range-val" id="sip-range-val">5 Years</span></div>
+        <input type="range" id="sip-tenure" min="1" max="30" value="5" oninput="calcSIP()"/>
+      </div>
+    </div>
+    <div class="calc-result" id="sip-result"><div style="text-align:center;opacity:.7;font-size:.82rem">Fill inputs to see estimated returns</div></div>
+  </div>`;
+}
+
+function calcSIP(){
+  const p = parseFloat(document.getElementById('sip-amount')?.value)||0;
+  const rate = parseFloat(document.getElementById('sip-rate')?.value)||0;
+  const yrs = parseInt(document.getElementById('sip-tenure')?.value)||1;
+  document.getElementById('sip-range-val').textContent = yrs + (yrs===1?' Year':' Years');
+  if(!p||!rate){document.getElementById('sip-result').innerHTML='<div style="text-align:center;opacity:.7;font-size:.82rem">Fill inputs to see estimated returns</div>';return;}
+  const r=rate/100/12, n=yrs*12;
+  const fv = p * ((Math.pow(1+r,n)-1)/r)*(1+r);
+  const invested = p*n;
+  const gain = fv-invested;
+  document.getElementById('sip-result').innerHTML = `
+    <div class="calc-results-grid">
+      <div class="calc-res-item"><div class="calc-res-label">Total Invested</div><div class="calc-res-val">₹${Math.round(invested).toLocaleString('en-IN')}</div></div>
+      <div class="calc-res-item"><div class="calc-res-label">Estimated Returns</div><div class="calc-res-val">₹${Math.round(gain).toLocaleString('en-IN')}</div></div>
+      <div class="calc-res-item"><div class="calc-res-label">Total Value</div><div class="calc-res-val">₹${Math.round(fv).toLocaleString('en-IN')}</div></div>
+      <div class="calc-res-item"><div class="calc-res-label">Wealth Gain</div><div class="calc-res-val">${Math.round(gain/invested*100)}%</div></div>
+    </div>
+    <div class="calc-result-sub">SIP ₹${p.toLocaleString('en-IN')}/month · ${rate}% p.a. · ${yrs} year${yrs>1?'s':''}</div>`;
+}
+
+/* ══════════════════════════════════════════
+   SWP CALCULATOR
+   ══════════════════════════════════════════ */
+function buildSWPCalc(){
+  return `<div class="calc-section">
+    <div class="calc-title">🧮 SWP Calculator</div>
+    <div class="calc-row">
+      <div class="calc-field"><label>Initial Corpus (₹)</label>
+        <input type="number" id="swp-corpus" placeholder="e.g. 5000000" oninput="calcSWP()"/></div>
+      <div class="calc-field"><label>Monthly Withdrawal (₹)</label>
+        <input type="number" id="swp-withdraw" placeholder="e.g. 30000" oninput="calcSWP()"/></div>
+    </div>
+    <div class="calc-row">
+      <div class="calc-field"><label>Expected Return (% p.a.)</label>
+        <input type="number" id="swp-rate" placeholder="e.g. 10" value="10" step="0.5" oninput="calcSWP()"/></div>
+      <div class="calc-field"><label>Duration (Years)</label>
+        <input type="number" id="swp-tenure" placeholder="e.g. 15" value="10" min="1" max="40" oninput="calcSWP()"/></div>
+    </div>
+    <div class="calc-result" id="swp-result"><div style="text-align:center;opacity:.7;font-size:.82rem">Fill inputs to see results</div></div>
+  </div>`;
+}
+
+function calcSWP(){
+  const c = parseFloat(document.getElementById('swp-corpus')?.value)||0;
+  const w = parseFloat(document.getElementById('swp-withdraw')?.value)||0;
+  const rate = parseFloat(document.getElementById('swp-rate')?.value)||0;
+  const yrs = parseInt(document.getElementById('swp-tenure')?.value)||0;
+  if(!c||!w||!rate||!yrs){document.getElementById('swp-result').innerHTML='<div style="text-align:center;opacity:.7;font-size:.82rem">Fill inputs to see results</div>';return;}
+  const r=rate/100/12, n=yrs*12;
+  let bal=c;
+  for(let i=0;i<n;i++){bal=bal*(1+r)-w;if(bal<0){bal=0;break;}}
+  const totalWithdrawn = w*n;
+  document.getElementById('swp-result').innerHTML = `
+    <div class="calc-results-grid">
+      <div class="calc-res-item"><div class="calc-res-label">Total Withdrawn</div><div class="calc-res-val">₹${Math.round(totalWithdrawn).toLocaleString('en-IN')}</div></div>
+      <div class="calc-res-item"><div class="calc-res-label">Remaining Corpus</div><div class="calc-res-val">₹${Math.round(bal).toLocaleString('en-IN')}</div></div>
+    </div>
+    <div class="calc-result-sub">₹${w.toLocaleString('en-IN')}/month withdrawal from ₹${c.toLocaleString('en-IN')} · ${rate}% growth · ${yrs}yr${yrs>1?'s':''}</div>`;
+}
+
+/* ── SESSION ── */
+function loadSession(){
+  try{const s=sessionStorage.getItem('ft_user');if(s){const u=JSON.parse(s);
+    document.getElementById('sb-av').textContent=u.initials||'?';
+    document.getElementById('sb-uname').textContent=u.fullName||u.name;
+    document.getElementById('sb-uemail').textContent=u.email||'—';
+  }}catch(_){}
+}
+function doLogout(){sessionStorage.removeItem('ft_user');sessionStorage.removeItem('ft_ob');window.location.href='index.html';}
+
+document.addEventListener('DOMContentLoaded', async ()=>{
+  loadSession();
+  await fetchMetalRates();
+  renderCards();
+  document.getElementById('inv-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Investment Details — Finace</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--indigo:#4f46e5;--violet:#7c3aed;--indigo-light:#eef2ff;--indigo-mid:#c7d2fe;--sl50:#f8fafc;--sl100:#f1f5f9;--sl200:#e2e8f0;--sl300:#cbd5e1;--sl500:#64748b;--sl900:#0f172a;--green:#16a34a;--green-bg:#dcfce7;--green-bd:#86efac;--red:#dc2626;--red-bg:#fee2e2;--amber:#d97706;--amber-bg:#fef3c7;--white:#fff;--sh-sm:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);--sh-md:0 4px 16px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04)}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--sl100);color:var(--sl900);overflow-x:hidden}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:240px;flex-shrink:0;background:var(--white);border-right:1px solid var(--sl200);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;box-shadow:2px 0 8px rgba(0,0,0,.04);z-index:10}
+.sb-brand{padding:22px 20px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--sl200)}
+.sb-name{font-size:.95rem;font-weight:700;color:var(--sl900);line-height:1.2}
+.sb-sub{font-size:.72rem;color:var(--sl500)}
+.sb-nav{flex:1;padding:16px 12px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;font-size:.875rem;font-weight:500;color:var(--sl500);cursor:pointer;transition:all .18s;margin-bottom:4px;border:none;background:none;width:100%;text-align:left;font-family:'Inter',sans-serif;text-decoration:none}
+.nav-item:hover{background:var(--sl100);color:var(--sl900)}
+.nav-item.active{background:linear-gradient(135deg,var(--indigo),var(--violet));color:#fff;font-weight:600;box-shadow:0 4px 14px rgba(79,70,229,.35)}
+.ni{font-size:1.1rem;width:22px;text-align:center;flex-shrink:0}
+.sb-user{padding:16px;border-top:1px solid var(--sl200)}
+.sb-user-row{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:var(--sl50);margin-bottom:8px}
+.sb-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--violet));display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:#fff;flex-shrink:0}
+.sb-uname{font-size:.83rem;font-weight:600;color:var(--sl900)}
+.sb-uemail{font-size:.71rem;color:var(--sl500);word-break:break-all}
+.sb-logout{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:.83rem;font-weight:500;color:var(--red);cursor:pointer;border:none;background:none;font-family:'Inter',sans-serif;width:100%;transition:background .15s}
+.sb-logout:hover{background:var(--red-bg)}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;overflow-y:auto}
+.top-nav{background:var(--white);border-bottom:1px solid var(--sl200);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:var(--sh-sm)}
+.top-nav-title{font-size:1rem;font-weight:700;color:var(--sl900);display:flex;align-items:center;gap:10px}
+.top-nav-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--indigo),var(--violet));display:flex;align-items:center;justify-content:center;font-size:.88rem;color:#fff}
+.tb-back{display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:8px;background:var(--indigo-light);border:1.5px solid var(--indigo-mid);color:var(--indigo);font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .18s}
+.tb-back:hover{background:var(--indigo-mid)}
+.content{padding:28px 28px 60px;max-width:900px}
+
+/* DETAIL STYLES */
+.detail-hero{border-radius:20px;padding:32px;margin-bottom:28px;display:flex;align-items:center;gap:20px}
+.detail-hero-icon{width:72px;height:72px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;background:rgba(255,255,255,.4);flex-shrink:0}
+.detail-hero h1{font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:4px}
+.detail-hero p{font-size:.88rem;opacity:.85}
+
+.detail-section{background:var(--white);border:1px solid var(--sl200);border-radius:18px;padding:24px 28px;margin-bottom:18px;box-shadow:var(--sh-sm)}
+.detail-section h2{font-size:1.05rem;font-weight:700;color:var(--sl900);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.detail-section h2 span{font-size:1.1rem}
+.detail-section p,.detail-section li{font-size:.86rem;color:#374151;line-height:1.8}
+.detail-section ul{padding-left:20px;margin-top:8px}
+.detail-section li{margin-bottom:6px}
+.detail-section strong{color:var(--sl900)}
+
+.detail-info-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.detail-info-box{background:var(--sl50);border:1px solid var(--sl200);border-radius:14px;padding:16px 18px;text-align:center}
+.detail-info-box .label{font-size:.7rem;font-weight:600;color:var(--sl500);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.detail-info-box .val{font-size:.95rem;font-weight:700;color:var(--sl900)}
+.inv-risk{font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:20px}
+.risk-low{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.risk-med{background:var(--amber-bg);color:var(--amber);border:1px solid #fcd34d}
+.risk-high{background:var(--red-bg);color:var(--red);border:1px solid #fca5a5}
+
+.example-box{background:var(--indigo-light);border:1.5px solid var(--indigo-mid);border-radius:14px;padding:18px 22px;margin-top:14px}
+.example-box h4{font-size:.86rem;font-weight:700;color:var(--indigo);margin-bottom:8px}
+.example-box p{font-size:.82rem;color:#374151;line-height:1.7}
+
+@media(max-width:860px){.sidebar{display:none}.content{padding:18px 14px}.detail-info-strip{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.detail-info-strip{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="sb-brand">
+    <div style="width:42px;height:42px;border-radius:12px;overflow:hidden;flex-shrink:0">
+      <img src="FinaceLogo.jpeg" alt="Finace" style="width:42px;height:42px;object-fit:contain;border-radius:12px"/>
+    </div>
+    <div><div class="sb-name">Finace</div><div class="sb-sub">Smart Finance Assistant</div></div>
+  </div>
+  <nav class="sb-nav">
+    <a class="nav-item" href="index.html"><span class="ni">✦</span> AI Advisor</a>
+    <a class="nav-item" href="dashboard.html"><span class="ni">⊞</span> Dashboard</a>
+    <a class="nav-item active" href="investment.html"><span class="ni">📈</span> Investments</a>
+  </nav>
+  <div class="sb-user">
+    <div class="sb-user-row">
+      <div class="sb-av" id="sb-av">?</div>
+      <div><div class="sb-uname" id="sb-uname">Loading…</div><div class="sb-uemail" id="sb-uemail">—</div></div>
+    </div>
+    <button class="sb-logout" onclick="doLogout()">→ Logout</button>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="top-nav">
+    <div class="top-nav-title"><div class="top-nav-icon">📈</div><span id="page-title">Investment Details</span></div>
+    <a class="tb-back" href="investment.html">← Back to Investments</a>
+  </div>
+  <div class="content" id="detail-content">
+    <p style="color:var(--sl500);padding:40px;text-align:center">Loading…</p>
+  </div>
+</div>
+</div>
+
+<script>
+const DATA = {
+  gold:{name:'Gold',icon:'🪙',color:'#92400e',bg:'linear-gradient(135deg,#fef3c7,#fde68a)',textColor:'#92400e',risk:'Low',riskClass:'risk-low',returnRange:'8-12%',lockIn:'None',taxInfo:'LTCG 20% with indexation (>3yr)',
+    intro:'Gold has been India\'s most cherished asset for centuries — both culturally and financially. It serves as a powerful hedge against inflation, currency depreciation, and economic uncertainty.',
+    howItWorks:'Gold can be purchased in several forms:\n• **Physical Gold** — Jewellery, coins, bars from banks/jewellers.\n• **Gold ETFs** — Traded on stock exchanges, backed by physical gold. Minimum 1 unit (~0.01g).\n• **Sovereign Gold Bonds (SGBs)** — Government securities denominated in grams. Pay 2.5% annual interest. No capital gains tax on maturity.\n• **Digital Gold** — Buy fractional gold online via apps (Paytm, PhonePe, Google Pay).',
+    advantages:['Excellent hedge against inflation','High liquidity — easily convertible to cash','SGBs offer 2.5% annual interest + capital appreciation','No counterparty risk for physical gold','Culturally significant in India'],
+    risks:['No regular income from physical gold','Storage and security costs for physical gold','Gold ETFs have expense ratios','Price can be volatile in short term','Making charges on jewellery (10-25%)'],
+    taxation:'• **Physical Gold & Gold ETFs**: Held >3 years = LTCG taxed at 20% with indexation. Held <3 years = taxed per income slab.\n• **SGBs**: Interest taxed per slab. Capital gains on maturity are **fully exempt**.\n• **Digital Gold**: Same as physical gold taxation.',
+    example:'If you invested ₹1,00,000 in gold 10 years ago (2015), gold price was ~₹2,650/g. Today (2025) it\'s ~₹6,800/g. Your investment would be worth approximately ₹2,57,000 — a return of ~157% or ~10% annualized.'},
+
+  silver:{name:'Silver',icon:'⬜',color:'#374151',bg:'linear-gradient(135deg,#f1f5f9,#e2e8f0)',textColor:'#1e293b',risk:'Medium',riskClass:'risk-med',returnRange:'6-14%',lockIn:'None',taxInfo:'LTCG 20% with indexation (>3yr)',
+    intro:'Silver is a dual-purpose metal — it\'s both a precious metal and an industrial commodity used in electronics, solar panels, and medical equipment. This industrial demand makes silver more volatile than gold.',
+    howItWorks:'• **Physical Silver** — Bars, coins, utensils from bullion dealers.\n• **Silver ETFs** — Recently launched in India (2022), traded on exchanges.\n• **Commodity Futures** — MCX silver contracts for experienced traders.\n• **Silver Mutual Funds** — Fund-of-funds investing in silver ETFs.',
+    advantages:['Lower entry price than gold','Strong industrial demand (electronics, solar)','Portfolio diversification benefits','Silver ETFs provide easy access','Tends to outperform gold in bull markets'],
+    risks:['Higher volatility than gold','Industrial demand fluctuates with economy','Storage is bulkier for physical silver','GST of 3% on physical silver','Less liquid than gold in India'],
+    taxation:'• Held >3 years = LTCG taxed at 20% with indexation benefit.\n• Held <3 years = Short-term gains taxed per income tax slab.\n• Silver ETFs follow the same taxation rules.',
+    example:'Silver was ₹35,000/kg in 2020 and reached ₹75,000/kg in 2024. An investment of ₹1,00,000 would have grown to approximately ₹2,14,000 in 4 years — a ~114% return.'},
+
+  bitcoin:{name:'Bitcoin',icon:'₿',color:'#d97706',bg:'linear-gradient(135deg,#fef3c7,#fcd34d)',textColor:'#92400e',risk:'High',riskClass:'risk-high',returnRange:'Variable (historically 50-200%)',lockIn:'None',taxInfo:'30% flat tax on gains + 1% TDS',
+    intro:'Bitcoin is the world\'s first decentralized cryptocurrency, created in 2009. In India, it operates in a regulated environment with a flat 30% tax on gains. It\'s considered a high-risk, high-reward asset.',
+    howItWorks:'• **Crypto Exchanges** — Buy/sell on WazirX, CoinDCX, ZebPay, CoinSwitch.\n• **P2P Trading** — Direct peer-to-peer transactions.\n• **Bitcoin SIP** — Some platforms allow recurring purchases.\n• **HODLing** — Long-term holding strategy.\n• **₹100 minimum** — Start with as little as ₹100 on most Indian exchanges.',
+    advantages:['Potentially very high returns','24/7 market — trade anytime','Decentralized, no central authority','Limited supply (21 million cap)','Global acceptance growing rapidly'],
+    risks:['Extreme price volatility (50%+ swings)','30% flat tax on ALL gains in India','1% TDS on transactions above ₹50,000','No loss set-off against other income','Regulatory uncertainty in India','Cyber security and wallet risks'],
+    taxation:'• **30% flat tax** on all crypto gains — no distinction between short-term and long-term.\n• **1% TDS** on transactions >₹50,000/year (₹10,000 for specified persons).\n• **No deductions** allowed except cost of acquisition.\n• **Cannot offset losses** against other income or carry forward crypto losses.',
+    example:'If you bought ₹10,000 of Bitcoin in 2020 (~₹5 lakh/BTC), by late 2024 (~₹70 lakh/BTC), your investment would be worth ~₹1,40,000. After 30% tax on ₹1,30,000 gain = ₹39,000 tax. Net value: ~₹1,01,000.'},
+
+  'mutual-funds':{name:'Mutual Funds',icon:'📊',color:'#4f46e5',bg:'linear-gradient(135deg,#eef2ff,#c7d2fe)',textColor:'#312e81',risk:'Medium',riskClass:'risk-med',returnRange:'10-15% (equity)',lockIn:'None (ELSS: 3yr)',taxInfo:'LTCG >₹1L at 10%; STCG 15%',
+    intro:'Mutual Funds are professionally managed investment pools that collect money from various investors to invest in stocks, bonds, money market instruments, and other assets. SEBI regulates all mutual funds in India.',
+    howItWorks:'• **Equity Funds** — Invest in stocks. Categories: Large-cap, Mid-cap, Small-cap, Multi-cap, Sectoral.\n• **Debt Funds** — Invest in bonds, T-bills, corporate deposits. Lower risk.\n• **Hybrid Funds** — Mix of equity and debt. Balanced advantage, aggressive hybrid.\n• **Index Funds** — Track market indices (Nifty 50, Sensex). Low expense ratio.\n• **ELSS** — Tax-saving equity funds with 3-year lock-in. Section 80C deduction.',
+    advantages:['Professional fund management','Diversification across stocks/bonds','Start with as low as ₹100 SIP','Highly regulated by SEBI','Wide variety of fund categories','Easy to track and manage online'],
+    risks:['Market risk — NAV fluctuates daily','No guaranteed returns','Exit loads may apply','Fund manager risk','Over-diversification can dilute returns'],
+    taxation:'• **Equity Funds**: LTCG (>1yr) above ₹1 lakh taxed at 10%. STCG (<1yr) taxed at 15%.\n• **Debt Funds** (post Apr 2023): All gains taxed per income slab regardless of holding period.\n• **ELSS**: Same as equity funds + Section 80C benefit up to ₹1.5 lakh.\n• **Dividends**: Taxed per income slab + 10% TDS if >₹5,000/year.',
+    example:'A monthly SIP of ₹5,000 in a Nifty 50 index fund for 10 years at 12% CAGR would grow to ₹11.6 lakh. Total invested: ₹6 lakh. Gain: ₹5.6 lakh (~93% return on investment).'},
+
+  fd:{name:'Fixed Deposit',icon:'🏦',color:'#059669',bg:'linear-gradient(135deg,#dcfce7,#bbf7d0)',textColor:'#064e3b',risk:'Low',riskClass:'risk-low',returnRange:'6.5-7.5%',lockIn:'Flexible (Tax-saver: 5yr)',taxInfo:'Interest taxed per slab; TDS applies',
+    intro:'Fixed Deposits (FDs) are the most popular and safest investment option in India. You deposit a lump sum for a fixed tenure at a predetermined interest rate. Banks, post offices, and NBFCs offer FDs.',
+    howItWorks:'• **Regular FDs** — Choose tenure (7 days to 10 years). Interest rate fixed at time of deposit.\n• **Tax-Saver FDs** — 5-year lock-in. Up to ₹1.5 lakh qualifies for Section 80C.\n• **Senior Citizen FDs** — 0.25-0.75% higher interest rate for those 60+.\n• **Cumulative vs Non-cumulative** — Cumulative: interest reinvested. Non-cumulative: periodic payouts.\n• **FD Ladder Strategy** — Spread deposits across different tenures for liquidity + returns.',
+    advantages:['Guaranteed, assured returns','Capital protection — zero market risk','Flexible tenures (7 days to 10 years)','Senior citizens get higher rates','Easy to open — online or at branch','Loan against FD available (up to 90%)'],
+    risks:['Returns may not beat inflation','Interest is fully taxable','Premature withdrawal penalty (0.5-1%)','TDS deducted if interest >₹40,000/year','Opportunity cost vs equity investments'],
+    taxation:'• Interest earned is **fully taxable** per your income tax slab.\n• **TDS**: Banks deduct 10% TDS if interest >₹40,000/year (₹50,000 for senior citizens).\n• **Tax-Saver FD**: Investment qualifies for 80C deduction up to ₹1.5 lakh. But interest is still taxable.\n• Submit Form 15G/15H to avoid TDS if total income is below taxable limit.',
+    example:'₹5,00,000 FD at 7% for 5 years (cumulative) = ₹7,01,276 at maturity. Interest earned: ₹2,01,276. If you\'re in 30% tax bracket, tax on interest = ~₹60,383. Effective post-tax return: ~5% per annum.'},
+
+  insurance:{name:'Insurance',icon:'🛡️',color:'#dc2626',bg:'linear-gradient(135deg,#fee2e2,#fecaca)',textColor:'#991b1b',risk:'Low',riskClass:'risk-low',returnRange:'4-8% (endowment)',lockIn:'Policy term',taxInfo:'80C deduction; 10(10D) maturity exempt',
+    intro:'Insurance is a financial safety net that protects you and your family against unforeseen events. In India, insurance is categorized into Life Insurance (LIC, private insurers) and General Insurance (health, motor, travel).',
+    howItWorks:'• **Term Life Insurance** — Pure protection, no maturity benefit. Cheapest. ₹1 crore cover for ~₹10,000-15,000/year (age 25-30).\n• **Endowment Plans** — Savings + insurance. Returns 4-6%. Maturity benefit guaranteed.\n• **ULIPs** — Market-linked returns + insurance. 5-year lock-in. Flexible fund switching.\n• **Health Insurance** — Covers hospitalization, surgery, critical illness. Family floater plans available.\n• **Riders** — Add-ons like accidental death, critical illness, waiver of premium.',
+    advantages:['Financial protection for family','Tax benefits under 80C and 80D','Term plans are very affordable','Health insurance covers rising medical costs','Loan facility on endowment policies','Group insurance through employers'],
+    risks:['Endowment plans give low returns vs mutual funds','Complex policy terms and conditions','Claim rejection if non-disclosure','ULIPs have high initial charges','Over-insurance can strain budget'],
+    taxation:'• **Section 80C**: Premium paid on life insurance (up to ₹1.5 lakh deduction).\n• **Section 80D**: Health insurance premium (₹25,000 self + ₹25,000 parents; ₹50,000 if senior citizen).\n• **Section 10(10D)**: Maturity proceeds are tax-free if premium <10% of sum assured.\n• **Term insurance**: Death benefit is completely tax-free for nominee.',
+    example:'A 25-year-old buying ₹1 crore term insurance for 30 years pays ~₹12,000/year. Total premium over 30 years: ₹3,60,000. Family gets ₹1 crore if anything happens — a 28x return on investment for pure protection.'},
+
+  sip:{name:'SIP (Systematic Investment Plan)',icon:'📈',color:'#7c3aed',bg:'linear-gradient(135deg,#f3e8ff,#e9d5ff)',textColor:'#5b21b6',risk:'Medium',riskClass:'risk-med',returnRange:'12-15%',lockIn:'None (ELSS: 3yr)',taxInfo:'Same as mutual fund taxation',
+    intro:'SIP is a method of investing in mutual funds where you invest a fixed amount at regular intervals (usually monthly). It harnesses two powerful concepts: rupee cost averaging and the power of compounding.',
+    howItWorks:'• **How it works**: You set a fixed amount (min ₹100-500) to be auto-debited monthly from your bank account.\n• **Rupee Cost Averaging**: When markets are down, you buy more units. When up, you buy fewer. This averages out your purchase cost.\n• **Step-up SIP**: Increase SIP amount annually (e.g., 10% every year) to accelerate wealth creation.\n• **Flexi SIP**: Vary amounts based on market conditions.\n• **SIP Top-up**: Add lump sum amounts on top of regular SIP.',
+    advantages:['Start with as low as ₹100/month','No need to time the market','Rupee cost averaging reduces risk','Compounding creates exponential growth','Fully flexible — pause, stop, increase anytime','Automated — set once and forget'],
+    risks:['Returns not guaranteed — market-linked','Long-term commitment needed for best results','Stopping SIP during market dips locks in losses','Over-diversification across too many SIPs','ELSS SIPs have 3-year lock-in per installment'],
+    taxation:'• Same as mutual fund taxation based on fund type (equity/debt).\n• **Equity SIP**: Each installment has its own 1-year holding period for LTCG.\n• **ELSS SIP**: Each installment locked for 3 years from investment date.\n• **Step-up SIP**: Higher investments may increase tax liability on gains.',
+    example:'₹10,000/month SIP for 20 years at 12% CAGR:\n• Total invested: ₹24,00,000\n• Estimated value: ₹99,91,479\n• Wealth gained: ₹75,91,479 (316% return!)\n\nWith 10% annual step-up: Value grows to ₹1.89 crore!'},
+
+  swp:{name:'SWP (Systematic Withdrawal Plan)',icon:'💸',color:'#0ea5e9',bg:'linear-gradient(135deg,#e0f2fe,#bae6fd)',textColor:'#075985',risk:'Medium',riskClass:'risk-med',returnRange:'8-12%',lockIn:'None',taxInfo:'Gains taxed per fund type',
+    intro:'SWP is the opposite of SIP — instead of investing regularly, you withdraw a fixed amount from your mutual fund at regular intervals. It creates a steady income stream, making it ideal for retirees or anyone seeking passive income.',
+    howItWorks:'• **How it works**: Invest a lump sum in a mutual fund, then set up regular withdrawals (monthly/quarterly).\n• **Corpus continues to grow**: The remaining amount stays invested and earns returns.\n• **Capital preservation**: If withdrawal rate < fund returns, your corpus grows even while withdrawing.\n• **Fund selection**: Typically done from balanced/hybrid or debt funds for stability.\n• **Tax efficiency**: Only the gain portion of each withdrawal is taxed, not the full amount.',
+    advantages:['Regular income stream — ideal for retirees','Tax-efficient vs FD interest','Remaining corpus keeps earning returns','Flexible — change withdrawal amount anytime','Better post-tax returns than traditional pensions','Capital can outlast you if managed well'],
+    risks:['If withdrawal rate > returns, corpus depletes','Market downturns can accelerate depletion','Requires careful planning of withdrawal rate','Not suitable for very short-term needs','Fund selection is critical'],
+    taxation:'• Each withdrawal is split into capital (return of investment) and gain.\n• **Only the gain portion** is taxed, making SWP very tax-efficient.\n• **Equity funds**: Gain held >1yr = LTCG 10% above ₹1L; <1yr = STCG 15%.\n• **Debt funds**: All gains taxed per income slab (post Apr 2023).\n• Much more tax-efficient than FD interest which is fully taxable.',
+    example:'₹50,00,000 invested in a balanced fund. SWP of ₹30,000/month.\nFund returns: 10% annually.\n• After 15 years: You\'ve withdrawn ₹54,00,000 AND your corpus is still ~₹55,00,000!\n• Total value created: ₹1,09,00,000 from initial ₹50,00,000.'}
+};
+
+function loadPage(){
+  const params = new URLSearchParams(window.location.search);
+  const type = params.get('type');
+  const d = DATA[type];
+  if(!d){document.getElementById('detail-content').innerHTML='<p style="text-align:center;padding:60px;color:var(--sl500)">Investment type not found. <a href="investment.html">← Go back</a></p>';return;}
+
+  document.title = d.name + ' — Finace';
+  document.getElementById('page-title').textContent = d.name + ' Details';
+
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-hero" style="background:${d.bg};color:${d.textColor}">
+      <div class="detail-hero-icon">${d.icon}</div>
+      <div><h1>${d.name}</h1><p>${d.intro}</p></div>
+    </div>
+
+    <div class="detail-info-strip">
+      <div class="detail-info-box"><div class="label">Returns</div><div class="val">${d.returnRange}</div></div>
+      <div class="detail-info-box"><div class="label">Lock-in</div><div class="val">${d.lockIn}</div></div>
+      <div class="detail-info-box"><div class="label">Risk</div><div class="val"><span class="inv-risk ${d.riskClass}">${d.risk}</span></div></div>
+      <div class="detail-info-box"><div class="label">Tax Benefit</div><div class="val" style="font-size:.78rem">${d.taxInfo}</div></div>
+    </div>
+
+    <div class="detail-section">
+      <h2><span>⚙️</span> How It Works</h2>
+      <div>${formatText(d.howItWorks)}</div>
+    </div>
+
+    <div class="detail-section">
+      <h2><span>✅</span> Advantages</h2>
+      <ul>${d.advantages.map(a=>'<li>'+a+'</li>').join('')}</ul>
+    </div>
+
+    <div class="detail-section">
+      <h2><span>⚠️</span> Risks & Considerations</h2>
+      <ul>${d.risks.map(r=>'<li>'+r+'</li>').join('')}</ul>
+    </div>
+
+    <div class="detail-section">
+      <h2><span>💰</span> Taxation Details</h2>
+      <div>${formatText(d.taxation)}</div>
+    </div>
+
+    <div class="detail-section">
+      <h2><span>📌</span> Real-World Example</h2>
+      <div class="example-box">
+        <h4>Example Scenario</h4>
+        <p>${formatText(d.example)}</p>
+      </div>
+    </div>`;
+}
+
+function formatText(t){
+  return t.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/• /g,'<br>• ');
+}
+
+function loadSession(){
+  try{const s=sessionStorage.getItem('ft_user');if(s){const u=JSON.parse(s);document.getElementById('sb-av').textContent=u.initials||'?';document.getElementById('sb-uname').textContent=u.fullName||u.name;document.getElementById('sb-uemail').textContent=u.email||'—';}}catch(_){}
+}
+function doLogout(){sessionStorage.removeItem('ft_user');sessionStorage.removeItem('ft_ob');window.location.href='index.html';}
+
+document.addEventListener('DOMContentLoaded',()=>{loadSession();loadPage();});
+</script>
+</body>
+</html>
