@@ -1,89 +1,34 @@
-# AI Financial Chatbot
+# Fin AI — AI-Powered Financial Assistant
 
-An AI-powered financial assistant that answers user queries about financial policies such as SIP, SWP, mutual funds, and fixed deposits using a Retrieval-Augmented Generation (RAG) approach.
+Fin AI is a financial assistant with a FastAPI backend and a static HTML/CSS/JavaScript frontend. It includes document-based financial question answering, financial-rate data, account authentication, and personal finance features.
 
 ## Features
 
-- Financial policy question answering
-- Document-based knowledge retrieval
+- Financial question answering backed by financial documents and retrieval
 - FastAPI backend
-- FAISS vector search
-- PDF document ingestion
+- MySQL database integration
+- Static frontend pages for authentication, dashboard, investments, net worth, notifications, and profile
+- PDF/document parsing utilities
+- Financial-rate endpoints
 
-## Tech Stack
+## Technology
 
-- Python
-- FastAPI
-- FAISS
-- LangChain
-- OpenAI / LLM
-- React (frontend if used)
+- Python and FastAPI
+- MySQL
+- FAISS and Sentence Transformers for document retrieval
+- HTML, CSS, and JavaScript
+- OpenRouter-compatible LLM API integration
 
-## Project Structure
+## Repository Structure
 
-```
-ai-financial-chatbot
-│
-├── backend
-│   ├── main.py
-│   ├── rag.py
-│   ├── documents
-│   └── requirements.txt
-│
-├── frontend
-│
-└── README.md
-```
-
-## Installation
-
-Clone the repository:
-
-```
-git clone https://github.com/JEEVA-PRASAD-RK/Financial-AI.git
-```
-
-Go to the project directory:
-
-```
-cd ai-financial-chatbot
-```
-
-Install dependencies:
-
-```
-pip install -r requirements.txt
-```
-
-## Run the Application
-
-Start the backend server:
-
-```
-uvicorn main:app --reload
-```
-
-The API will run at:
-
-```
-http://127.0.0.1:8000
-```
-
-## Example Query
-
-```
-What is a fixed deposit?
-```
-
-The chatbot retrieves relevant information from financial documents and generates an answer.
-
-## Future Improvements
-
-- Add financial recommendation engine
-- Integrate real-time financial data
-- Deploy using Docker or cloud services
-
-## Author
-
-JEEVA PRASAD  
-GitHub: https://github.com/JEEVA-PRASAD-RK
+```text
+backend/
+  main.py
+  config.py
+  rag.py
+  rates.py
+  requirements.txt
+  documents/
+documents/
+frontend/
+README.md

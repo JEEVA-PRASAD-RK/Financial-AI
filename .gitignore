@@ -1,0 +1,41 @@
+﻿# Secrets and environment files
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local databases and logs
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Frontend build files
+node_modules/
+dist/
+
+# Local debugging and backup files
+frontend/_temp.html
+backend/debug_parser.py
+backend/bank_parser_corrupted.py
+backend/bank_parser_corrupted_backup.py
+
+# Local debugging and backup files
+frontend/_temp.html
+backend/debug_parser.py
+backend/bank_parser_corrupted.py
+backend/bank_parser_corrupted_backup.py
+
+# Accidental nested clone
+Financial-AI/
