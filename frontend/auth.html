@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Finace — Sign In</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #080c14;
+            --bg2: #0d1220;
+            --teal: #00D4C8;
+            --teal-dim: rgba(0, 212, 200, 0.12);
+            --teal-glow: rgba(0, 212, 200, 0.25);
+            --violet: #8B5CF6;
+            --violet-dim: rgba(139, 92, 246, 0.12);
+            --green: #00E87A;
+            --red: #FF4D6A;
+            --gold: #FFB020;
+            --glass: rgba(255, 255, 255, 0.04);
+            --glassh: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.08);
+            --borderh: rgba(0, 212, 200, 0.35);
+            --mu: rgba(255, 255, 255, 0.45);
+            --text: #f0f4ff;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        /* ── AURORA ── */
+        .aurora {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .aurora-1 {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 200, 0.1) 0%, transparent 65%);
+            top: -250px;
+            left: -200px;
+            animation: drift1 20s ease-in-out infinite;
+        }
+
+        .aurora-2 {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 65%);
+            bottom: -200px;
+            right: -150px;
+            animation: drift2 25s ease-in-out infinite;
+        }
+
+        .aurora-3 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 176, 32, 0.05) 0%, transparent 65%);
+            top: 50%;
+            left: 55%;
+            animation: drift3 18s ease-in-out infinite;
+        }
+
+        @keyframes drift1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0)
+            }
+
+            50% {
+                transform: translate(80px, 50px)
+            }
+        }
+
+        @keyframes drift2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0)
+            }
+
+            50% {
+                transform: translate(-60px, -40px)
+            }
+        }
+
+        @keyframes drift3 {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%)
+            }
+
+            50% {
+                transform: translate(-50%, -58%)
+            }
+        }
+
+        /* ── GRID DOTS ── */
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background-image:
+                radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+        }
+
+        /* ── LAYOUT ── */
+        .page {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── LEFT PANEL ── */
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-panel::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--border) 30%, var(--border) 70%, transparent);
+        }
+
+        .brand-mark {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 56px;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 13px;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 0 28px rgba(0, 212, 200, 0.3);
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .brand-text-wrap {}
+
+        .brand-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-sub {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--mu);
+            margin-top: 2px;
+        }
+
+        .hero-headline {
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            animation: fadeUp 0.6s ease 0.1s both;
+        }
+
+        .hero-headline .accent {
+            background: linear-gradient(135deg, var(--teal), #4ECDC4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 0.95rem;
+            color: var(--mu);
+            line-height: 1.7;
+            max-width: 380px;
+            margin-bottom: 40px;
+            animation: fadeUp 0.6s ease 0.2s both;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            animation: fadeUp 0.6s ease 0.3s both;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.83rem;
+            color: var(--mu);
+        }
+
+        .feature-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            background: var(--teal-dim);
+            border: 1px solid rgba(0, 212, 200, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        /* ── RIGHT PANEL (FORM) ── */
+        .right-panel {
+            width: 480px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 48px;
+            overflow-y: auto;
+        }
+
+        .auth-box {
+            width: 100%;
+            animation: fadeUp 0.5s ease both;
+        }
+
+        /* ── TABS ── */
+        .auth-tabs {
+            display: flex;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 28px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            border-radius: 9px;
+            border: none;
+            background: none;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--mu);
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .auth-tab.active {
+            background: linear-gradient(135deg, var(--teal), #00A89E);
+            color: #000;
+            box-shadow: 0 4px 14px rgba(0, 212, 200, 0.3);
+        }
+
+        /* ── FORM ── */
+        .form-section {
+            display: none;
+        }
+
+        .form-section.visible {
+            display: block;
+        }
+
+        .form-heading {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            letter-spacing: -0.3px;
+        }
+
+        .form-sub {
+            font-size: 0.8rem;
+            color: var(--mu);
+            margin-bottom: 24px;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--mu);
+            margin-bottom: 7px;
+        }
+
+        .field-wrap {
+            position: relative;
+        }
+
+        .field-wrap .field-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.95rem;
+            pointer-events: none;
+        }
+
+        .field input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1.5px solid var(--border);
+            border-radius: 11px;
+            padding: 12px 14px 12px 40px;
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .field input:focus {
+            border-color: rgba(0, 212, 200, 0.5);
+            background: rgba(0, 212, 200, 0.04);
+            box-shadow: 0 0 0 3px rgba(0, 212, 200, 0.08);
+        }
+
+        .field input::placeholder {
+            color: rgba(255, 255, 255, 0.22);
+        }
+
+        .field-hint {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 5px;
+        }
+
+        .forgot-link {
+            font-size: 0.72rem;
+            color: var(--teal);
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .forgot-link:hover {
+            opacity: 0.75;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--teal), #00A89E);
+            border: none;
+            color: #000;
+            padding: 13px;
+            border-radius: 11px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: all 0.2s;
+            letter-spacing: 0.2px;
+            box-shadow: 0 4px 18px rgba(0, 212, 200, 0.3);
+        }
+
+        .submit-btn:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(0, 212, 200, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ── MESSAGES ── */
+        .msg-box {
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 0.77rem;
+            font-weight: 500;
+            margin-bottom: 14px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .msg-box.err {
+            background: rgba(255, 77, 106, 0.1);
+            border: 1px solid rgba(255, 77, 106, 0.3);
+            color: var(--red);
+        }
+
+        .msg-box.ok {
+            background: rgba(0, 232, 122, 0.1);
+            border: 1px solid rgba(0, 232, 122, 0.3);
+            color: var(--green);
+        }
+
+        /* ── OTP INPUT ── */
+        .otp-group {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+            width: 100%;
+        }
+
+        .otp-box {
+            width: 100%;
+            height: 52px;
+            min-width: 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--border);
+            border-radius: 11px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            font-family: 'DM Mono', monospace;
+            outline: none;
+            transition: all 0.2s;
+            padding: 0;
+        }
+
+        .otp-box:focus {
+            border-color: rgba(0, 212, 200, 0.55);
+            background: rgba(0, 212, 200, 0.05);
+            box-shadow: 0 0 0 3px rgba(0, 212, 200, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .otp-box.filled {
+            border-color: rgba(0, 212, 200, 0.4);
+            color: var(--teal);
+        }
+
+        .otp-resend {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--mu);
+            margin-top: 14px;
+        }
+
+        .otp-resend span {
+            color: var(--teal);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .otp-resend span:hover {
+            text-decoration: underline;
+        }
+
+        /* ── BACK LINK ── */
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 0.75rem;
+            color: var(--mu);
+            cursor: pointer;
+            margin-bottom: 22px;
+            transition: color 0.2s;
+            width: fit-content;
+        }
+
+        .back-link:hover {
+            color: var(--teal);
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            color: var(--mu);
+            font-size: 0.72rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── PROGRESS DOTS ── */
+        .step-dots {
+            display: flex;
+            justify-content: center;
+            gap: 7px;
+            margin-bottom: 24px;
+        }
+
+        .step-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: all 0.3s;
+        }
+
+        .step-dot.active {
+            background: var(--teal);
+            transform: scale(1.3);
+        }
+
+        .step-dot.done {
+            background: rgba(0, 212, 200, 0.4);
+        }
+
+        /* ── SUCCESS STATE ── */
+        .success-state {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .success-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(0, 232, 122, 0.12);
+            border: 2px solid rgba(0, 232, 122, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        .success-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .success-sub {
+            font-size: 0.82rem;
+            color: var(--mu);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in {
+            animation: fadeUp 0.35s ease both;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 860px) {
+            .left-panel {
+                display: none;
+            }
+
+            .right-panel {
+                width: 100%;
+                padding: 32px 24px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .right-panel {
+                padding: 24px 18px;
+            }
+        }
+
+        /* ── SPINNER ── */
+        .spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: rgba(13, 18, 32, 0.97);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 999;
+            transition: transform 0.3s, opacity 0.3s;
+            opacity: 0;
+            backdrop-filter: blur(14px);
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="aurora">
+        <div class="aurora-1"></div>
+        <div class="aurora-2"></div>
+        <div class="aurora-3"></div>
+    </div>
+    <div class="grid-overlay"></div>
+
+    <div class="page">
+
+        <!-- ── LEFT PANEL ── -->
+        <div class="left-panel">
+            <div class="brand-mark">
+                <div class="brand-logo">
+                    <img src="FinaceLogo.jpeg" alt="Finace"
+                        onerror="this.parentElement.style.background='linear-gradient(135deg,#00D4C8,#006B66)';this.style.display='none'" />
+                </div>
+                <div class="brand-text-wrap">
+                    <div class="brand-name">Finace</div>
+                    <div class="brand-sub">Smart Finance</div>
+                </div>
+            </div>
+
+            <div class="hero-headline">
+                Your money,<br>
+                <span class="accent">working smarter.</span>
+            </div>
+            <p class="hero-sub">
+                Get AI-powered financial advice, track investments, monitor net worth, and make informed decisions — all
+                in one place.
+            </p>
+
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-dot">📊</div>
+                    <span>Instant dashboard from your bank statement</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot">🤖</div>
+                    <span>AI financial advisor, available 24/7</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot">🪙</div>
+                    <span>Live gold & silver rates, investment tracking</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot">⚖️</div>
+                    <span>Complete net worth breakdown in real time</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── RIGHT PANEL ── -->
+        <div class="right-panel">
+            <div class="auth-box" id="auth-box">
+
+                <!-- TABS -->
+                <div class="auth-tabs" id="tabs">
+                    <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
+                    <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Create Account</button>
+                </div>
+
+                <!-- ── LOGIN FORM ── -->
+                <div class="form-section visible" id="section-login">
+                    <div class="form-heading">Welcome back 👋</div>
+                    <p class="form-sub">Sign in to your Finace account</p>
+
+                    <div class="msg-box err" id="login-err"></div>
+                    <div class="msg-box ok" id="login-ok"></div>
+
+                    <div class="field">
+                        <label>Email Address</label>
+                        <div class="field-wrap">
+                            <span class="field-icon">📧</span>
+                            <input type="email" id="li-email" placeholder="you@example.com" autocomplete="email" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <div class="field-wrap">
+                            <span class="field-icon">🔒</span>
+                            <input type="password" id="li-pass" placeholder="••••••••"
+                                autocomplete="current-password" />
+                        </div>
+                        <div class="field-hint">
+                            <span class="forgot-link" onclick="showForgot()">Forgot password?</span>
+                        </div>
+                    </div>
+
+                    <button class="submit-btn" id="li-btn" onclick="doLogin()">Sign In</button>
+
+                    <div class="divider">or</div>
+                    <p style="text-align:center;font-size:0.78rem;color:var(--mu)">
+                        Don't have an account?&nbsp;<span style="color:var(--teal);cursor:pointer;font-weight:600"
+                            onclick="switchTab('register')">Create one →</span>
+                    </p>
+                </div>
+
+                <!-- ── REGISTER FORM ── -->
+                <div class="form-section" id="section-register">
+                    <div class="form-heading">Create account ✨</div>
+                    <p class="form-sub">Join Finace for personalised guidance</p>
+
+                    <div class="msg-box err" id="reg-err"></div>
+
+                    <div class="field">
+                        <label>Full Name</label>
+                        <div class="field-wrap">
+                            <span class="field-icon">👤</span>
+                            <input type="text" id="reg-name" placeholder="Your full name" autocomplete="name" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Email Address</label>
+                        <div class="field-wrap">
+                            <span class="field-icon">📧</span>
+                            <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Date of Birth</label>
+                        <div class="field-wrap">
+                            <span class="field-icon">🎂</span>
+                            <input type="date" id="reg-dob" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <div class="field-wrap">
+                            <span class="field-icon">🔒</span>
+                            <input type="password" id="reg-pass" placeholder="At least 8 characters"
+                                autocomplete="new-password" />
+                        </div>
+                    </div>
+
+                    <button class="submit-btn" id="reg-btn" onclick="doRegister()">Create Account &amp; Verify
+                        Email</button>
+
+                    <div class="divider">or</div>
+                    <p style="text-align:center;font-size:0.78rem;color:var(--mu)">
+                        Already have an account?&nbsp;<span style="color:var(--teal);cursor:pointer;font-weight:600"
+                            onclick="switchTab('login')">Sign in →</span>
+                    </p>
+                </div>
+
+                <!-- ── OTP VERIFY (Registration) ── -->
+                <div class="form-section" id="section-otp-reg">
+                    <span class="back-link" onclick="switchTab('register')">← Back to register</span>
+                    <div class="step-dots">
+                        <div class="step-dot done"></div>
+                        <div class="step-dot active"></div>
+                    </div>
+                    <div class="form-heading">Verify your email 📬</div>
+                    <p class="form-sub" id="otp-reg-sub">We sent a 6-digit code to your email. Check your inbox!</p>
+
+                    <div class="msg-box err" id="otp-reg-err"></div>
+                    <div class="msg-box ok" id="otp-reg-ok"></div>
+
+                    <div class="otp-group" id="otp-reg-boxes">
+                        <input class="otp-box" id="rotp0" maxlength="1" type="text" inputmode="numeric" />
+                        <input class="otp-box" id="rotp1" maxlength="1" type="text" inputmode="numeric" />
+                        <input class="otp-box" id="rotp2" maxlength="1" type="text" inputmode="numeric" />
+                        <input class="otp-box" id="rotp3" maxlength="1" type="text" inputmode="numeric" />
+                        <input class="otp-box" id="rotp4" maxlength="1" type="text" inputmode="numeric" />
+                        <input class="otp-box" id="rotp5" maxlength="1" type="text" inputmode="numeric" />
+                    </div>
+
+                    <button class="submit-btn" id="otp-reg-btn" onclick="doVerifyRegOTP()">Verify &amp; Continue
+                        →</button>
+
+                    <div class="otp-resend">
+                        Didn't get it?&nbsp;<span onclick="resendRegOTP()">Resend OTP</span>
+                    </div>
+                </div>
+
+                <!-- ── FORGOT PASSWORD: Email Step ── -->
+                <div class="form-section" id="section-forgot-email">
+                    <span class="back-link" onclick="showLogin()">← Back to sign in</span>
+                    <div class="form-heading">Reset password 🔑</div>
+                    <p class="form-sub">Enter your registered email and we'll send you an OTP to verify your identity.
+                    </p>
+
+                    <div class="msg-box err" id="fp-email-err"></div>
+                    <div class="msg-box ok" id="fp-email-ok"></div>
+
+                    <div class="field">
+                        <label>Registered Email</label>
+                        <div class="field-wrap">
+                            <span class="field-icon">📧</span>
+                            <input type="email" id="fp-email" placeholder="you@example.com" />
+                        </div>
+                    </div>
+
+                    <button class="submit-btn" id="fp-email-btn" onclick="sendForgotOTP()">Send OTP →</button>
+                </div>
+
+                <!-- ── FORGOT PASSWORD: OTP Step ── -->
+                <div class="form-section" id="section-forgot-otp">
+                    <span class="back-link" onclick="showForgot()">← Change email</span>
+                    <div class="step-dots">
+                        <div class="step-dot done"></div>
+                        <div class="step-dot active"></div>
+                        <div class="step-dot"></div>
+                    </div>
+                    <div class="form-heading">Enter OTP 🔢</div>
+                    <p class="form-sub" id="fp-otp-sub">We sent a 6-digit code to your email.</p>
+
+                    <div class="msg-box err" id="fp-otp-err"></div>
+                    <div class="msg-box ok" id="fp-otp-ok"></div>
+
+                    <div class="otp-group" id="fp-otp-boxes">
+                        <input class="otp-box" id="fotp0" maxlength="1" type="text" inputmode="numeric" />
+                        <input class="otp-box" id="fotp1" maxlength="1" type="text" inputmode="numeric" />
+                        <input class="otp-box" id="fotp2" maxlength="1" type="text" inputmode="numeric" />
+                        <input class="otp-box" id="fotp3" maxlength="1" type="text" inputmode="numeric" />
+                        <input class="otp-box" id="fotp4" maxlength="1" type="text" inputmode="numeric" />
+                        <input class="otp-box" id="fotp5" maxlength="1" type="text" inputmode="numeric" />
+                    </div>
+
+                    <button class="submit-btn" id="fp-otp-btn" onclick="verifyForgotOTP()">Verify OTP →</button>
+
+                    <div class="otp-resend">
+                        Didn't get it?&nbsp;<span onclick="sendForgotOTP(true)">Resend OTP</span>
+                    </div>
+                </div>
+
+                <!-- ── FORGOT PASSWORD: New Password Step ── -->
+                <div class="form-section" id="section-forgot-newpass">
+                    <div class="step-dots">
+                        <div class="step-dot done"></div>
+                        <div class="step-dot done"></div>
+                        <div class="step-dot active"></div>
+                    </div>
+                    <div class="form-heading">New password 🔐</div>
+                    <p class="form-sub">OTP verified! Set your new password below.</p>
+
+                    <div class="msg-box err" id="fp-pass-err"></div>
+
+                    <div class="field">
+                        <label>New Password</label>
+                        <div class="field-wrap">
+                            <span class="field-icon">🔒</span>
+                            <input type="password" id="fp-new-pass" placeholder="At least 8 characters" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Confirm Password</label>
+                        <div class="field-wrap">
+                            <span class="field-icon">🔒</span>
+                            <input type="password" id="fp-confirm-pass" placeholder="Repeat new password" />
+                        </div>
+                    </div>
+
+                    <button class="submit-btn" id="fp-pass-btn" onclick="resetPassword()">Set New Password →</button>
+                </div>
+
+                <!-- ── SUCCESS (after reset / register) ── -->
+                <div class="form-section" id="section-success">
+                    <div class="success-state">
+                        <div class="success-icon" id="success-icon">✓</div>
+                        <div class="success-title" id="success-title">All done!</div>
+                        <p class="success-sub" id="success-sub">Redirecting you now…</p>
+                        <button class="submit-btn" onclick="redirectToApp()" style="max-width:260px;margin:0 auto">
+                            Continue to Finace →
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"><span id="toast-icon">✅</span>&nbsp;<span id="toast-text">Done!</span></div>
+
+    <script>
+        const API = 'http://127.0.0.1:8000';
+        let fpEmail = '';
+        let fpToken = '';
+        let regPendingEmail = '';
+        let regPendingName = '';
+
+        /* ── UTILS ── */
+        function showToast(icon, msg) {
+            document.getElementById('toast-icon').textContent = icon;
+            document.getElementById('toast-text').textContent = msg;
+            const t = document.getElementById('toast');
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3200);
+        }
+
+        function showMsg(id, msg, type = 'err') {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = msg;
+            el.className = `msg-box ${type}`;
+            el.style.display = 'flex';
+        }
+        function hideMsg(id) {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        }
+
+        function setBtnLoading(id, loading, label) {
+            const b = document.getElementById(id);
+            if (!b) return;
+            b.disabled = loading;
+            b.innerHTML = loading
+                ? `<span class="spinner"></span> Please wait…`
+                : label;
+        }
+
+        async function apiPost(path, formData) {
+            const res = await fetch(API + path, { method: 'POST', body: formData });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.detail || 'Request failed');
+            return data;
+        }
+
+        /* ── SECTION SWITCHING ── */
+        function showSection(id) {
+            document.querySelectorAll('.form-section').forEach(s => s.classList.remove('visible'));
+            const s = document.getElementById(id);
+            if (s) { s.classList.add('visible'); s.classList.add('slide-in'); setTimeout(() => s.classList.remove('slide-in'), 400); }
+            // hide tabs for sub-flows
+            const tabs = document.getElementById('tabs');
+            const showTabs = ['section-login', 'section-register'].includes(id);
+            tabs.style.display = showTabs ? 'flex' : 'none';
+        }
+
+        function switchTab(tab) {
+            document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+            document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+            showSection(tab === 'login' ? 'section-login' : 'section-register');
+            ['login-err', 'login-ok', 'reg-err'].forEach(hideMsg);
+        }
+
+        function showForgot() { showSection('section-forgot-email'); hideMsg('fp-email-err'); hideMsg('fp-email-ok'); }
+        function showLogin() { switchTab('login'); }
+
+        /* ── LOGIN ── */
+        function doLogin() {
+            const email = document.getElementById('li-email').value.trim();
+            const pass = document.getElementById('li-pass').value;
+            hideMsg('login-err'); hideMsg('login-ok');
+            if (!email || !pass) { showMsg('login-err', 'Please fill in all fields.'); return; }
+            setBtnLoading('li-btn', true, 'Sign In');
+
+            const fd = new FormData();
+            fd.append('email', email);
+            fd.append('password', pass);
+
+            apiPost('/login', fd)
+                .then(data => {
+                    const user = {
+                        id: data.user.id,
+                        name: data.user.full_name.split(' ')[0],
+                        fullName: data.user.full_name,
+                        email: data.user.email,
+                        initials: data.user.full_name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2),
+                        token: data.token,
+                        profile: data.profile || {},
+                        dob: data.user.dob,
+                        created_at: data.user.created_at
+                    };
+                    try { localStorage.setItem('ft_user', JSON.stringify(user)); } catch (_) { }
+                    showMsg('login-ok', '✓ Welcome back, ' + user.name + '! Redirecting…', 'ok');
+                    setTimeout(() => redirectToApp(), 1200);
+                })
+                .catch(err => {
+                    setBtnLoading('li-btn', false, 'Sign In');
+                    showMsg('login-err', err.message);
+                });
+        }
+
+        /* ── REGISTER ── */
+        function doRegister() {
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const dob = document.getElementById('reg-dob').value;
+            const pass = document.getElementById('reg-pass').value;
+            hideMsg('reg-err');
+            if (!name || !email || !dob || !pass) { showMsg('reg-err', 'Please fill in all fields.'); return; }
+            if (pass.length < 8) { showMsg('reg-err', 'Password must be at least 8 characters.'); return; }
+            setBtnLoading('reg-btn', true, 'Create Account & Verify Email');
+
+            const fd = new FormData();
+            fd.append('full_name', name);
+            fd.append('email', email);
+            fd.append('dob', dob);
+            fd.append('password', pass);
+
+            apiPost('/register', fd)
+                .then(() => {
+                    regPendingEmail = email;
+                    regPendingName = name;
+                    document.getElementById('otp-reg-sub').textContent = `We sent a code to ${email}`;
+                    showSection('section-otp-reg');
+                    setupOTPInputs('r', 6, doVerifyRegOTP);
+                    setTimeout(() => document.getElementById('rotp0').focus(), 100);
+                })
+                .catch(err => {
+                    setBtnLoading('reg-btn', false, 'Create Account & Verify Email');
+                    showMsg('reg-err', err.message);
+                });
+        }
+
+        function doVerifyRegOTP() {
+            const otp = getOTP('r');
+            hideMsg('otp-reg-err');
+            if (otp.length < 6) { showMsg('otp-reg-err', 'Please enter all 6 digits.'); return; }
+            setBtnLoading('otp-reg-btn', true, 'Verify & Continue →');
+
+            const fd = new FormData();
+            fd.append('email', regPendingEmail);
+            fd.append('otp', otp);
+
+            apiPost('/verify-otp', fd)
+                .then(data => {
+                    const user = {
+                        id: data.user.id,
+                        name: data.user.full_name.split(' ')[0],
+                        fullName: data.user.full_name,
+                        email: data.user.email,
+                        initials: data.user.full_name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2),
+                        token: data.token,
+                        profile: {},
+                        dob: data.user.dob,
+                        created_at: data.user.created_at
+                    };
+                    try { localStorage.setItem('ft_user', JSON.stringify(user)); } catch (_) { }
+                    showSuccess('🎉', 'Account Verified!', 'Your account is all set. Redirecting you to the app…');
+                    setTimeout(() => redirectToApp(true), 2000);
+                })
+                .catch(err => {
+                    setBtnLoading('otp-reg-btn', false, 'Verify & Continue →');
+                    showMsg('otp-reg-err', err.message);
+                });
+        }
+
+        function resendRegOTP() {
+            const fd = new FormData();
+            fd.append('email', regPendingEmail);
+            apiPost('/resend-otp', fd)
+                .then(() => showMsg('otp-reg-ok', '✓ New OTP sent to ' + regPendingEmail, 'ok'))
+                .catch(err => showMsg('otp-reg-err', err.message));
+        }
+
+        /* ── FORGOT PASSWORD ── */
+        function sendForgotOTP(resend = false) {
+            const emailInput = document.getElementById('fp-email');
+            const email = resend ? fpEmail : (emailInput ? emailInput.value.trim() : fpEmail);
+            hideMsg('fp-email-err'); hideMsg('fp-email-ok');
+            hideMsg('fp-otp-err'); hideMsg('fp-otp-ok');
+
+            if (!email) { showMsg('fp-email-err', 'Please enter your registered email.'); return; }
+            if (!resend) setBtnLoading('fp-email-btn', true, 'Send OTP →');
+
+            const fd = new FormData();
+            fd.append('email', email);
+
+            // Try /forgot-password endpoint first; fall back to /resend-otp for compatibility
+            apiPost('/forgot-password', fd)
+                .then(() => {
+                    fpEmail = email;
+                    if (!resend) {
+                        document.getElementById('fp-otp-sub').textContent = `We sent a 6-digit code to ${email}`;
+                        showSection('section-forgot-otp');
+                        setupOTPInputs('f', 6, verifyForgotOTP);
+                        setTimeout(() => document.getElementById('fotp0').focus(), 100);
+                    } else {
+                        showMsg('fp-otp-ok', '✓ New OTP sent to ' + email, 'ok');
+                    }
+                })
+                .catch(() => {
+                    // Fallback: use resend-otp
+                    apiPost('/resend-otp', fd)
+                        .then(() => {
+                            fpEmail = email;
+                            if (!resend) {
+                                document.getElementById('fp-otp-sub').textContent = `We sent a 6-digit code to ${email}`;
+                                showSection('section-forgot-otp');
+                                setupOTPInputs('f', 6, verifyForgotOTP);
+                                setTimeout(() => document.getElementById('fotp0').focus(), 100);
+                            } else {
+                                showMsg('fp-otp-ok', '✓ New OTP sent to ' + email, 'ok');
+                            }
+                        })
+                        .catch(err2 => {
+                            if (!resend) {
+                                setBtnLoading('fp-email-btn', false, 'Send OTP →');
+                                showMsg('fp-email-err', err2.message);
+                            } else {
+                                showMsg('fp-otp-err', err2.message);
+                            }
+                        });
+                })
+                .finally(() => {
+                    if (!resend) setBtnLoading('fp-email-btn', false, 'Send OTP →');
+                });
+        }
+
+        function verifyForgotOTP() {
+            const otp = getOTP('f');
+            hideMsg('fp-otp-err');
+            if (otp.length < 6) { showMsg('fp-otp-err', 'Please enter all 6 digits.'); return; }
+            setBtnLoading('fp-otp-btn', true, 'Verify OTP →');
+
+            const fd = new FormData();
+            fd.append('email', fpEmail);
+            fd.append('otp', otp);
+
+            // Try /verify-forgot-otp first, fallback to /verify-otp
+            apiPost('/verify-forgot-otp', fd)
+                .then(data => {
+                    fpToken = data.token || '';
+                    setBtnLoading('fp-otp-btn', false, 'Verify OTP →');
+                    showSection('section-forgot-newpass');
+                    setTimeout(() => document.getElementById('fp-new-pass').focus(), 100);
+                })
+                .catch(() => {
+                    apiPost('/verify-otp', fd)
+                        .then(data => {
+                            fpToken = data.token || '';
+                            // User is now technically logged in via OTP — save and go to new pass
+                            setBtnLoading('fp-otp-btn', false, 'Verify OTP →');
+                            showSection('section-forgot-newpass');
+                            setTimeout(() => document.getElementById('fp-new-pass').focus(), 100);
+                        })
+                        .catch(err2 => {
+                            setBtnLoading('fp-otp-btn', false, 'Verify OTP →');
+                            showMsg('fp-otp-err', err2.message);
+                        });
+                });
+        }
+
+        function resetPassword() {
+            const np = document.getElementById('fp-new-pass').value;
+            const cp = document.getElementById('fp-confirm-pass').value;
+            hideMsg('fp-pass-err');
+            if (!np || np.length < 8) { showMsg('fp-pass-err', 'Password must be at least 8 characters.'); return; }
+            if (np !== cp) { showMsg('fp-pass-err', 'Passwords do not match.'); return; }
+            setBtnLoading('fp-pass-btn', true, 'Set New Password →');
+
+            const fd = new FormData();
+            fd.append('email', fpEmail);
+            fd.append('new_password', np);
+            if (fpToken) fd.append('token', fpToken);
+
+            apiPost('/reset-password', fd)
+                .then(() => {
+                    setBtnLoading('fp-pass-btn', false, 'Set New Password →');
+                    showSuccess('🔑', 'Password Reset!', 'Your password has been updated. Please sign in with your new password.');
+                    setTimeout(() => { switchTab('login'); document.getElementById('li-email').value = fpEmail; }, 2800);
+                })
+                .catch(err => {
+                    setBtnLoading('fp-pass-btn', false, 'Set New Password →');
+                    showMsg('fp-pass-err', err.message);
+                });
+        }
+
+        function showSuccess(icon, title, sub) {
+            document.getElementById('success-icon').textContent = icon;
+            document.getElementById('success-title').textContent = title;
+            document.getElementById('success-sub').textContent = sub;
+            showSection('section-success');
+        }
+
+        function redirectToApp(isNewUser = false) {
+            window.location.href = isNewUser ? 'Home.html?onboard=1' : 'Home.html';
+        }
+
+        /* ── OTP HELPERS ── */
+        function getOTP(prefix) {
+            return [0, 1, 2, 3, 4, 5].map(i => document.getElementById(prefix + 'otp' + i)?.value || '').join('');
+        }
+
+        function setupOTPInputs(prefix, count, onComplete) {
+            for (let i = 0; i < count; i++) {
+                const el = document.getElementById(prefix + 'otp' + i);
+                if (!el) continue;
+                el.value = '';
+                el.classList.remove('filled');
+
+                el.addEventListener('input', () => {
+                    el.value = el.value.replace(/[^0-9]/g, '');
+                    el.classList.toggle('filled', el.value.length > 0);
+                    if (el.value && i < count - 1) {
+                        document.getElementById(prefix + 'otp' + (i + 1))?.focus();
+                    }
+                    // Auto-submit when last digit entered
+                    if (i === count - 1 && el.value) {
+                        setTimeout(onComplete, 200);
+                    }
+                });
+
+                el.addEventListener('keydown', e => {
+                    if (e.key === 'Backspace' && !el.value && i > 0) {
+                        document.getElementById(prefix + 'otp' + (i - 1))?.focus();
+                    }
+                });
+
+                el.addEventListener('paste', e => {
+                    e.preventDefault();
+                    const paste = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+                    for (let j = 0; j < count && j < paste.length; j++) {
+                        const box = document.getElementById(prefix + 'otp' + j);
+                        if (box) { box.value = paste[j]; box.classList.add('filled'); }
+                    }
+                    const lastFilled = Math.min(paste.length, count) - 1;
+                    document.getElementById(prefix + 'otp' + lastFilled)?.focus();
+                    if (paste.length >= count) setTimeout(onComplete, 200);
+                });
+            }
+        }
+
+        /* ── ENTER KEY ── */
+        document.addEventListener('keydown', e => {
+            if (e.key !== 'Enter') return;
+            const visible = document.querySelector('.form-section.visible');
+            if (!visible) return;
+            const id = visible.id;
+            if (id === 'section-login') doLogin();
+            else if (id === 'section-register') doRegister();
+            else if (id === 'section-forgot-email') sendForgotOTP();
+            else if (id === 'section-forgot-newpass') resetPassword();
+        });
+
+        /* ── CHECK EXISTING SESSION ── */
+        try {
+            const stored = localStorage.getItem('ft_user');
+            if (stored) {
+                const u = JSON.parse(stored);
+                if (u && u.id) redirectToApp();
+            }
+        } catch (_) { }
+    </script>
+</body>
+
+</html>

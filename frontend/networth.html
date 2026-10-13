@@ -1,0 +1,3296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Net Worth — Finace</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Sora:wght@700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="finace-dark.css" />
+  <!-- Apply saved theme before page renders to avoid flash -->
+  <script>try{var t=localStorage.getItem('ft_theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --ind: #4f46e5;
+      --vio: #7c3aed;
+      --ind-l: #eef2ff;
+      --ind-m: #c7d2fe;
+      --sl50: #f8fafc;
+      --sl100: #f1f5f9;
+      --sl200: #e2e8f0;
+      --sl300: #cbd5e1;
+      --sl500: #64748b;
+      --sl900: #0f172a;
+      --g: #16a34a;
+      --g-bg: #dcfce7;
+      --g-bd: #86efac;
+      --r: #dc2626;
+      --r-bg: #fee2e2;
+      --r-bd: #fca5a5;
+      --am: #d97706;
+      --am-bg: #fef3c7;
+      --am-bd: #fcd34d;
+      --w: #fff;
+      --sh-sm: 0 1px 3px rgba(0, 0, 0, .06), 0 1px 2px rgba(0, 0, 0, .04);
+      --sh-md: 0 4px 16px rgba(0, 0, 0, .08);
+      --sh-lg: 0 10px 40px rgba(0, 0, 0, .12);
+      --sh-i: 0 6px 20px rgba(79, 70, 229, .22)
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: var(--sl100);
+      color: var(--sl900);
+      overflow-x: hidden
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--w);
+      border-right: 1px solid var(--sl200);
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 10;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, .04)
+    }
+
+    .sb-brand {
+      padding: 22px 20px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--sl200)
+    }
+
+    .sb-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--vio), var(--ind));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #fff;
+      flex-shrink: 0
+    }
+
+    .sb-name {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--sl900)
+    }
+
+    .sb-sub {
+      font-size: .72rem;
+      color: var(--sl500)
+    }
+
+    .sb-nav {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--sl500);
+      cursor: pointer;
+      transition: all .18s;
+      margin-bottom: 4px;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      text-decoration: none
+    }
+
+    .nav-item:hover {
+      background: var(--sl100);
+      color: var(--sl900)
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--ind), var(--vio));
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, .35)
+    }
+
+    .sb-user {
+      padding: 16px;
+      border-top: 1px solid var(--sl200)
+    }
+
+    .sb-user-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      background: var(--sl50);
+      margin-bottom: 8px
+    }
+
+    .sb-av {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--ind), var(--vio));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .8rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      cursor: pointer
+    }
+
+    .sb-uname {
+      font-size: .83rem;
+      font-weight: 600;
+      color: var(--sl900);
+      cursor: pointer
+    }
+
+    .sb-uemail {
+      font-size: .71rem;
+      color: var(--sl500);
+      word-break: break-all
+    }
+
+    .sb-logout {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: .83rem;
+      font-weight: 500;
+      color: var(--r);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+      width: 100%;
+      transition: background .15s
+    }
+
+    .sb-logout:hover {
+      background: var(--r-bg)
+    }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow-y: auto
+    }
+
+    .top-nav {
+      background: var(--w);
+      border-bottom: 1px solid var(--sl200);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      box-shadow: var(--sh-sm)
+    }
+
+    .tn-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--sl900);
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .tn-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--ind), var(--vio));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .88rem;
+      color: #fff
+    }
+
+    .btn-add {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--ind), var(--vio));
+      border: none;
+      color: #fff;
+      font-family: inherit;
+      font-size: .875rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--sh-i);
+      transition: all .18s
+    }
+
+    .btn-add:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(79, 70, 229, .35)
+    }
+
+    .content {
+      padding: 28px 28px 40px
+    }
+
+    /* HEADER */
+    .ph-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 26px;
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    .ph-row h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--sl900);
+      margin-bottom: 4px
+    }
+
+    .ph-row p {
+      font-size: .86rem;
+      color: var(--sl500)
+    }
+
+    /* SUMMARY STRIP */
+    .sum-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 26px
+    }
+
+    .sum-card {
+      background: var(--w);
+      border: 1px solid var(--sl200);
+      border-radius: 18px;
+      padding: 20px 22px;
+      box-shadow: var(--sh-sm);
+      transition: box-shadow .2s;
+      position: relative;
+      overflow: hidden
+    }
+
+    .sum-card:hover {
+      box-shadow: var(--sh-md)
+    }
+
+    .sum-card.accent {
+      background: linear-gradient(135deg, var(--ind), var(--vio));
+      border-color: transparent;
+      box-shadow: var(--sh-i)
+    }
+
+    .sum-card.green-card {
+      background: linear-gradient(135deg, #16a34a, #059669);
+      border-color: transparent;
+      box-shadow: 0 6px 20px rgba(22, 163, 74, .25)
+    }
+
+    .sum-card.red-card {
+      background: linear-gradient(135deg, #dc2626, #c2410c);
+      border-color: transparent;
+      box-shadow: 0 6px 20px rgba(220, 38, 38, .25)
+    }
+
+    .sum-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+      background: rgba(255, 255, 255, .2)
+    }
+
+    .sum-label {
+      font-size: .71rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 6px;
+      color: rgba(255, 255, 255, .75)
+    }
+
+    .sum-val {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1
+    }
+
+    .sum-sub {
+      font-size: .74rem;
+      color: rgba(255, 255, 255, .7);
+      margin-top: 6px
+    }
+
+    .nw-pos {
+      color: #4ade80
+    }
+
+    .nw-neg {
+      color: #f87171
+    }
+
+    /* CHART ROW */
+    .chart-row {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 18px;
+      margin-bottom: 18px
+    }
+
+    .card {
+      background: var(--w);
+      border: 1px solid var(--sl200);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--sh-sm)
+    }
+
+    .card-head {
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--sl200);
+      background: var(--sl50)
+    }
+
+    .card-head-title {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--sl900);
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .card-badge {
+      font-size: .7rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--ind-l);
+      color: var(--ind)
+    }
+
+    .card-body {
+      padding: 20px 22px
+    }
+
+    /* DONUT */
+    .donut-wrap {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 4px 0
+    }
+
+    .donut-svg-w {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      flex-shrink: 0
+    }
+
+    .donut-svg-w svg {
+      width: 180px;
+      height: 180px
+    }
+
+    .donut-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none
+    }
+
+    .donut-center-val {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--sl900);
+      line-height: 1
+    }
+
+    .donut-center-lbl {
+      font-size: .67rem;
+      font-weight: 600;
+      color: var(--sl500);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-top: 4px
+    }
+
+    .donut-legend {
+      flex: 1
+    }
+
+    .leg-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px
+    }
+
+    .leg-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    .leg-label {
+      font-size: .78rem;
+      color: var(--sl500);
+      flex: 1
+    }
+
+    .leg-val {
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--sl900)
+    }
+
+    /* LISTS */
+    .lists-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px
+    }
+
+    .entry-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 340px;
+      overflow-y: auto;
+      padding-right: 2px
+    }
+
+    .entry-list::-webkit-scrollbar {
+      width: 4px
+    }
+
+    .entry-list::-webkit-scrollbar-thumb {
+      background: var(--sl300);
+      border-radius: 4px
+    }
+
+    .entry-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: var(--sl50);
+      border: 1px solid var(--sl200);
+      transition: all .17s;
+      cursor: pointer
+    }
+
+    .entry-item:hover {
+      border-color: var(--ind-m);
+      background: var(--ind-l)
+    }
+
+    .entry-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0
+    }
+
+    .cat-asset {
+      background: #dcfce7
+    }
+
+    .cat-liability {
+      background: #fee2e2
+    }
+
+    .entry-info {
+      flex: 1;
+      min-width: 0
+    }
+
+    .entry-name {
+      font-size: .84rem;
+      font-weight: 600;
+      color: var(--sl900);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .entry-cat {
+      font-size: .72rem;
+      color: var(--sl500);
+      margin-top: 1px
+    }
+
+    .entry-value {
+      text-align: right;
+      flex-shrink: 0
+    }
+
+    .entry-val-num {
+      font-family: 'Sora', sans-serif;
+      font-size: .95rem;
+      font-weight: 800
+    }
+
+    .ev-g {
+      color: var(--g)
+    }
+
+    .ev-r {
+      color: var(--r)
+    }
+
+    .loan-tag {
+      font-size: .64rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--r-bg);
+      color: var(--r);
+      margin-top: 2px;
+      display: inline-block
+    }
+
+    .entry-actions {
+      display: flex;
+      gap: 4px;
+      margin-left: 6px;
+      opacity: 0;
+      transition: opacity .15s
+    }
+
+    .entry-item:hover .entry-actions {
+      opacity: 1
+    }
+
+    .act-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .78rem;
+      transition: all .15s
+    }
+
+    .act-edit {
+      background: var(--ind-l);
+      color: var(--ind)
+    }
+
+    .act-edit:hover {
+      background: var(--ind-m)
+    }
+
+    .act-del {
+      background: var(--r-bg);
+      color: var(--r)
+    }
+
+    .act-del:hover {
+      background: var(--r-bd)
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 36px 20px;
+      color: var(--sl500)
+    }
+
+    .empty-icon {
+      font-size: 2.2rem;
+      margin-bottom: 10px
+    }
+
+    .empty-state p {
+      font-size: .84rem
+    }
+
+    /* ═══ MODAL OVERLAY ═══ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(10, 16, 35, .55);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px
+    }
+
+    .modal-overlay.open {
+      display: flex
+    }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 22px;
+      width: 100%;
+      max-width: 660px;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, .22);
+      animation: popIn .28s cubic-bezier(.34, 1.56, .64, 1);
+      max-height: 92vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column
+    }
+
+    .modal-box.wide {
+      max-width: 820px
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(.92);
+        opacity: 0
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--sl200);
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 2;
+      border-radius: 22px 22px 0 0
+    }
+
+    .mh-left {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .mh-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      background: var(--ind-l)
+    }
+
+    .mh-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--sl900)
+    }
+
+    .mh-sub {
+      font-size: .75rem;
+      color: var(--sl500)
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--sl500);
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: all .15s
+    }
+
+    .modal-close:hover {
+      color: var(--r);
+      background: var(--r-bg)
+    }
+
+    .modal-body {
+      padding: 22px 24px 26px;
+      flex: 1
+    }
+
+    .modal-footer {
+      padding: 14px 24px 20px;
+      border-top: 1px solid var(--sl200);
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      background: #fff;
+      border-radius: 0 0 22px 22px;
+      position: sticky;
+      bottom: 0
+    }
+
+    /* CATEGORY PICKER */
+    .type-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 18px
+    }
+
+    .type-btn {
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid var(--sl200);
+      background: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--sl500);
+      transition: all .18s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px
+    }
+
+    .type-btn.sel-asset {
+      border-color: var(--g);
+      background: var(--g-bg);
+      color: var(--g)
+    }
+
+    .type-btn.sel-liability {
+      border-color: var(--r);
+      background: var(--r-bg);
+      color: var(--r)
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 18px
+    }
+
+    .cat-tile {
+      padding: 10px 6px;
+      border-radius: 12px;
+      border: 1.5px solid var(--sl200);
+      background: #fff;
+      cursor: pointer;
+      text-align: center;
+      font-family: inherit;
+      font-size: .68rem;
+      font-weight: 600;
+      color: var(--sl500);
+      transition: all .18s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px
+    }
+
+    .cat-tile-icon {
+      font-size: 1.25rem
+    }
+
+    .cat-tile:hover {
+      border-color: var(--ind-m);
+      background: var(--ind-l);
+      color: var(--ind)
+    }
+
+    .cat-tile.selected.sel-asset {
+      border-color: var(--g);
+      background: var(--g-bg);
+      color: var(--g);
+      box-shadow: 0 0 0 3px rgba(22, 163, 74, .12)
+    }
+
+    .cat-tile.selected.sel-liability {
+      border-color: var(--r);
+      background: var(--r-bg);
+      color: var(--r);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, .12)
+    }
+
+    .cat-tile.selected {
+      border-color: var(--ind);
+      background: var(--ind-l);
+      color: var(--ind);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, .12)
+    }
+
+    /* FORM ELEMENTS */
+    .dyn-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 14px
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px
+    }
+
+    .form-label {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--sl900);
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .entry-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid rgba(255, 255, 255, .08);
+      transition: all .17s;
+      cursor: pointer;
+    }
+
+    .entry-item:hover {
+      background: rgba(0, 212, 200, .14);
+      border-color: rgba(0, 212, 200, .32);
+    }
+
+    .entry-item:hover .entry-name,
+    .entry-item:hover .entry-val-num {
+      color: #fff;
+    }
+
+    .entry-item:hover .entry-cat {
+      color: rgba(255, 255, 255, .72);
+    }
+
+    .req {
+      color: var(--r)
+    }
+
+    .form-hint {
+      font-size: .72rem;
+      color: var(--sl500)
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--sl200);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: .875rem;
+      color: var(--sl900);
+      background: #fff;
+      transition: border-color .18s, box-shadow .18s;
+      outline: none
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--ind);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, .1)
+    }
+
+    .form-input[type=date] {
+      color-scheme: light
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px
+    }
+
+    .prefix-wrap {
+      position: relative
+    }
+
+    .inp-prefix {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--sl500)
+    }
+
+    .prefix-wrap .form-input {
+      padding-left: 26px
+    }
+
+    .computed-box {
+      background: linear-gradient(135deg, var(--ind-l), #f0f4ff);
+      border: 1.5px solid var(--ind-m);
+      border-radius: 12px;
+      padding: 14px 16px
+    }
+
+    .comp-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px
+    }
+
+    .comp-row:last-child {
+      margin-bottom: 0
+    }
+
+    .comp-label {
+      font-size: .78rem;
+      color: var(--sl500)
+    }
+
+    .comp-value {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--ind)
+    }
+
+    .comp-value.green {
+      color: var(--g)
+    }
+
+    .comp-value.red {
+      color: var(--r)
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .radio-opt {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 9px;
+      border: 1.5px solid var(--sl200);
+      background: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--sl500);
+      transition: all .15s
+    }
+
+    .radio-opt input {
+      display: none
+    }
+
+    .radio-opt.checked {
+      border-color: var(--ind);
+      background: var(--ind-l);
+      color: var(--ind);
+      font-weight: 600
+    }
+
+    .separator {
+      height: 1px;
+      background: var(--sl200);
+      margin: 4px 0
+    }
+
+    .section-label {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--sl500);
+      margin-bottom: 2px
+    }
+
+    /* LOAN ON ASSET PANEL */
+    .loan-panel {
+      background: linear-gradient(135deg, #fff7f7, #fef2f2);
+      border: 1.5px solid #fca5a5;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 4px
+    }
+
+    .loan-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px
+    }
+
+    .loan-panel-title {
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--r)
+    }
+
+    .liab-added-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: var(--r-bg);
+      border: 1px solid var(--r-bd);
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--r);
+      margin-top: 6px
+    }
+
+    /* AI OTHER PANEL */
+    .ai-other-panel {
+      background: linear-gradient(135deg, #ede9fe, #e0e7ff);
+      border: 1px solid var(--ind-m);
+      border-radius: 14px;
+      padding: 16px
+    }
+
+    .ai-other-title {
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--ind)
+    }
+
+    .ai-result-box {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid var(--ind-m);
+      padding: 12px 14px;
+      margin-top: 10px
+    }
+
+    .ai-res-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+      font-size: .78rem
+    }
+
+    .ai-res-label {
+      color: var(--sl500)
+    }
+
+    .ai-res-val {
+      font-weight: 700;
+      color: var(--sl900)
+    }
+
+    /* BUTTONS */
+    .btn-compute {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 16px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--ind), var(--vio));
+      border: none;
+      color: #fff;
+      font-family: inherit;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s
+    }
+
+    .btn-compute:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--sh-i)
+    }
+
+    .btn-compute:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none
+    }
+
+    .btn-cancel {
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: 1.5px solid var(--sl200);
+      background: #fff;
+      font-family: inherit;
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--sl500);
+      cursor: pointer;
+      transition: all .15s
+    }
+
+    .btn-cancel:hover {
+      border-color: var(--sl300);
+      background: var(--sl50)
+    }
+
+    .btn-submit {
+      padding: 10px 24px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--ind), var(--vio));
+      border: none;
+      color: #fff;
+      font-family: inherit;
+      font-size: .875rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--sh-i);
+      transition: all .18s;
+      display: flex;
+      align-items: center;
+      gap: 7px
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, .35)
+    }
+
+    .btn-submit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none
+    }
+
+    /* LIST MODAL */
+    .list-modal-box {
+      background: #fff;
+      border-radius: 22px;
+      width: 100%;
+      max-width: 780px;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, .22);
+      animation: popIn .28s cubic-bezier(.34, 1.56, .64, 1);
+      max-height: 88vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column
+    }
+
+    .lm-head {
+      padding: 18px 24px 14px;
+      border-bottom: 1px solid var(--sl200);
+      background: var(--sl50);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .lm-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--sl900);
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .lm-filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px
+    }
+
+    .lm-search {
+      flex: 1;
+      min-width: 140px;
+      padding: 6px 12px;
+      border: 1.5px solid var(--sl200);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: .8rem;
+      outline: none;
+      transition: border-color .18s
+    }
+
+    .lm-search:focus {
+      border-color: var(--ind)
+    }
+
+    .lm-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 24px 16px
+    }
+
+    .lm-table-header {
+      display: grid;
+      grid-template-columns: 1fr 130px 120px 80px;
+      gap: 8px;
+      padding: 10px 4px 6px;
+      border-bottom: 2px solid var(--sl200);
+      margin-top: 12px
+    }
+
+    .lm-th {
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--sl500);
+      text-transform: uppercase;
+      letter-spacing: .04em
+    }
+
+    .lm-row {
+      display: grid;
+      grid-template-columns: 1fr 130px 120px 80px;
+      gap: 8px;
+      padding: 10px 4px;
+      border-bottom: 1px solid var(--sl100);
+      align-items: center;
+      transition: background .1s;
+      border-radius: 6px;
+      cursor: pointer
+    }
+
+    .lm-row:hover {
+      background: var(--sl50)
+    }
+
+    .lm-row-name {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--sl900);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .lm-row-cat {
+      font-size: .7rem;
+      color: var(--sl500);
+      margin-top: 1px
+    }
+
+    .lm-row-date {
+      font-size: .75rem;
+      color: var(--sl500)
+    }
+
+    .lm-row-val {
+      font-size: .88rem;
+      font-weight: 700;
+      text-align: right
+    }
+
+    .lm-footer {
+      padding: 14px 24px;
+      border-top: 1px solid var(--sl200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--sl50);
+      flex-shrink: 0
+    }
+
+    .pg-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .pg-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1.5px solid var(--sl200);
+      background: #fff;
+      color: var(--sl500);
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .15s;
+      font-family: inherit
+    }
+
+    .pg-btn:hover:not(:disabled) {
+      border-color: var(--ind);
+      color: var(--ind);
+      background: var(--ind-l)
+    }
+
+    .pg-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed
+    }
+
+    .pg-btn.active {
+      background: var(--ind);
+      color: #fff;
+      border-color: var(--ind)
+    }
+
+    /* DETAIL MODAL */
+    .detail-modal-box {
+      background: #fff;
+      border-radius: 22px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, .22);
+      animation: popIn .28s cubic-bezier(.34, 1.56, .64, 1);
+      max-height: 88vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column
+    }
+
+    .dm-header {
+      padding: 22px 24px 16px;
+      border-bottom: 1px solid var(--sl200);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      background: linear-gradient(135deg, var(--ind-l), #f0f4ff)
+    }
+
+    .dm-badge {
+      font-size: .7rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: var(--ind-l);
+      color: var(--ind);
+      margin-bottom: 6px;
+      display: inline-block
+    }
+
+    .dm-badge.asset-badge {
+      background: var(--g-bg);
+      color: var(--g)
+    }
+
+    .dm-badge.liab-badge {
+      background: var(--r-bg);
+      color: var(--r)
+    }
+
+    .dm-name {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--sl900);
+      line-height: 1.2;
+      margin-bottom: 4px
+    }
+
+    .dm-val {
+      font-family: 'Sora', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1
+    }
+
+    .dm-val.asset-val {
+      color: var(--g)
+    }
+
+    .dm-val.liab-val {
+      color: var(--r)
+    }
+
+    .dm-sub {
+      font-size: .75rem;
+      color: var(--sl500);
+      margin-top: 4px
+    }
+
+    .dm-body {
+      padding: 20px 24px
+    }
+
+    .dm-section {
+      margin-bottom: 20px
+    }
+
+    .dm-section-title {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--sl500);
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--sl200)
+    }
+
+    .dm-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px
+    }
+
+    .dm-field {
+      background: var(--sl50);
+      border-radius: 10px;
+      padding: 10px 14px
+    }
+
+    .dm-field-label {
+      font-size: .7rem;
+      color: var(--sl500);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 3px
+    }
+
+    .dm-field-value {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--sl900)
+    }
+
+    .dm-field.highlight {
+      background: linear-gradient(135deg, var(--r-bg), #fff5f5);
+      border: 1px solid var(--r-bd)
+    }
+
+    .dm-field.highlight .dm-field-value {
+      color: var(--r)
+    }
+
+    .dm-field.success {
+      background: var(--g-bg);
+      border: 1px solid var(--g-bd)
+    }
+
+    .dm-field.success .dm-field-value {
+      color: var(--g)
+    }
+
+    .dm-actions {
+      display: flex;
+      gap: 10px;
+      padding: 16px 24px;
+      border-top: 1px solid var(--sl200);
+      background: var(--sl50);
+      border-radius: 0 0 22px 22px
+    }
+
+    .dm-edit-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--ind), var(--vio));
+      border: none;
+      color: #fff;
+      font-family: inherit;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--sh-i);
+      transition: all .15s
+    }
+
+    .dm-edit-btn:hover {
+      transform: translateY(-1px)
+    }
+
+    .dm-del-btn {
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: 1.5px solid var(--r-bd);
+      background: var(--r-bg);
+      color: var(--r);
+      font-family: inherit;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s
+    }
+
+    .dm-del-btn:hover {
+      background: var(--r-bd)
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 99999;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: .84rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      box-shadow: var(--sh-lg);
+      animation: slideUp .3s ease;
+      max-width: 320px
+    }
+
+    .toast-success {
+      background: #1a1a2e;
+      color: #fff;
+      border-left: 4px solid var(--g)
+    }
+
+    .toast-error {
+      background: #1a1a2e;
+      color: #fff;
+      border-left: 4px solid var(--r)
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1
+      }
+    }
+
+    .info-note {
+      background: var(--am-bg);
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: #92400e;
+      font-size: .75rem;
+      border-left: 3px solid var(--am)
+    }
+
+    .info-note.red-note {
+      background: var(--r-bg);
+      color: #7f1d1d;
+      border-color: var(--r)
+    }
+  </style>
+  <style>
+    /* ── DARK OVERRIDE ── */
+    :root {
+      --white: #111827;
+      --w: #111827;
+      --sl50: rgba(255, 255, 255, .03);
+      --sl100: rgba(255, 255, 255, .05);
+      --sl200: rgba(255, 255, 255, .08);
+      --sl300: rgba(255, 255, 255, .12);
+      --sl500: rgba(255, 255, 255, .45);
+      --sl900: #f0f4ff;
+      --indigo: #00D4C8;
+      --ind: #00D4C8;
+      --primary: #00D4C8;
+      --indigo-light: rgba(0, 212, 200, .1);
+      --indigo-mid: rgba(0, 212, 200, .25);
+      --violet: #8B5CF6;
+      --vio: #8B5CF6;
+      --green: #00E87A;
+      --g: #00E87A;
+      --green-bg: rgba(0, 232, 122, .08);
+      --green-bd: rgba(0, 232, 122, .3);
+      --red: #FF4D6A;
+      --r: #FF4D6A;
+      --red-bg: rgba(255, 77, 106, .08);
+      --amber: #FFB020;
+      --am: #FFB020;
+      --amber-bg: rgba(255, 176, 32, .08);
+      --sh-sm: 0 2px 8px rgba(0, 0, 0, .4);
+      --sh-md: 0 4px 16px rgba(0, 0, 0, .5);
+      --sh-indigo: 0 4px 20px rgba(0, 212, 200, .2);
+    }
+
+    html,
+    body {
+      background: #080c14 !important;
+      color: #f0f4ff !important;
+      font-family: 'Outfit', sans-serif !important;
+    }
+
+    .card,
+    .nw-card,
+    .asset-card,
+    .section-box,
+    .list-modal-box {
+      background: rgba(255, 255, 255, .04) !important;
+      border: 1px solid rgba(255, 255, 255, .08) !important;
+      color: #f0f4ff !important;
+    }
+
+    .card-head,
+    .nw-card-head,
+    .modal-head {
+      background: rgba(255, 255, 255, .03) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, .08) !important;
+    }
+
+    .card-title,
+    .nw-title,
+    .modal-title {
+      color: #f0f4ff !important;
+    }
+
+    .top-nav,
+    .topbar {
+      background: rgba(8, 12, 20, .92) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, .08) !important;
+      box-shadow: none !important;
+    }
+
+    .top-nav *,
+    .topbar * {
+      color: #f0f4ff !important;
+    }
+
+    .list-modal-box {
+      background: #0d1220 !important;
+      border: 1px solid rgba(255, 255, 255, .08) !important;
+    }
+
+    .lm-row {
+      border-bottom: 1px solid rgba(255, 255, 255, .06) !important;
+    }
+
+    .lm-row:hover {
+      background: rgba(255, 255, 255, .04) !important;
+    }
+
+    .lm-row-name {
+      color: #f0f4ff !important;
+    }
+
+    /* ── MODAL (Add/Edit Entry) dark fix ── */
+    .modal-box, .detail-modal-box, .list-modal-box {
+      background: #0d1220 !important;
+      border: 1px solid rgba(255,255,255,.1) !important;
+    }
+    .modal-header {
+      background: #0d1220 !important;
+      border-bottom: 1px solid rgba(255,255,255,.08) !important;
+    }
+    .modal-footer {
+      background: #0d1220 !important;
+      border-top: 1px solid rgba(255,255,255,.08) !important;
+    }
+    .mh-title { color: #f0f4ff !important; }
+    .mh-sub   { color: rgba(255,255,255,.45) !important; }
+    .modal-close { color: rgba(255,255,255,.45) !important; }
+    .modal-close:hover { color: #FF4D6A !important; background: rgba(255,77,106,.1) !important; }
+
+    /* Form labels & inputs */
+    .form-label { color: #f0f4ff !important; }
+    .form-hint  { color: rgba(255,255,255,.4) !important; }
+    .form-input, .form-select, .form-textarea {
+      background: rgba(255,255,255,.05) !important;
+      border-color: rgba(255,255,255,.12) !important;
+      color: #f0f4ff !important;
+      color-scheme: dark !important;
+    }
+    .form-input::placeholder, .form-textarea::placeholder {
+      color: rgba(255,255,255,.28) !important;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: rgba(0,212,200,.5) !important;
+      box-shadow: 0 0 0 3px rgba(0,212,200,.12) !important;
+    }
+    .inp-prefix { color: rgba(0,212,200,.8) !important; }
+
+    /* Type toggle (Asset / Liability) */
+    .type-btn {
+      background: rgba(255,255,255,.04) !important;
+      border-color: rgba(255,255,255,.12) !important;
+      color: rgba(255,255,255,.55) !important;
+    }
+    .type-btn.sel-asset     { background: rgba(0,232,122,.1) !important; border-color: rgba(0,232,122,.4) !important; color: #00E87A !important; }
+    .type-btn.sel-liability { background: rgba(255,77,106,.1) !important; border-color: rgba(255,77,106,.4) !important; color: #FF4D6A !important; }
+
+    /* Category tiles */
+    .cat-tile {
+      background: rgba(255,255,255,.03) !important;
+      border-color: rgba(255,255,255,.08) !important;
+      color: rgba(255,255,255,.45) !important;
+    }
+    .cat-tile:hover {
+      background: rgba(0,212,200,.1) !important;
+      border-color: rgba(0,212,200,.35) !important;
+      color: #00D4C8 !important;
+    }
+    .cat-tile.selected, .cat-tile.selected.sel-asset, .cat-tile.selected.sel-liability {
+      background: rgba(0,212,200,.12) !important;
+      border-color: rgba(0,212,200,.45) !important;
+      color: #00D4C8 !important;
+    }
+    .cat-tile.selected.sel-asset     { background: rgba(0,232,122,.12) !important; border-color: rgba(0,232,122,.45) !important; color: #00E87A !important; }
+    .cat-tile.selected.sel-liability { background: rgba(255,77,106,.12) !important; border-color: rgba(255,77,106,.45) !important; color: #FF4D6A !important; }
+
+    /* Computed value box */
+    .computed-box { background: rgba(0,212,200,.08) !important; border-color: rgba(0,212,200,.2) !important; }
+    .computed-val, .computed-label { color: #f0f4ff !important; }
+
+    /* Detail modal */
+    .dm-header, .dm-body, .dm-actions, .dm-section { background: transparent !important; }
+    .dm-badge { background: rgba(0,212,200,.12) !important; color: #00D4C8 !important; }
+    .asset-badge { background: rgba(0,232,122,.12) !important; color: #00E87A !important; }
+    .liab-badge  { background: rgba(255,77,106,.12) !important; color: #FF4D6A !important; }
+    .dm-name     { color: #f0f4ff !important; }
+    .dm-val      { color: #f0f4ff !important; }
+    .dm-sub      { color: rgba(255,255,255,.4) !important; }
+    .dm-field    { background: rgba(255,255,255,.03) !important; border-color: rgba(255,255,255,.07) !important; }
+    .dm-field-label { color: rgba(255,255,255,.45) !important; }
+    .dm-field-value { color: #f0f4ff !important; }
+    .dm-section-title { color: rgba(255,255,255,.7) !important; }
+    .dm-edit-btn { background: rgba(0,212,200,.1) !important; color: #00D4C8 !important; border-color: rgba(0,212,200,.2) !important; }
+    .dm-del-btn  { background: rgba(255,77,106,.1) !important; color: #FF4D6A !important; border-color: rgba(255,77,106,.2) !important; }
+
+    /* Entry item hover text fix */
+    .entry-name { color: #f0f4ff !important; }
+    .entry-cat  { color: rgba(255,255,255,.45) !important; }
+    .entry-item:hover .entry-name, .entry-item:hover .entry-val-num { color: #fff !important; }
+    .entry-item:hover .entry-cat { color: rgba(255,255,255,.7) !important; }
+
+    /* AI classifier box */
+    .ai-classify-box { background: rgba(0,212,200,.08) !important; border-color: rgba(0,212,200,.2) !important; color: #f0f4ff !important; }
+
+    /* ── Radio option pills ── */
+    .radio-opt {
+      background: rgba(255,255,255,.04) !important;
+      border-color: rgba(255,255,255,.1) !important;
+      color: rgba(255,255,255,.55) !important;
+    }
+    .radio-opt:hover {
+      background: rgba(0,212,200,.08) !important;
+      border-color: rgba(0,212,200,.3) !important;
+      color: #00D4C8 !important;
+    }
+    .radio-opt.checked {
+      background: rgba(0,212,200,.12) !important;
+      border-color: rgba(0,212,200,.45) !important;
+      color: #00D4C8 !important;
+    }
+
+    /* ── Computed value box ── */
+    .computed-box {
+      background: rgba(0,212,200,.06) !important;
+      border-color: rgba(0,212,200,.2) !important;
+    }
+    .comp-label { color: rgba(255,255,255,.45) !important; }
+    .comp-value { color: #00D4C8 !important; }
+    .comp-value.green { color: #00E87A !important; }
+    .comp-value.red   { color: #FF4D6A !important; }
+
+    /* ── Loan on asset panel ── */
+    .loan-panel {
+      background: rgba(255,77,106,.06) !important;
+      border-color: rgba(255,77,106,.25) !important;
+    }
+    .loan-panel-title { color: #FF4D6A !important; }
+
+    /* ── AI Other / classify panels ── */
+    .ai-other-panel {
+      background: rgba(139,92,246,.08) !important;
+      border-color: rgba(139,92,246,.25) !important;
+    }
+    .ai-other-title { color: #8B5CF6 !important; }
+    .ai-result-box {
+      background: rgba(255,255,255,.04) !important;
+      border-color: rgba(255,255,255,.08) !important;
+    }
+    .ai-res-label { color: rgba(255,255,255,.45) !important; }
+    .ai-res-val   { color: #f0f4ff !important; }
+
+    /* ── Cancel button ── */
+    .btn-cancel {
+      background: rgba(255,255,255,.04) !important;
+      border-color: rgba(255,255,255,.1) !important;
+      color: rgba(255,255,255,.55) !important;
+    }
+    .btn-cancel:hover {
+      background: rgba(255,255,255,.08) !important;
+      border-color: rgba(255,255,255,.2) !important;
+      color: #f0f4ff !important;
+    }
+
+    /* ── Section labels & separators ── */
+    .section-label { color: rgba(255,255,255,.35) !important; }
+    .separator      { background: rgba(255,255,255,.07) !important; }
+
+    /* ── Submit button ── */
+    .btn-submit {
+      background: linear-gradient(135deg,#00D4C8,#006B66) !important;
+      color: #000 !important;
+      font-weight: 700 !important;
+    }
+
+    /* ── List modal table header ── */
+    .lm-table-header { border-bottom: 1px solid rgba(255,255,255,.07) !important; }
+    .lm-th { color: rgba(255,255,255,.35) !important; }
+    .lm-row-cat, .lm-row-date { color: rgba(255,255,255,.45) !important; }
+
+    /* ── Pagination buttons ── */
+    .pg-btn {
+      background: rgba(255,255,255,.04) !important;
+      border: 1px solid rgba(255,255,255,.08) !important;
+      color: rgba(255,255,255,.55) !important;
+    }
+    .pg-btn.active {
+      background: rgba(0,212,200,.15) !important;
+      border-color: rgba(0,212,200,.4) !important;
+      color: #00D4C8 !important;
+    }
+    .pg-btn:disabled { opacity: .3 !important; }
+
+    /* ── Sum cards on the header ── */
+    .sum-card { color: #f0f4ff !important; }
+    .sum-label { color: rgba(255,255,255,.45) !important; }
+    .sum-val { color: #f0f4ff !important; }
+    .nw-pos { color: #00E87A !important; }
+    .nw-neg { color: #FF4D6A !important; }
+
+    /* ── Loan tag badge ── */
+    .loan-tag {
+      background: rgba(255,77,106,.1) !important;
+      border-color: rgba(255,77,106,.3) !important;
+      color: #FF4D6A !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="aurora">
+    <div class="aurora-1"></div>
+    <div class="aurora-2"></div>
+    <div class="aurora-3"></div>
+  </div>
+  <div class="layout" style="position:relative;z-index:1">
+    <aside class="sidebar">
+      <div class="sb-brand">
+        <div class="sb-icon" style="background:none;box-shadow:none;padding:0;overflow:hidden">
+          <img src="FinaceLogo.jpeg" alt="Finace"
+            style="width:42px;height:42px;object-fit:contain;border-radius:12px" />
+        </div>
+        <div>
+          <div class="sb-name">Finace</div>
+          <div class="sb-sub">Smart Finance Assistant</div>
+        </div>
+      </div>
+      <nav class="sb-nav">
+
+        <button class="nav-item" onclick="window.location.href='Home.html'"><span>🏠</span> Home</button>
+        <button class="nav-item" onclick="window.location.href='dashboard.html'"><span>⊞</span> Dashboard</button>
+        <button class="nav-item" onclick="window.location.href='investment.html'"><span>📈</span> Investments</button>
+        <button class="nav-item" onclick="window.location.href='suggestions.html'"><span>⭐</span> Suggestions</button>
+        <button class="nav-item active" id="nav-assets"><span>⚖️</span> Net Worth</button>
+      </nav>
+      <div class="sb-user">
+        <div class="sb-user-row">
+          <div class="sb-av" id="sbAv" title="My Profile" onclick="window.location.href='profile.html'">?</div>
+          <div style="min-width:0">
+            <div class="sb-uname" id="sbName" onclick="window.location.href='profile.html'" title="My Profile">Guest
+            </div>
+            <div class="sb-uemail" id="sbEmail">Not logged in</div>
+          </div>
+        </div>
+        <button class="sb-logout" id="sbLogoutBtn" style="display:none" onclick="logout()">→ Logout</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="top-nav">
+        <div class="tn-title">
+          <div class="tn-icon">⚖️</div>Net Worth Tracker
+        </div>
+        <button class="btn-add" onclick="openAddModal()">＋ Add Entry</button>
+      </div>
+      <div class="content">
+        <div class="ph-row">
+          <div>
+            <h1>Assets &amp; Liabilities</h1>
+            <p>Track everything you own and owe to know your true financial position.</p>
+          </div>
+        </div>
+        <div class="sum-strip">
+          <div class="sum-card green-card">
+            <div class="sum-icon">🏦</div>
+            <div class="sum-label">Total Assets</div>
+            <div class="sum-val" id="sumAssets">₹0</div>
+            <div class="sum-sub" id="sumAssetsCount">0 items</div>
+          </div>
+          <div class="sum-card red-card">
+            <div class="sum-icon">💸</div>
+            <div class="sum-label">Total Liabilities</div>
+            <div class="sum-val" id="sumLiabilities">₹0</div>
+            <div class="sum-sub" id="sumLiabCount">0 items</div>
+          </div>
+          <div class="sum-card accent">
+            <div class="sum-icon">⚖️</div>
+            <div class="sum-label">Net Worth</div>
+            <div class="sum-val" id="sumNetWorth">₹0</div>
+            <div class="sum-sub">Assets − Liabilities</div>
+          </div>
+        </div>
+        <div class="chart-row">
+          <div class="card">
+            <div class="card-head">
+              <div class="card-head-title">📊 Portfolio Split</div>
+              <div class="card-badge" id="chartBadge">0 items</div>
+            </div>
+            <div class="card-body">
+              <div class="donut-wrap">
+                <div class="donut-svg-w">
+                  <svg viewBox="0 0 180 180" id="donutSvg">
+                    <circle cx="90" cy="90" r="70" fill="none" stroke="#f1f5f9" stroke-width="28" />
+                    <text x="90" y="90" text-anchor="middle" dominant-baseline="middle" font-size="13" fill="#94a3b8"
+                      font-family="Inter">No data</text>
+                  </svg>
+                  <div class="donut-center">
+                    <div class="donut-center-val" id="donutVal">—</div>
+                    <div class="donut-center-lbl">Net Worth</div>
+                  </div>
+                </div>
+                <div class="donut-legend" id="donutLegend">
+                  <div style="color:var(--sl500);font-size:.82rem">Add entries to see the chart.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div class="card-head-title">🗂️ Category Breakdown</div>
+            </div>
+            <div class="card-body" id="catBreakdown" style="max-height:260px;overflow-y:auto">
+              <div class="empty-state">
+                <div class="empty-icon">📋</div>
+                <p>No data yet.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lists-row">
+          <div class="card">
+            <div class="card-head">
+              <div class="card-head-title">🏦 Assets <span class="card-badge" id="assetsBadge">0</span></div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="font-size:.8rem;color:var(--g);font-weight:600" id="totalAssetsTag">₹0</div>
+                <button class="btn-compute" style="padding:5px 10px;font-size:.72rem"
+                  onclick="openListModal('asset')">View All</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="entry-list" id="assetsList"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div class="card-head-title">💸 Liabilities <span class="card-badge" id="liabBadge">0</span></div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="font-size:.8rem;color:var(--r);font-weight:600" id="totalLiabTag">₹0</div>
+                <button class="btn-compute"
+                  style="padding:5px 10px;font-size:.72rem;background:linear-gradient(135deg,var(--r),#b91c1c)"
+                  onclick="openListModal('liability')">View All</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="entry-list" id="liabilitiesList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ADD/EDIT MODAL -->
+  <div class="modal-overlay" id="entryModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="mh-left">
+          <div class="mh-icon" id="mhIcon">➕</div>
+          <div>
+            <div class="mh-title" id="mhTitle">Add Entry</div>
+            <div class="mh-sub">Choose type and category</div>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="type-toggle">
+          <button type="button" class="type-btn" id="btnAsset" onclick="setEntryType('asset')">🏦 Asset</button>
+          <button type="button" class="type-btn" id="btnLiab" onclick="setEntryType('liability')">💸 Liability</button>
+        </div>
+        <div class="section-label">Select Category</div>
+        <div class="cat-grid" id="catGrid"></div>
+        <div id="dynSection" style="display:none">
+          <div class="separator" style="margin-bottom:16px"></div>
+          <div class="dyn-fields" id="dynFields"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-submit" id="btnSubmit" onclick="submitEntry()" style="display:none"><span
+            id="btnSubmitTxt">Add Entry</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIST MODAL -->
+  <div class="modal-overlay" id="listModal">
+    <div class="list-modal-box">
+      <div class="lm-head">
+        <div>
+          <div class="lm-title" id="lmTitle">All Assets</div>
+          <div class="lm-filters"><input class="lm-search" type="text" placeholder="🔍 Search…" id="lmSearch"
+              oninput="renderListModal()" /></div>
+        </div>
+        <button class="modal-close" onclick="closeListModal()">✕</button>
+      </div>
+      <div class="lm-body" id="lmBody"></div>
+      <div class="lm-footer">
+        <div style="font-size:.8rem;color:var(--sl500)" id="lmFooterInfo"></div>
+        <div class="pg-wrap" id="lmPagination"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL MODAL -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="detail-modal-box" id="detailModalBox"></div>
+  </div>
+
+  <script>
+    const API = 'http://localhost:8000';
+    let userId = null, editId = null, selType = 'asset', selCat = null;
+    let computedValue = 0, rawMeta = {}, aiClassifyResult = null, loanWillAddLiab = false;
+    let state = { assets: [], liabilities: [], total_assets: 0, total_liabilities: 0, net_worth: 0 };
+    let listModalType = 'asset', listPage = 1;
+    const LIST_PER_PAGE = 12;
+
+    const LOAN_CATS = new Set(['Home Loan', 'Personal Loan', 'Vehicle Loan', 'Education Loan', 'Loan', 'Credit Card Due', 'EMI / BNPL', 'Mortgage Loan', 'Mortgage Asset']);
+
+    const ASSET_CATS = [
+      { id: 'Gold & Jewellery', icon: '🥇', label: 'Gold' }, { id: 'Real Estate', icon: '🏠', label: 'Real Estate' }, { id: 'Vehicle', icon: '🚗', label: 'Vehicle' },
+      { id: 'Fixed Deposit', icon: '🏦', label: 'FD / RD' }, { id: 'Market Investments', icon: '📈', label: 'Investments' }, { id: 'Retirement Fund', icon: '🛡️', label: 'Retirement' },
+      { id: 'Cash & Savings', icon: '💵', label: 'Cash' }, { id: 'Insurance', icon: '🔒', label: 'Insurance' }, { id: 'Business / Equity', icon: '🏢', label: 'Business' },
+      { id: 'Tax Refund', icon: '💰', label: 'Tax Refund' }, { id: 'Mortgage Asset', icon: '🔑', label: 'Mortgage\nAsset' }, { id: 'Other Asset', icon: '📦', label: 'Other…' },
+    ];
+    const LIAB_CATS = [
+      { id: 'Home Loan', icon: '🏠', label: 'Home Loan' }, { id: 'Personal Loan', icon: '👤', label: 'Personal Loan' }, { id: 'Vehicle Loan', icon: '🚗', label: 'Vehicle Loan' },
+      { id: 'Education Loan', icon: '🎓', label: 'Education\nLoan' }, { id: 'Credit Card Due', icon: '💳', label: 'Credit Card' }, { id: 'EMI / BNPL', icon: '📦', label: 'EMI / BNPL' },
+      { id: 'Mortgage Loan', icon: '🔑', label: 'Mortgage\nLoan' }, { id: 'Other Liability', icon: '⚠️', label: 'Other…' },
+    ];
+    const CAT_ICONS = {};
+    [...ASSET_CATS, ...LIAB_CATS].forEach(c => CAT_ICONS[c.id] = c.icon);
+    const catIcon = c => CAT_ICONS[c] || '📦';
+
+    /* ── INIT ── */
+    window.addEventListener('DOMContentLoaded', () => {
+      const u = JSON.parse(localStorage.getItem('ft_user') || 'null');
+      if (u) {
+        userId = u.id;
+        document.getElementById('sbAv').textContent = u.initials || (u.fullName || u.name || 'U')[0].toUpperCase();
+        document.getElementById('sbName').textContent = u.fullName || u.name || '—';
+        document.getElementById('sbEmail').textContent = u.email || '—';
+        document.getElementById('sbLogoutBtn').style.display = 'flex';
+        loadData();
+      } else {
+        injectGuestBanner();
+        renderSampleNetWorth();
+      }
+
+      // index.html #login hash redirect support
+      if (window.location.hash === '#login') {
+        history.replaceState(null, '', window.location.pathname);
+      }
+    });
+
+    function logout() { localStorage.removeItem('ft_user'); localStorage.removeItem('ft_ob'); localStorage.removeItem('ft_P'); window.location.href = 'Home.html'; }
+
+    function injectGuestBanner() {
+      if (document.getElementById('guest-banner')) return;
+      const b = document.createElement('div'); b.id = 'guest-banner';
+      b.style.cssText = 'position:sticky;top:0;z-index:9998;background:linear-gradient(90deg,#4f46e5,#7c3aed);color:#fff;padding:9px 18px;display:flex;align-items:center;justify-content:space-between;font-family:Inter,sans-serif;font-size:.82rem;font-weight:600;box-shadow:0 2px 12px rgba(79,70,229,.35);flex-wrap:wrap;gap:8px;';
+      b.innerHTML = '<span>👋 <strong>Sample data</strong> shown — log in to track your real net worth.</span><div style="display:flex;gap:10px"><a href="Home.html" style="padding:6px 16px;border-radius:7px;border:1.5px solid rgba(255,255,255,.5);background:rgba(255,255,255,.15);color:#fff;font-family:Inter,sans-serif;font-size:.78rem;font-weight:700;text-decoration:none">Login →</a><button onclick="this.closest(\'#guest-banner\').remove()" style="background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:1rem">✕</button></div>';
+      document.querySelector('.main').prepend(b);
+    }
+
+    function renderSampleNetWorth() {
+      state = {
+        assets: [
+          { id: 1, name: 'Savings Account', category: 'Cash & Savings', entry_type: 'asset', current_value: 250000, created_at: '2024-01-01', start_date: '' },
+          { id: 2, name: 'HDFC Flexicap SIP', category: 'Market Investments', entry_type: 'asset', current_value: 185000, created_at: '2023-06-01', start_date: '2023-06-01' },
+          { id: 3, name: 'Gold Jewellery 50g', category: 'Gold & Jewellery', entry_type: 'asset', current_value: 340000, created_at: '2022-01-01', start_date: '' },
+          { id: 4, name: 'EPF Balance', category: 'Retirement Fund', entry_type: 'asset', current_value: 520000, created_at: '2020-04-01', start_date: '2020-04-01' },
+        ],
+        liabilities: [
+          { id: 5, name: 'SBI Home Loan', category: 'Home Loan', entry_type: 'liability', current_value: 2200000, created_at: '2022-03-01', start_date: '2022-03-01' },
+          { id: 6, name: 'Car Loan', category: 'Vehicle Loan', entry_type: 'liability', current_value: 380000, created_at: '2023-09-01', start_date: '2023-09-01' },
+          { id: 7, name: 'HDFC Credit Card', category: 'Credit Card Due', entry_type: 'liability', current_value: 45000, created_at: '2024-03-01', start_date: '' },
+        ],
+        total_assets: 1295000, total_liabilities: 2625000, net_worth: -1330000,
+      };
+      render();
+    }
+
+    /* ── DATA ── */
+    async function loadData() {
+      try {
+        const r = await fetch(`${API}/networth/all?user_id=${userId}`);
+        if (!r.ok) throw new Error();
+        state = await r.json(); render();
+      } catch (e) { showToast('Failed to load data. Is backend running?', 'error'); }
+    }
+
+    /* ── FORMAT ── */
+    function fmt(n) {
+      n = parseFloat(n) || 0;
+      if (Math.abs(n) >= 1e7) return '₹' + (n / 1e7).toFixed(2) + 'Cr';
+      if (Math.abs(n) >= 1e5) return '₹' + (n / 1e5).toFixed(2) + 'L';
+      return '₹' + n.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+    }
+
+    /* ── RENDER ── */
+    function render() {
+      const { assets, liabilities, total_assets, total_liabilities, net_worth } = state;
+      document.getElementById('sumAssets').textContent = fmt(total_assets);
+      document.getElementById('sumLiabilities').textContent = fmt(total_liabilities);
+      document.getElementById('sumNetWorth').textContent = fmt(net_worth);
+      document.getElementById('sumNetWorth').className = 'sum-val ' + (net_worth >= 0 ? 'nw-pos' : 'nw-neg');
+      document.getElementById('sumAssetsCount').textContent = `${assets.length} item${assets.length !== 1 ? 's' : ''}`;
+      document.getElementById('sumLiabCount').textContent = `${liabilities.length} item${liabilities.length !== 1 ? 's' : ''}`;
+      document.getElementById('totalAssetsTag').textContent = fmt(total_assets);
+      document.getElementById('totalLiabTag').textContent = fmt(total_liabilities);
+      document.getElementById('assetsBadge').textContent = assets.length;
+      document.getElementById('liabBadge').textContent = liabilities.length;
+      document.getElementById('chartBadge').textContent = `${assets.length + liabilities.length} items`;
+      document.getElementById('donutVal').textContent = fmt(net_worth);
+      renderList('assetsList', assets.slice(0, 6), 'asset');
+      renderList('liabilitiesList', liabilities.slice(0, 6), 'liability');
+      renderDonut(); renderCatBreakdown();
+    }
+
+    function renderList(cid, items, type) {
+      const el = document.getElementById(cid);
+      if (!items.length) {
+        el.innerHTML = `<div class="empty-state"><div class="empty-icon">${type === 'asset' ? '🏦' : '💸'}</div><p>No ${type === 'asset' ? 'assets' : 'liabilities'} yet.${userId ? ' Click + Add Entry.' : ' Log in to add entries.'}</p></div>`;
+        return;
+      }
+      el.innerHTML = items.map(item => {
+        const pendingLoan = item.linked_liab_id && type === 'asset' ? `<div class="loan-tag">Loan tracked</div>` : '';
+        return `<div class="entry-item" onclick="openDetailModal(${item.id})">
+      <div class="entry-icon ${type === 'asset' ? 'cat-asset' : 'cat-liability'}">${catIcon(item.category)}</div>
+      <div class="entry-info">
+        <div class="entry-name" title="${item.name}">${item.name}</div>
+        <div class="entry-cat">${item.category}${item.start_date ? ' · ' + item.start_date : ''}</div>${pendingLoan}
+      </div>
+      <div class="entry-value"><div class="entry-val-num ${type === 'asset' ? 'ev-g' : 'ev-r'}">${fmt(item.current_value)}</div></div>
+      <div class="entry-actions">
+        <button class="act-btn act-edit" title="Edit" onclick="event.stopPropagation();openEditModal(${item.id})">✏️</button>
+        <button class="act-btn act-del" title="Delete" onclick="event.stopPropagation();deleteEntry(${item.id})">🗑️</button>
+      </div>
+    </div>`;
+      }).join('');
+    }
+
+    const DONUT_COLORS = ['#4f46e5', '#7c3aed', '#16a34a', '#d97706', '#0891b2', '#be185d', '#059669', '#9333ea', '#ca8a04', '#dc2626'];
+    function renderDonut() {
+      const total = state.total_assets + state.total_liabilities;
+      const svg = document.getElementById('donutSvg'), legend = document.getElementById('donutLegend');
+      if (!total) { svg.innerHTML = `<circle cx="90" cy="90" r="70" fill="none" stroke="#f1f5f9" stroke-width="28"/><text x="90" y="90" text-anchor="middle" dominant-baseline="middle" font-size="13" fill="#94a3b8" font-family="Inter">No data</text>`; legend.innerHTML = '<div style="color:var(--sl500);font-size:.82rem">Add entries to see the chart.</div>'; return; }
+      const catMap = {};[...state.assets, ...state.liabilities].forEach(item => { catMap[item.category] = (catMap[item.category] || 0) + item.current_value; });
+      const entries = Object.entries(catMap).sort((a, b) => b[1] - a[1]);
+      const circ = 2 * Math.PI * 70; let offset = 0, svgH = `<circle cx="90" cy="90" r="70" fill="none" stroke="#f1f5f9" stroke-width="28"/>`, legH = '';
+      entries.forEach(([cat, val], i) => {
+        const pct = val / total, dash = pct * circ, color = DONUT_COLORS[i % DONUT_COLORS.length];
+        svgH += `<circle cx="90" cy="90" r="70" fill="none" stroke="${color}" stroke-width="28" stroke-dasharray="${dash} ${circ - dash}" stroke-dashoffset="${circ * 0.25}" transform="rotate(${(offset / circ) * 360} 90 90)"/>`;
+        offset += dash;
+        legH += `<div class="leg-item"><div class="leg-dot" style="background:${color}"></div><div class="leg-label">${catIcon(cat)} ${cat}</div><div class="leg-val">${fmt(val)}</div></div>`;
+      });
+      svg.innerHTML = svgH; legend.innerHTML = legH;
+    }
+
+    function renderCatBreakdown() {
+      const el = document.getElementById('catBreakdown'), all = [...state.assets, ...state.liabilities];
+      if (!all.length) { el.innerHTML = '<div class="empty-state"><div class="empty-icon">📋</div><p>No data yet.</p></div>'; return; }
+      const catMap = {};
+      all.forEach(item => { if (!catMap[item.category]) catMap[item.category] = { total: 0, type: item.entry_type, count: 0 }; catMap[item.category].total += item.current_value; catMap[item.category].count++; });
+      const grand = Object.values(catMap).reduce((s, v) => s + v.total, 0);
+      el.innerHTML = Object.entries(catMap).sort((a, b) => b[1].total - a[1].total).map(([cat, data]) => {
+        const pct = grand > 0 ? (data.total / grand * 100) : 0, isA = data.type === 'asset', bc = isA ? '#16a34a' : '#dc2626';
+        return `<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div style="font-size:.8rem;font-weight:600;color:var(--sl900)">${catIcon(cat)} ${cat}</div><div style="font-size:.8rem;font-weight:700;color:${bc}">${fmt(data.total)}</div></div><div style="height:6px;background:var(--sl200);border-radius:4px;overflow:hidden"><div style="height:100%;width:${pct.toFixed(1)}%;background:${bc};border-radius:4px;transition:width .6s"></div></div><div style="font-size:.69rem;color:var(--sl500);margin-top:3px">${data.count} item${data.count !== 1 ? 's' : ''} · ${pct.toFixed(1)}%</div></div>`;
+      }).join('');
+    }
+
+    /* ── LIST MODAL ── */
+    function openListModal(type) { listModalType = type; listPage = 1; document.getElementById('listModal').classList.add('open'); document.getElementById('lmTitle').textContent = type === 'asset' ? 'All Assets' : 'All Liabilities'; document.getElementById('lmSearch').value = ''; renderListModal(); }
+    function closeListModal() { document.getElementById('listModal').classList.remove('open'); }
+    function renderListModal() {
+      const search = document.getElementById('lmSearch').value.toLowerCase();
+      const items = (listModalType === 'asset' ? state.assets : state.liabilities).filter(item => !search || item.name.toLowerCase().includes(search) || item.category.toLowerCase().includes(search));
+      const total = items.length, pages = Math.max(1, Math.ceil(total / LIST_PER_PAGE)); listPage = Math.min(listPage, pages);
+      const slice = items.slice((listPage - 1) * LIST_PER_PAGE, listPage * LIST_PER_PAGE), isAsset = listModalType === 'asset';
+      const body = document.getElementById('lmBody');
+      if (!slice.length) { body.innerHTML = `<div class="empty-state" style="padding:40px 0"><div class="empty-icon">🔍</div><p>No entries found.</p></div>`; }
+      else { body.innerHTML = `<div class="lm-table-header"><div class="lm-th">Name</div><div class="lm-th">Category</div><div class="lm-th">Date</div><div class="lm-th" style="text-align:right">Value</div></div>` + slice.map(item => `<div class="lm-row" onclick="openDetailModal(${item.id});closeListModal()"><div><div class="lm-row-name" title="${item.name}">${item.name}${item.linked_liab_id && isAsset ? '<span class="loan-tag" style="margin-left:6px;font-size:.62rem">loan</span>' : ''}</div><div class="lm-row-cat">${item.category}</div></div><div class="lm-row-cat">${catIcon(item.category)} ${item.category}</div><div class="lm-row-date">${item.start_date || item.created_at || '—'}</div><div class="lm-row-val" style="color:${isAsset ? 'var(--g)' : 'var(--r)'}">${fmt(item.current_value)}</div></div>`).join(''); }
+      document.getElementById('lmFooterInfo').textContent = `${total} total · Page ${listPage}/${pages}`;
+      const el = document.getElementById('lmPagination'); if (pages <= 1) { el.innerHTML = ''; return; }
+      let h = `<button class="pg-btn" onclick="listPage--;renderListModal()" ${listPage === 1 ? 'disabled' : ''}>‹</button>`;
+      for (let i = Math.max(1, listPage - 2); i <= Math.min(pages, listPage + 2); i++)h += `<button class="pg-btn ${i === listPage ? 'active' : ''}" onclick="listPage=${i};renderListModal()">${i}</button>`;
+      h += `<button class="pg-btn" onclick="listPage++;renderListModal()" ${listPage === pages ? 'disabled' : ''}>›</button>`; el.innerHTML = h;
+    }
+
+    /* ── DETAIL MODAL ── */
+    async function openDetailModal(id) {
+      const itemLocal = [...state.assets, ...state.liabilities].find(i => i.id === id);
+      if (!itemLocal) return;
+      // Guest: show simple detail with login prompt
+      if (!userId) {
+        const isA = itemLocal.entry_type === 'asset';
+        document.getElementById('detailModalBox').innerHTML = `
+      <div class="dm-header"><div>
+        <div class="dm-badge ${isA ? 'asset-badge' : 'liab-badge'}">${isA ? 'ASSET' : 'LIABILITY'} · ${itemLocal.category}</div>
+        <div class="dm-name">${itemLocal.name}</div>
+        <div class="dm-val ${isA ? 'asset-val' : 'liab-val'}">${fmt(itemLocal.current_value)}</div>
+        <div class="dm-sub">Sample data · Log in to add real entries</div>
+      </div><button class="modal-close" onclick="closeDetailModal()">✕</button></div>
+      <div class="dm-body"><div class="dm-section"><div class="dm-section-title">Details</div>
+        <div class="dm-grid">
+          <div class="dm-field"><div class="dm-field-label">Category</div><div class="dm-field-value">${itemLocal.category}</div></div>
+          <div class="dm-field ${isA ? 'success' : 'highlight'}"><div class="dm-field-label">Value</div><div class="dm-field-value">${fmt(itemLocal.current_value)}</div></div>
+        </div>
+        <div style="margin-top:16px;padding:12px;background:var(--ind-l);border-radius:10px;font-size:.82rem;color:var(--ind);text-align:center">
+          🔒 Log in to add, edit and track your real assets & liabilities
+        </div>
+      </div></div>
+      <div class="dm-actions"><a href="auth.html" style="flex:1;padding:10px;border-radius:10px;background:linear-gradient(135deg,var(--ind),var(--vio));color:#fff;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;box-shadow:var(--sh-i);text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center">Login to Add Real Data →</a></div>`;
+        document.getElementById('detailModal').classList.add('open');
+        return;
+      }
+      try {
+        const r = await fetch(`${API}/networth/detail/${id}?user_id=${userId}`);
+        if (!r.ok) throw new Error();
+        const item = await r.json(); renderDetailModal(item);
+        document.getElementById('detailModal').classList.add('open');
+      } catch (e) { showToast('Failed to load details.', 'error'); }
+    }
+    function closeDetailModal() { document.getElementById('detailModal').classList.remove('open'); }
+
+    function renderDetailModal(item) {
+      const isAsset = item.entry_type === 'asset', m = item.raw_meta || {}, d = item.detail || {};
+      const f = (label, val, cls = '') => val && val !== '0' && val !== '₹0' ? `<div class="dm-field ${cls}"><div class="dm-field-label">${label}</div><div class="dm-field-value">${val}</div></div>` : '';
+      let fieldsHtml = '';
+      switch (item.category) {
+        case 'Gold & Jewellery': fieldsHtml = `<div class="dm-grid">${f('Metal', d.metal_type)}${f('Karat', d.karat)}${f('Weight', d.weight_g + 'g')}${f('Rate/g', fmt(d.rate_per_g))}</div>`; break;
+        case 'Real Estate': fieldsHtml = `<div class="dm-grid">${f('Type', d.property_type)}${f('Area', d.area_sqft ? d.area_sqft + ' sq.ft' : '')}${f('Purchased', d.purchase_date)}${f('Purchase Price', fmt(d.purchase_price))}${f('Current Value', fmt(d.current_price), 'success')}</div>`; break;
+        case 'Vehicle': fieldsHtml = `<div class="dm-grid">${f('Type', d.vehicle_type)}${f('Model', d.make_model)}${f('Purchased', d.purchase_date)}${f('Original Price', fmt(d.purchase_price))}${f('Depreciation', d.depreciation_rate + '% p.a.')}${f('Current Value', fmt(d.computed_value), 'success')}</div>`; break;
+        case 'Fixed Deposit': fieldsHtml = `<div class="dm-grid">${f('Type', d.deposit_type)}${f('Principal', fmt(d.principal), 'success')}${f('Rate', d.interest_rate + '% p.a.')}${f('Compounding', d.compounding)}${f('Start', d.start_date)}${f('Maturity', d.maturity_date)}${f('Maturity Value', fmt(d.maturity_value), 'success')}</div>`; break;
+        case 'Market Investments': fieldsHtml = `<div class="dm-grid">${f('Type', d.inv_type)}${f('Mode', d.payment_mode)}${f('Invested', fmt(d.invested_amount))}${f('Current Value', fmt(d.current_value), 'success')}${f('Expected Return', d.expected_return ? d.expected_return + '%' : '')}${f('Start', d.start_date)}</div>`; break;
+        case 'Home Loan': case 'Personal Loan': case 'Vehicle Loan': case 'Education Loan': case 'Loan':
+          fieldsHtml = `<div class="dm-grid">${f('Principal', fmt(d.principal_original))}${f('Paid', fmt(d.principal_paid), 'success')}${f('Outstanding', fmt(d.principal_outstanding), 'highlight')}${f('Rate', d.interest_rate + (d.rate_period === 'monthly' ? ' %/month' : ' %/year'))}${f('Type', d.interest_type)}${f('EMI', fmt(d.emi_amount), 'highlight')}${f('Start', d.start_date)}${f('End', d.end_date)}</div>`; break;
+        case 'Credit Card Due': fieldsHtml = `<div class="dm-grid">${f('Bank', d.bank_name)}${f('Outstanding', fmt(d.outstanding), 'highlight')}${f('Min Due', fmt(d.min_due), 'highlight')}${f('Due Date', d.due_date)}${f('Interest Rate', d.interest_rate + '% p.a.')}</div>`; break;
+        case 'EMI / BNPL': fieldsHtml = `<div class="dm-grid">${f('Provider', d.provider)}${f('Item', d.item_name)}${f('Total', fmt(d.total_amount))}${f('EMI/month', fmt(d.emi_amount), 'highlight')}${f('Months', `${d.months_paid}/${d.months_total}`)}${f('Paid', fmt(d.paid_amount), 'success')}${f('Outstanding', fmt(d.total_amount - d.paid_amount), 'highlight')}${f('End', d.end_date)}</div>`; break;
+        case 'Mortgage Loan': fieldsHtml = `<div class="dm-grid">${f('Collateral', d.collateral_type)}${f('Collateral Value', fmt(d.collateral_value), 'success')}${f('Loan Amount', fmt(d.loan_amount))}${f('Paid', fmt(d.principal_paid), 'success')}${f('Outstanding', fmt(d.principal_outstanding), 'highlight')}${f('Rate', d.interest_rate + (d.rate_period === 'monthly' ? ' %/month' : ' %/year'))}${f('EMI', fmt(d.emi_amount), 'highlight')}${f('Lender', d.lender_name)}${f('Start', d.start_date)}${f('End', d.end_date)}</div>`; break;
+        default: if (m.current_balance) fieldsHtml = `<div class="dm-grid">${f('Balance', fmt(m.current_balance), 'success')}</div>`; else fieldsHtml = `<div class="dm-grid">${f('Value', fmt(item.current_value), 'success')}</div>`;
+      }
+      let loanSection = '';
+      if (isAsset && item.linked_liab_id) {
+        const liabItem = state.liabilities.find(l => l.id === item.linked_liab_id);
+        if (liabItem) { const lm = liabItem.raw_meta || {}; loanSection = `<div class="dm-section"><div class="dm-section-title" style="color:var(--r)">🔗 Attached Loan Liability</div><div class="dm-grid">${f('Outstanding', fmt(liabItem.current_value), 'highlight')}${f('Loan Type', liabItem.category)}${f('EMI', fmt(lm.emi_amount), 'highlight')}${f('Start', lm.start_date)}</div></div>`; }
+      }
+      document.getElementById('detailModalBox').innerHTML = `
+    <div class="dm-header"><div>
+      <div class="dm-badge ${isAsset ? 'asset-badge' : 'liab-badge'}">${isAsset ? 'ASSET' : 'LIABILITY'} · ${item.category}</div>
+      <div class="dm-name">${item.name}</div>
+      <div class="dm-val ${isAsset ? 'asset-val' : 'liab-val'}">${fmt(item.current_value)}</div>
+      <div class="dm-sub">Added ${item.created_at}${item.start_date ? ' · Since ' + item.start_date : ''}</div>
+    </div><button class="modal-close" onclick="closeDetailModal()">✕</button></div>
+    <div class="dm-body"><div class="dm-section"><div class="dm-section-title">Details</div>${fieldsHtml || '<p style="color:var(--sl500);font-size:.82rem">No additional details stored.</p>'}</div>${loanSection}</div>
+    <div class="dm-actions">
+      <button class="dm-edit-btn" onclick="closeDetailModal();openEditModal(${item.id})">✏️ Edit Entry</button>
+      <button class="dm-del-btn" onclick="closeDetailModal();deleteEntry(${item.id})">🗑️ Delete</button>
+    </div>`;
+    }
+
+    /* ── ADD/EDIT MODAL ── */
+    function openAddModal() {
+      if (!userId) { showToast('Log in to add assets & liabilities', 'error'); return; }
+      editId = null; selType = 'asset'; selCat = null; computedValue = 0; rawMeta = {}; aiClassifyResult = null; loanWillAddLiab = false;
+      document.getElementById('mhTitle').textContent = 'Add Entry'; document.getElementById('mhIcon').textContent = '➕';
+      document.getElementById('btnSubmitTxt').textContent = 'Add Entry'; document.getElementById('btnSubmit').style.display = 'none';
+      setEntryType('asset'); document.getElementById('entryModal').classList.add('open');
+    }
+    function openEditModal(id) {
+      if (!userId) return;
+      const item = [...state.assets, ...state.liabilities].find(i => i.id === id); if (!item) return;
+      editId = id; selCat = item.category; computedValue = item.current_value; rawMeta = item.raw_meta || {}; loanWillAddLiab = !!item.linked_liab_id;
+      document.getElementById('mhTitle').textContent = 'Edit Entry'; document.getElementById('mhIcon').textContent = '✏️';
+      document.getElementById('btnSubmitTxt').textContent = 'Save Changes'; document.getElementById('btnSubmit').style.display = 'flex';
+      setEntryType(item.entry_type, false); selectCat(item.category, false); renderDynFields(item);
+      document.getElementById('entryModal').classList.add('open');
+    }
+    function closeModal() { document.getElementById('entryModal').classList.remove('open'); editId = null; }
+    function setEntryType(type, resetCat = true) {
+      selType = type;
+      document.getElementById('btnAsset').className = 'type-btn' + (type === 'asset' ? ' sel-asset' : '');
+      document.getElementById('btnLiab').className = 'type-btn' + (type === 'liability' ? ' sel-liability' : '');
+      if (resetCat) { selCat = null; document.getElementById('dynSection').style.display = 'none'; document.getElementById('btnSubmit').style.display = 'none'; }
+      renderCatGrid();
+    }
+    function renderCatGrid() {
+      const cats = selType === 'asset' ? ASSET_CATS : LIAB_CATS;
+      document.getElementById('catGrid').innerHTML = cats.map(c => `<button type="button" class="cat-tile${selCat === c.id ? ' selected sel-' + selType : ''}" onclick="selectCat('${c.id}')"><span class="cat-tile-icon">${c.icon}</span><span style="line-height:1.2;text-align:center">${c.label.replace('\n', '<br>')}</span></button>`).join('');
+    }
+    function selectCat(catId, renderFields = true) {
+      selCat = catId; renderCatGrid();
+      document.getElementById('dynSection').style.display = 'block'; document.getElementById('btnSubmit').style.display = 'flex';
+      if (renderFields) renderDynFields(null);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       DYNAMIC FIELD RENDERERS — FULL SET FROM ORIGINAL
+    ═══════════════════════════════════════════════════════ */
+    function renderDynFields(existingItem) {
+      const m = existingItem ? existingItem.raw_meta : {};
+      const el = document.getElementById('dynFields');
+      switch (selCat) {
+        case 'Gold & Jewellery': el.innerHTML = goldFields(m); break;
+        case 'Real Estate': el.innerHTML = realEstateFields(m); break;
+        case 'Vehicle': el.innerHTML = vehicleFields(m); break;
+        case 'Fixed Deposit': el.innerHTML = fdFields(m); break;
+        case 'Market Investments': el.innerHTML = investmentFields(m); break;
+        case 'Retirement Fund': el.innerHTML = retirementFields(m); break;
+        case 'Cash & Savings': el.innerHTML = cashFields(m); break;
+        case 'Insurance': el.innerHTML = insuranceFields(m); break;
+        case 'Business / Equity': el.innerHTML = businessFields(m); break;
+        case 'Tax Refund': el.innerHTML = taxRefundFields(m); break;
+        case 'Mortgage Asset': el.innerHTML = mortgageAssetFields(m); break;
+        case 'Home Loan': case 'Personal Loan': case 'Vehicle Loan':
+        case 'Education Loan': case 'Loan': el.innerHTML = loanFields(m, selCat); break;
+        case 'Credit Card Due': el.innerHTML = creditCardFields(m); break;
+        case 'EMI / BNPL': el.innerHTML = emiFields(m); break;
+        case 'Mortgage Loan': el.innerHTML = mortgageLoanFields(m); break;
+        case 'Other Asset': el.innerHTML = otherFields(m, 'asset'); break;
+        case 'Other Liability': el.innerHTML = otherFields(m, 'liability'); break;
+        default: el.innerHTML = '';
+      }
+      if (existingItem) populateComputed(existingItem);
+      attachLiveEvents();
+    }
+
+    function goldFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. Grandmother's Necklace" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Metal Type <span class="req">*</span></label>
+    <div class="radio-group" id="metalTypeGroup">
+      ${['Gold', 'Silver', 'Platinum', 'Diamond Jewellery'].map(o => `<label class="radio-opt${(m.metal_type || 'Gold') === o ? ' checked' : ''}" onclick="radioSelect(this,'metalTypeGroup');updateGoldCalc()"><input type="radio" name="mt" value="${o}"/>${o}</label>`).join('')}
+    </div></div>
+  <div class="form-group" id="karatGroupWrap">
+    <label class="form-label">Karat</label>
+    <div class="radio-group" id="karatGroup">
+      ${['24K', '22K', '18K', '14K'].map(k => `<label class="radio-opt${(m.karat || '22K') === k ? ' checked' : ''}" onclick="radioSelect(this,'karatGroup');updateGoldCalc()"><input type="radio" name="k" value="${k}"/>${k}</label>`).join('')}
+    </div></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Weight (grams) <span class="req">*</span></label>
+      <input class="form-input" id="fGoldWeight" type="number" min="0" step="0.01" placeholder="e.g. 50" value="${m.weight_g || ''}" oninput="updateGoldCalc()"/></div>
+    <div class="form-group"><label class="form-label">Rate per gram (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fGoldRate" type="number" min="0" placeholder="e.g. 6800" value="${m.rate_per_g || ''}" oninput="updateGoldCalc()"/>
+      </div><span class="form-hint">Today's market rate</span></div>
+  </div>
+  <div class="computed-box" id="goldComputed" style="${m.weight_g && m.rate_per_g ? '' : 'display:none'}">
+    <div class="comp-row"><span class="comp-label">Calculated Value</span><span class="comp-value green" id="goldCalcVal">${m.weight_g && m.rate_per_g ? fmt(m.weight_g * m.rate_per_g) : '₹0'}</span></div>
+  </div>
+  ${loanOnAssetSection(m)}`;
+    }
+
+    function realEstateFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. Apartment at T. Nagar" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Property Type</label>
+    <div class="radio-group" id="propTypeGroup">
+      ${['Apartment/Flat', 'House/Villa', 'Plot/Land', 'Commercial', 'Agricultural'].map(o => `<label class="radio-opt${(m.property_type || 'Apartment/Flat') === o ? ' checked' : ''}" onclick="radioSelect(this,'propTypeGroup')"><input type="radio" name="pt" value="${o}"/>${o}</label>`).join('')}
+    </div></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Area (sq. ft)</label>
+      <input class="form-input" id="fAreaSqft" type="number" min="0" placeholder="1200" value="${m.area_sqft || ''}"/></div>
+    <div class="form-group"><label class="form-label">Purchase Date</label>
+      <input class="form-input" id="fRePurchaseDate" type="date" value="${m.purchase_date || ''}"/></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Purchase Price (₹)</label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fRePurchasePrice" type="number" min="0" placeholder="0" value="${m.purchase_price || ''}"/></div></div>
+    <div class="form-group"><label class="form-label">Current Market Value (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fReCurrentPrice" type="number" min="0" placeholder="0" value="${m.current_price || ''}" oninput="computedValue=parseFloat(this.value)||0"/>
+      </div><span class="form-hint">Use market / guideline value</span></div>
+  </div>
+  ${loanOnAssetSection(m)}`;
+    }
+
+    function vehicleFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. Honda City 2021" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Vehicle Type <span class="req">*</span></label>
+    <div class="radio-group" id="vehTypeGroup">
+      ${['Car', 'Bike', 'Scooter', 'Truck', 'Van', 'Other'].map(o => `<label class="radio-opt${(m.vehicle_type || 'Car') === o ? ' checked' : ''}" onclick="radioSelect(this,'vehTypeGroup');updateVehicleCalc()"><input type="radio" name="vt" value="${o}"/>${o}</label>`).join('')}
+    </div></div>
+  <div class="form-group"><label class="form-label">Make & Model</label>
+    <input class="form-input" id="fVehModel" placeholder="e.g. Maruti Swift Dzire" value="${m.make_model || ''}"/></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Purchase Price (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fVehPurchasePrice" type="number" min="0" placeholder="0" value="${m.purchase_price || ''}" oninput="updateVehicleCalc()"/></div></div>
+    <div class="form-group"><label class="form-label">Purchase Date <span class="req">*</span></label>
+      <input class="form-input" id="fVehPurchaseDate" type="date" value="${m.purchase_date || ''}" onchange="updateVehicleCalc()"/></div>
+  </div>
+  <div class="computed-box" id="vehComputed" style="${m.computed_value ? '' : 'display:none'}">
+    <div class="comp-row"><span class="comp-label">Current Depreciated Value</span><span class="comp-value green" id="vehCalcVal">${m.computed_value ? fmt(m.computed_value) : '—'}</span></div>
+    <div class="comp-row"><span class="comp-label" id="vehDepNote" style="font-size:.7rem">Depreciation applied</span></div>
+  </div>
+  <div class="form-group"><label class="form-label">Override Value (optional)</label>
+    <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+      <input class="form-input" id="fVehOverride" type="number" min="0" placeholder="From IDV or dealer quote" value="${m.override_value || ''}" oninput="if(this.value)computedValue=parseFloat(this.value)||0"/>
+    </div><span class="form-hint">Overrides auto-calculation</span></div>
+  ${loanOnAssetSection(m)}`;
+    }
+
+    function fdFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. SBI FD 2024" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Deposit Type</label>
+    <div class="radio-group" id="depTypeGroup">
+      ${['FD (Fixed Deposit)', 'RD (Recurring Deposit)', 'Term Deposit'].map(o => `<label class="radio-opt${(m.deposit_type_label || 'FD (Fixed Deposit)') === o ? ' checked' : ''}" onclick="radioSelect(this,'depTypeGroup')"><input type="radio" name="dt" value="${o}"/>${o}</label>`).join('')}
+    </div></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Principal (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fFdPrincipal" type="number" min="0" placeholder="0" value="${m.principal || ''}" oninput="updateFdCalc()"/></div></div>
+    <div class="form-group"><label class="form-label">Interest Rate (% p.a.) <span class="req">*</span></label>
+      <input class="form-input" id="fFdRate" type="number" min="0" step="0.01" placeholder="7.5" value="${m.interest_rate || ''}" oninput="updateFdCalc()"/></div>
+  </div>
+  <div class="form-group"><label class="form-label">Compounding</label>
+    <div class="radio-group" id="compGroup">
+      ${['Simple', 'Monthly', 'Quarterly', 'Annually'].map(o => `<label class="radio-opt${(m.compounding_label || 'Quarterly') === o ? ' checked' : ''}" onclick="radioSelect(this,'compGroup');updateFdCalc()"><input type="radio" name="cg" value="${o}"/>${o}</label>`).join('')}
+    </div></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Start Date <span class="req">*</span></label>
+      <input class="form-input" id="fFdStart" type="date" value="${m.start_date || ''}" onchange="updateFdCalc()"/></div>
+    <div class="form-group"><label class="form-label">Maturity Date <span class="req">*</span></label>
+      <input class="form-input" id="fFdMaturity" type="date" value="${m.maturity_date || ''}" onchange="updateFdCalc()"/></div>
+  </div>
+  <div class="computed-box" id="fdComputed" style="display:none">
+    <div class="comp-row"><span class="comp-label">Current Accrued</span><span class="comp-value green" id="fdCurrentVal">—</span></div>
+    <div class="comp-row"><span class="comp-label">Maturity Value</span><span class="comp-value" id="fdMaturityVal">—</span></div>
+    <div class="comp-row"><span class="comp-label">Total Interest</span><span class="comp-value" id="fdInterest">—</span></div>
+  </div>`;
+    }
+
+    function investmentFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. HDFC Flexicap Fund" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Investment Type <span class="req">*</span></label>
+    <div class="radio-group" id="invTypeGroup">
+      ${['Mutual Fund', 'Direct Stocks', 'ETF', 'ELSS', 'NPS', 'PPF', 'Bonds', 'Other'].map(o => `<label class="radio-opt${(m.inv_type || 'Mutual Fund') === o ? ' checked' : ''}" onclick="radioSelect(this,'invTypeGroup')"><input type="radio" name="it" value="${o}"/>${o}</label>`).join('')}
+    </div></div>
+  <div class="form-group"><label class="form-label">Payment Mode</label>
+    <div class="radio-group" id="payModeGroup">
+      ${['SIP (Monthly)', 'Lump Sum', 'SWP', 'Both'].map(o => `<label class="radio-opt${(m.payment_mode || 'SIP (Monthly)') === o ? ' checked' : ''}" onclick="radioSelect(this,'payModeGroup')"><input type="radio" name="pm" value="${o}"/>${o}</label>`).join('')}
+    </div></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Total Invested (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fInvInvested" type="number" min="0" placeholder="0" value="${m.invested_amount || ''}" oninput="updateInvCalc()"/></div></div>
+    <div class="form-group"><label class="form-label">Current Value (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fInvCurrent" type="number" min="0" placeholder="0" value="${m.current_value || ''}" oninput="updateInvCalc()"/>
+      </div><span class="form-hint">From your app/demat</span></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Expected Return (%)</label>
+      <input class="form-input" id="fInvReturn" type="number" min="0" step="0.1" placeholder="12" value="${m.expected_return || ''}"/></div>
+    <div class="form-group"><label class="form-label">Start Date</label>
+      <input class="form-input" id="fInvStart" type="date" value="${m.start_date || ''}"/></div>
+  </div>
+  <div class="computed-box" id="invComputed" style="display:none">
+    <div class="comp-row"><span class="comp-label">Gain / Loss</span><span class="comp-value" id="invGainLoss">—</span></div>
+    <div class="comp-row"><span class="comp-label">Returns %</span><span class="comp-value" id="invReturnPct">—</span></div>
+  </div>`;
+    }
+
+    function retirementFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. EPF Account" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Fund Type</label>
+    <div class="radio-group" id="retTypeGroup">
+      ${['EPF', 'PPF', 'NPS', 'Gratuity', 'Pension', 'Other'].map(o => `<label class="radio-opt${(m.fund_type || 'EPF') === o ? ' checked' : ''}" onclick="radioSelect(this,'retTypeGroup')"><input type="radio" name="rt" value="${o}"/>${o}</label>`).join('')}
+    </div></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Current Balance (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fRetBalance" type="number" min="0" placeholder="0" value="${m.current_balance || ''}" oninput="computedValue=parseFloat(this.value)||0"/></div></div>
+    <div class="form-group"><label class="form-label">Monthly Contribution (₹)</label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fRetContrib" type="number" min="0" placeholder="0" value="${m.monthly_contribution || ''}"/></div></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Start Date</label>
+      <input class="form-input" id="fRetStart" type="date" value="${m.start_date || ''}"/></div>
+    <div class="form-group"><label class="form-label">Maturity / Retirement Date</label>
+      <input class="form-input" id="fRetEnd" type="date" value="${m.end_date || ''}"/></div>
+  </div>`;
+    }
+
+    function cashFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. SBI Savings" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Account Type</label>
+    <div class="radio-group" id="cashTypeGroup">
+      ${['Savings Account', 'Current Account', 'Cash in Hand', 'Wallet (PhonePe/Paytm)', 'Other'].map(o => `<label class="radio-opt${(m.account_type || 'Savings Account') === o ? ' checked' : ''}" onclick="radioSelect(this,'cashTypeGroup')"><input type="radio" name="ct" value="${o}"/>${o}</label>`).join('')}
+    </div></div>
+  <div class="form-group"><label class="form-label">Current Balance (₹) <span class="req">*</span></label>
+    <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+      <input class="form-input" id="fCashBalance" type="number" min="0" placeholder="0" value="${m.current_balance || ''}" oninput="computedValue=parseFloat(this.value)||0"/></div></div>`;
+    }
+
+    function insuranceFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. LIC Endowment Plan" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Insurance Type</label>
+    <div class="radio-group" id="insTypeGroup">
+      ${['Endowment', 'ULIP', 'Whole Life', 'Money Back', 'Other'].map(o => `<label class="radio-opt${(m.insurance_type || 'Endowment') === o ? ' checked' : ''}" onclick="radioSelect(this,'insTypeGroup')"><input type="radio" name="ins" value="${o}"/>${o}</label>`).join('')}
+    </div></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Surrender / Maturity Value (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fInsSurrValue" type="number" min="0" placeholder="0" value="${m.surrender_value || ''}" oninput="computedValue=parseFloat(this.value)||0"/></div>
+      <span class="form-hint">Current surrender value from policy statement</span></div>
+    <div class="form-group"><label class="form-label">Annual Premium (₹)</label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fInsPremium" type="number" min="0" placeholder="0" value="${m.annual_premium || ''}"/></div></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Policy Start</label>
+      <input class="form-input" id="fInsStart" type="date" value="${m.start_date || ''}"/></div>
+    <div class="form-group"><label class="form-label">Policy Maturity</label>
+      <input class="form-input" id="fInsEnd" type="date" value="${m.end_date || ''}"/></div>
+  </div>`;
+    }
+
+    function businessFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. My Startup" value="${m.name || ''}"/></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Ownership %</label>
+      <input class="form-input" id="fBizOwnership" type="number" min="0" max="100" placeholder="e.g. 40" value="${m.ownership_pct || ''}" oninput="updateBizCalc()"/></div>
+    <div class="form-group"><label class="form-label">Business Valuation (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fBizValue" type="number" min="0" placeholder="0" value="${m.business_value || ''}" oninput="updateBizCalc()"/></div></div>
+  </div>
+  <div class="form-group"><label class="form-label">Your Share Value (₹)</label>
+    <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+      <input class="form-input" id="fBizShareValue" type="number" min="0" placeholder="Auto-calculated" value="${m.share_value || ''}" oninput="computedValue=parseFloat(this.value)||0"/></div>
+    <span class="form-hint">= Valuation × Ownership%. Override if needed.</span></div>`;
+    }
+
+    function taxRefundFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. ITR Refund FY2024" value="${m.name || ''}"/></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Refund Amount (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fTaxRefundAmt" type="number" min="0" placeholder="0" value="${m.refund_amount || ''}" oninput="computedValue=parseFloat(this.value)||0"/></div></div>
+    <div class="form-group"><label class="form-label">Expected Receipt Date</label>
+      <input class="form-input" id="fTaxExpDate" type="date" value="${m.expected_date || ''}"/></div>
+  </div>`;
+    }
+
+    function mortgageAssetFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Asset Name (used as collateral) <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. Ancestral Land used as collateral" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Collateral Type</label>
+    <div class="radio-group" id="collTypeGroup">
+      ${['Real Estate', 'Gold', 'Vehicle', 'Business Asset', 'Other'].map(o => `<label class="radio-opt${(m.collateral_type || 'Real Estate') === o ? ' checked' : ''}" onclick="radioSelect(this,'collTypeGroup')"><input type="radio" name="col" value="${o}"/>${o}</label>`).join('')}
+    </div></div>
+  <div class="form-group"><label class="form-label">Collateral / Asset Value (₹) <span class="req">*</span></label>
+    <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+      <input class="form-input" id="fCollValue" type="number" min="0" placeholder="0" value="${m.collateral_value || ''}" oninput="computedValue=parseFloat(this.value)||0"/></div>
+    <span class="form-hint">Current market value of the collateral asset</span></div>
+  <div class="separator"></div>
+  <div class="section-label">Mortgage Loan Details</div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Loan Amount (₹)</label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fMortLoanAmt" type="number" min="0" placeholder="0" value="${m.loan_amount || ''}" oninput="updateMortgageCalc()"/></div></div>
+    <div class="form-group"><label class="form-label">Principal Already Paid (₹)</label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fMortPaid" type="number" min="0" placeholder="0" value="${m.principal_paid || 0}" oninput="updateMortgageCalc()"/></div></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Interest Rate</label>
+      <input class="form-input" id="fMortRate" type="number" min="0" step="0.01" placeholder="e.g. 9.5" value="${m.interest_rate || ''}" oninput="updateMortgageCalc()"/></div>
+    <div class="form-group"><label class="form-label">Rate Period</label>
+      <div class="radio-group" id="mortRatePeriodGroup">
+        <label class="radio-opt${(m.rate_period || 'annual') === 'annual' ? ' checked' : ''}" onclick="radioSelect(this,'mortRatePeriodGroup');updateMortgageCalc()"><input type="radio" name="mrp" value="annual"/>Per Annum</label>
+        <label class="radio-opt${(m.rate_period || 'annual') === 'monthly' ? ' checked' : ''}" onclick="radioSelect(this,'mortRatePeriodGroup');updateMortgageCalc()"><input type="radio" name="mrp" value="monthly"/>Per Month</label>
+      </div></div>
+  </div>
+  <div class="form-group"><label class="form-label">Interest Type</label>
+    <div class="radio-group" id="mortIntTypeGroup">
+      <label class="radio-opt${(m.interest_type || 'reducing') === 'reducing' ? ' checked' : ''}" onclick="radioSelect(this,'mortIntTypeGroup');updateMortgageCalc()"><input type="radio" name="mit" value="reducing"/>Reducing Balance</label>
+      <label class="radio-opt${(m.interest_type || 'reducing') === 'flat' ? ' checked' : ''}" onclick="radioSelect(this,'mortIntTypeGroup');updateMortgageCalc()"><input type="radio" name="mit" value="flat"/>Flat Rate</label>
+    </div></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Tenure (months)</label>
+      <input class="form-input" id="fMortTenure" type="number" min="1" placeholder="120" value="${m.tenure_months || ''}" oninput="updateMortgageCalc()"/></div>
+    <div class="form-group"><label class="form-label">Lender Name</label>
+      <input class="form-input" id="fMortLender" placeholder="e.g. SBI, Family member" value="${m.lender_name || ''}"/></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Loan Start Date</label>
+      <input class="form-input" id="fMortStart" type="date" value="${m.start_date || ''}"/></div>
+    <div class="form-group"><label class="form-label">Loan End Date</label>
+      <input class="form-input" id="fMortEnd" type="date" value="${m.end_date || ''}"/></div>
+  </div>
+  <div class="computed-box" id="mortComputed" style="display:none">
+    <div class="comp-row"><span class="comp-label">Outstanding Principal</span><span class="comp-value red" id="mortOutstanding">—</span></div>
+    <div class="comp-row"><span class="comp-label">EMI Amount</span><span class="comp-value" id="mortEmi">—</span></div>
+    <div class="comp-row"><span class="comp-label">Monthly Interest</span><span class="comp-value" id="mortMonthlyInt">—</span></div>
+  </div>
+  <div class="info-note" style="margin-top:8px">The outstanding loan amount will automatically appear in your Liabilities section as a Mortgage Loan.</div>`;
+    }
+
+    function loanOnAssetSection(m) {
+      const hasLoan = m.has_loan || false, liabAdded = loanWillAddLiab || false;
+      return `
+  <div class="separator"></div>
+  <div class="form-group">
+    <label class="form-label">Was this purchased with a loan / borrowed money?</label>
+    <div class="radio-group" id="hasLoanGroup">
+      <label class="radio-opt${hasLoan === true || hasLoan === 'true' ? ' checked' : ''}" onclick="radioSelect(this,'hasLoanGroup');toggleLoanSection(true)"><input type="radio" name="hl" value="true"/>Yes, loan/borrowed</label>
+      <label class="radio-opt${!hasLoan || hasLoan === false || hasLoan === 'false' ? ' checked' : ''}" onclick="radioSelect(this,'hasLoanGroup');toggleLoanSection(false)"><input type="radio" name="hl" value="false"/>No, fully paid</label>
+    </div>
+  </div>
+  <div id="assetLoanPanel" class="loan-panel" style="${hasLoan === true || hasLoan === 'true' ? '' : 'display:none'}">
+    <div class="loan-panel-header">
+      <span style="font-size:1.2rem">💸</span>
+      <div><div class="loan-panel-title">Loan / Borrowed Amount Details</div>
+        <div style="font-size:.73rem;color:#991b1b">This will automatically be added to your Liabilities</div></div>
+    </div>
+    <div class="form-group"><label class="form-label">Loan Category</label>
+      <div class="radio-group" id="loanCatGroup">
+        ${['Home Loan', 'Vehicle Loan', 'Personal Loan', 'Family/Friend', 'Other'].map(o => `<label class="radio-opt${(m.loan_category || 'Home Loan') === o ? ' checked' : ''}" onclick="radioSelect(this,'loanCatGroup')"><input type="radio" name="lcat" value="${o}"/>${o}</label>`).join('')}
+      </div></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Total Loan Amount (₹)</label>
+        <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+          <input class="form-input" id="fLoanTotalAmt" type="number" min="0" placeholder="0" value="${m.loan_total_amount || ''}"/></div></div>
+      <div class="form-group"><label class="form-label">Amount Already Paid (₹)</label>
+        <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+          <input class="form-input" id="fLoanPaidAmt" type="number" min="0" placeholder="0" value="${m.loan_paid_amount || 0}" oninput="updateLoanPendingCalc()"/></div></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Pending Amount (₹)</label>
+        <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+          <input class="form-input" id="fLoanPendingAmt" type="number" min="0" placeholder="Auto-calculated" value="${m.loan_pending_amount || ''}"/></div>
+        <span class="form-hint">= Total − Paid. Edit if needed.</span></div>
+      <div class="form-group"><label class="form-label">Monthly EMI (₹)</label>
+        <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+          <input class="form-input" id="fLoanEmiAmt" type="number" min="0" placeholder="0" value="${m.loan_emi || ''}"/></div></div>
+    </div>
+    <div class="form-group"><label class="form-label">Interest Rate (if any)</label>
+      <div class="radio-group" id="loanHasIntGroup">
+        <label class="radio-opt${(m.loan_has_interest !== false && m.loan_has_interest !== 'false') ? ' checked' : ''}" onclick="radioSelect(this,'loanHasIntGroup');toggleLoanInterest(true)"><input type="radio" name="lhi" value="true"/>Has Interest</label>
+        <label class="radio-opt${(m.loan_has_interest === false || m.loan_has_interest === 'false') ? ' checked' : ''}" onclick="radioSelect(this,'loanHasIntGroup');toggleLoanInterest(false)"><input type="radio" name="lhi" value="false"/>No Interest (family/friend)</label>
+      </div></div>
+    <div id="loanInterestSection" style="${(m.loan_has_interest === false || m.loan_has_interest === 'false') ? 'display:none' : ''}">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Interest Rate</label>
+          <input class="form-input" id="fLoanIntRate" type="number" min="0" step="0.01" placeholder="e.g. 8.5" value="${m.loan_interest_rate || ''}"/></div>
+        <div class="form-group"><label class="form-label">Rate Period</label>
+          <div class="radio-group" id="loanRatePeriodGroup">
+            <label class="radio-opt${(m.loan_rate_period || 'annual') === 'annual' ? ' checked' : ''}" onclick="radioSelect(this,'loanRatePeriodGroup')"><input type="radio" name="lrp" value="annual"/>Per Annum</label>
+            <label class="radio-opt${(m.loan_rate_period || 'annual') === 'monthly' ? ' checked' : ''}" onclick="radioSelect(this,'loanRatePeriodGroup')"><input type="radio" name="lrp" value="monthly"/>Per Month</label>
+          </div></div>
+      </div>
+      <div class="form-group"><label class="form-label">Interest Type</label>
+        <div class="radio-group" id="loanIntTypeGroup">
+          <label class="radio-opt${(m.loan_interest_type || 'reducing') === 'reducing' ? ' checked' : ''}" onclick="radioSelect(this,'loanIntTypeGroup')"><input type="radio" name="lit" value="reducing"/>Reducing Balance</label>
+          <label class="radio-opt${(m.loan_interest_type || 'reducing') === 'flat' ? ' checked' : ''}" onclick="radioSelect(this,'loanIntTypeGroup')"><input type="radio" name="lit" value="flat"/>Flat Rate</label>
+        </div></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Loan Start Date</label>
+        <input class="form-input" id="fLoanStartDate" type="date" value="${m.loan_start_date || ''}"/></div>
+      <div class="form-group"><label class="form-label">Loan End / Final Date</label>
+        <input class="form-input" id="fLoanEndDate" type="date" value="${m.loan_end_date || ''}"/></div>
+    </div>
+    <div class="liab-added-badge" id="liabAddedBadge" style="${liabAdded ? '' : 'display:none'}">
+      ✅ This loan is tracked in your Liabilities section automatically.
+    </div>
+  </div>`;
+    }
+
+    function loanFields(m, loanCat) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. SBI Home Loan" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Loan Status <span class="req">*</span></label>
+    <div class="radio-group" id="loanStatusGroup">
+      <label class="radio-opt${(m.loan_status || 'current') === 'new' ? ' checked' : ''}" onclick="radioSelect(this,'loanStatusGroup');toggleLoanStatus('new')"><input type="radio" name="ls" value="new"/>New Loan</label>
+      <label class="radio-opt${(m.loan_status || 'current') === 'current' ? ' checked' : ''}" onclick="radioSelect(this,'loanStatusGroup');toggleLoanStatus('current')"><input type="radio" name="ls" value="current"/>Existing / Current</label>
+    </div></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Principal Amount (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fLoanPrincipal" type="number" min="0" placeholder="0" value="${m.principal_original || ''}" oninput="updateLoanCalc()"/></div></div>
+    <div class="form-group"><label class="form-label">Interest Rate <span class="req">*</span></label>
+      <input class="form-input" id="fLoanRate" type="number" min="0" step="0.01" placeholder="e.g. 8.5" value="${m.interest_rate || ''}" oninput="updateLoanCalc()"/></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Rate Period</label>
+      <div class="radio-group" id="ratePeriodGroup">
+        <label class="radio-opt${(m.rate_period || 'annual') === 'annual' ? ' checked' : ''}" onclick="radioSelect(this,'ratePeriodGroup');updateLoanCalc()"><input type="radio" name="rp" value="annual"/>Per Annum</label>
+        <label class="radio-opt${(m.rate_period || 'annual') === 'monthly' ? ' checked' : ''}" onclick="radioSelect(this,'ratePeriodGroup');updateLoanCalc()"><input type="radio" name="rp" value="monthly"/>Per Month</label>
+      </div></div>
+    <div class="form-group"><label class="form-label">Interest Type</label>
+      <div class="radio-group" id="intTypeGroup">
+        <label class="radio-opt${(m.interest_type || 'reducing') === 'reducing' ? ' checked' : ''}" onclick="radioSelect(this,'intTypeGroup');updateLoanCalc()"><input type="radio" name="itype" value="reducing"/>Reducing Balance</label>
+        <label class="radio-opt${(m.interest_type || 'reducing') === 'flat' ? ' checked' : ''}" onclick="radioSelect(this,'intTypeGroup');updateLoanCalc()"><input type="radio" name="itype" value="flat"/>Flat Rate</label>
+      </div></div>
+  </div>
+  <div class="info-note"><strong>Flat:</strong> Interest always on full principal (costlier). <strong>Reducing:</strong> Interest falls as you repay (standard bank loans).</div>
+  <div id="loanCurrentSection" style="${(m.loan_status || 'current') === 'new' ? 'display:none' : ''}">
+    <div class="separator"></div><div class="section-label" style="margin-top:8px">Existing Loan Details</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Principal Already Paid (₹)</label>
+        <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+          <input class="form-input" id="fLoanPaid" type="number" min="0" placeholder="0" value="${m.principal_paid || 0}" oninput="updateLoanCalc()"/></div></div>
+      <div class="form-group"><label class="form-label">Loan Start Date</label>
+        <input class="form-input" id="fLoanStart" type="date" value="${m.start_date || ''}" onchange="updateLoanCalc()"/></div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Tenure (months) <span class="req">*</span></label>
+      <input class="form-input" id="fLoanTenure" type="number" min="1" placeholder="e.g. 240" value="${m.tenure_months || ''}" oninput="updateLoanCalc()"/></div>
+    <div class="form-group"><label class="form-label">Loan End Date</label>
+      <input class="form-input" id="fLoanEnd" type="date" value="${m.end_date || ''}"/></div>
+  </div>
+  <div class="computed-box" id="loanComputed" style="display:none">
+    <div class="comp-row"><span class="comp-label">Outstanding Principal</span><span class="comp-value red" id="loanOutstanding">—</span></div>
+    <div class="comp-row"><span class="comp-label">EMI Amount</span><span class="comp-value" id="loanEmi">—</span></div>
+    <div class="comp-row"><span class="comp-label">Monthly Interest</span><span class="comp-value" id="loanMonthlyInt">—</span></div>
+  </div>`;
+    }
+
+    function creditCardFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. HDFC Millennia Card" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Bank / Issuer</label>
+    <input class="form-input" id="fCcBank" placeholder="e.g. HDFC, SBI, ICICI" value="${m.bank_name || ''}"/></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Total Outstanding (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fCcOutstanding" type="number" min="0" placeholder="0" value="${m.outstanding || ''}" oninput="computedValue=parseFloat(this.value)||0"/></div></div>
+    <div class="form-group"><label class="form-label">Minimum Due (₹)</label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fCcMinDue" type="number" min="0" placeholder="0" value="${m.min_due || ''}"/></div></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Payment Due Date</label>
+      <input class="form-input" id="fCcDueDate" type="date" value="${m.due_date || ''}"/></div>
+    <div class="form-group"><label class="form-label">Interest Rate (% p.a.)</label>
+      <input class="form-input" id="fCcRate" type="number" min="0" step="0.1" placeholder="36" value="${m.interest_rate || 36}"/></div>
+  </div>
+  <div class="info-note red-note">⚠️ CC interest (36–42% p.a.) is the costliest debt. Pay full outstanding, not just minimum.</div>`;
+    }
+
+    function emiFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. iPhone 15 EMI" value="${m.name || ''}"/></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Provider / Platform</label>
+      <input class="form-input" id="fEmiProvider" placeholder="e.g. Bajaj Finserv" value="${m.provider || ''}"/></div>
+    <div class="form-group"><label class="form-label">Item / Purpose</label>
+      <input class="form-input" id="fEmiItem" placeholder="e.g. Samsung TV" value="${m.item_name || ''}"/></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Total Amount (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fEmiTotal" type="number" min="0" placeholder="0" value="${m.total_amount || ''}" oninput="updateEmiCalc()"/></div></div>
+    <div class="form-group"><label class="form-label">Monthly EMI (₹)</label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fEmiAmount" type="number" min="0" placeholder="0" value="${m.emi_amount || ''}" oninput="updateEmiCalc()"/></div></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Total Months</label>
+      <input class="form-input" id="fEmiTotalMonths" type="number" min="1" placeholder="12" value="${m.months_total || ''}" oninput="updateEmiCalc()"/></div>
+    <div class="form-group"><label class="form-label">Months Already Paid</label>
+      <input class="form-input" id="fEmiPaidMonths" type="number" min="0" placeholder="0" value="${m.months_paid || 0}" oninput="updateEmiCalc()"/></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">EMI Start Date</label>
+      <input class="form-input" id="fEmiStart" type="date" value="${m.start_date || ''}"/></div>
+    <div class="form-group"><label class="form-label">EMI End Date</label>
+      <input class="form-input" id="fEmiEnd" type="date" value="${m.end_date || ''}"/></div>
+  </div>
+  <div class="computed-box" id="emiComputed" style="display:none">
+    <div class="comp-row"><span class="comp-label">Outstanding</span><span class="comp-value red" id="emiOutstanding">—</span></div>
+    <div class="comp-row"><span class="comp-label">Paid So Far</span><span class="comp-value" id="emiPaid">—</span></div>
+  </div>`;
+    }
+
+    function mortgageLoanFields(m) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="e.g. Mortgage Loan against Land" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Collateral Used</label>
+    <input class="form-input" id="fMortCollateral" placeholder="e.g. Plot at Chennai, Gold 200g" value="${m.collateral_type || ''}"/></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Collateral Value (₹)</label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fMortCollValue" type="number" min="0" placeholder="0" value="${m.collateral_value || ''}"/></div></div>
+    <div class="form-group"><label class="form-label">Loan Amount (₹) <span class="req">*</span></label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fMortLoanAmtL" type="number" min="0" placeholder="0" value="${m.loan_amount || ''}" oninput="updateMortgageLiabCalc()"/></div></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Principal Paid (₹)</label>
+      <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+        <input class="form-input" id="fMortPaidL" type="number" min="0" placeholder="0" value="${m.principal_paid || 0}" oninput="updateMortgageLiabCalc()"/></div></div>
+    <div class="form-group"><label class="form-label">Interest Rate</label>
+      <input class="form-input" id="fMortRateL" type="number" min="0" step="0.01" placeholder="e.g. 9.5" value="${m.interest_rate || ''}" oninput="updateMortgageLiabCalc()"/></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Rate Period</label>
+      <div class="radio-group" id="mortLiabRatePeriodGroup">
+        <label class="radio-opt${(m.rate_period || 'annual') === 'annual' ? ' checked' : ''}" onclick="radioSelect(this,'mortLiabRatePeriodGroup');updateMortgageLiabCalc()"><input type="radio" name="mlrp" value="annual"/>Per Annum</label>
+        <label class="radio-opt${(m.rate_period || 'annual') === 'monthly' ? ' checked' : ''}" onclick="radioSelect(this,'mortLiabRatePeriodGroup');updateMortgageLiabCalc()"><input type="radio" name="mlrp" value="monthly"/>Per Month</label>
+      </div></div>
+    <div class="form-group"><label class="form-label">Interest Type</label>
+      <div class="radio-group" id="mortLiabIntTypeGroup">
+        <label class="radio-opt${(m.interest_type || 'reducing') === 'reducing' ? ' checked' : ''}" onclick="radioSelect(this,'mortLiabIntTypeGroup')"><input type="radio" name="mlit" value="reducing"/>Reducing</label>
+        <label class="radio-opt${(m.interest_type || 'reducing') === 'flat' ? ' checked' : ''}" onclick="radioSelect(this,'mortLiabIntTypeGroup')"><input type="radio" name="mlit" value="flat"/>Flat</label>
+      </div></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Tenure (months)</label>
+      <input class="form-input" id="fMortTenureL" type="number" min="1" placeholder="120" value="${m.tenure_months || ''}" oninput="updateMortgageLiabCalc()"/></div>
+    <div class="form-group"><label class="form-label">Lender</label>
+      <input class="form-input" id="fMortLenderL" placeholder="Bank or lender name" value="${m.lender_name || ''}"/></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Start Date</label>
+      <input class="form-input" id="fMortStartL" type="date" value="${m.start_date || ''}"/></div>
+    <div class="form-group"><label class="form-label">End Date</label>
+      <input class="form-input" id="fMortEndL" type="date" value="${m.end_date || ''}"/></div>
+  </div>
+  <div class="computed-box" id="mortLiabComputed" style="display:none">
+    <div class="comp-row"><span class="comp-label">Outstanding</span><span class="comp-value red" id="mortLiabOutstanding">—</span></div>
+    <div class="comp-row"><span class="comp-label">EMI</span><span class="comp-value" id="mortLiabEmi">—</span></div>
+  </div>`;
+    }
+
+    function otherFields(m, entryType) {
+      return `
+  <div class="form-group"><label class="form-label">Entry Name <span class="req">*</span></label>
+    <input class="form-input" id="fName" placeholder="What is this?" value="${m.name || ''}"/></div>
+  <div class="form-group"><label class="form-label">Current Value (₹) <span class="req">*</span></label>
+    <div class="prefix-wrap"><span class="inp-prefix">₹</span>
+      <input class="form-input" id="fOtherValue" type="number" min="0" placeholder="0" value="${m.other_value || ''}" oninput="computedValue=parseFloat(this.value)||0"/></div></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Start Date</label>
+      <input class="form-input" id="fOtherStart" type="date" value="${m.start_date || ''}"/></div>
+    <div class="form-group"><label class="form-label">End / Maturity Date</label>
+      <input class="form-input" id="fOtherEnd" type="date" value="${m.end_date || ''}"/></div>
+  </div>
+  <div class="ai-other-panel">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <span style="font-size:1.2rem">✨</span>
+      <div><div class="ai-other-title">AI Classification</div><div style="font-size:.74rem;color:#4338ca">Describe your ${entryType} — AI will categorise it</div></div>
+    </div>
+    <div class="form-group"><label class="form-label">Description</label>
+      <textarea class="form-textarea" id="fOtherDesc" rows="2" placeholder="e.g. I have a chit fund paying out in 6 months…">${m.description || ''}</textarea></div>
+    <button class="btn-compute" type="button" onclick="runAiClassify()" id="btnAiClassify" style="margin-top:8px;width:100%;justify-content:center">✨ Classify with AI</button>
+    <div id="aiResultBox" style="display:none"></div>
+  </div>`;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       LIVE COMPUTE FUNCTIONS
+    ═══════════════════════════════════════════════════════ */
+    function updateGoldCalc() {
+      const w = parseFloat(document.getElementById('fGoldWeight')?.value) || 0;
+      const r = parseFloat(document.getElementById('fGoldRate')?.value) || 0;
+      const box = document.getElementById('goldComputed'), el = document.getElementById('goldCalcVal');
+      if (w > 0 && r > 0) { computedValue = w * r; if (el) el.textContent = fmt(w * r); if (box) box.style.display = 'block'; }
+      else if (box) box.style.display = 'none';
+      // Show karat only for Gold
+      const metal = getRadioVal('metalTypeGroup') || 'Gold';
+      const karatWrap = document.getElementById('karatGroupWrap');
+      if (karatWrap) karatWrap.style.display = metal === 'Gold' ? '' : 'none';
+    }
+    async function updateVehicleCalc() {
+      const price = parseFloat(document.getElementById('fVehPurchasePrice')?.value) || 0;
+      const dateVal = document.getElementById('fVehPurchaseDate')?.value;
+      const vType = getRadioVal('vehTypeGroup') || 'Car';
+      if (!price || !dateVal) return;
+      const fd = new FormData(); fd.append('purchase_price', price); fd.append('purchase_date', dateVal); fd.append('vehicle_type', vType);
+      try { const res = await fetch(`${API}/networth/compute/vehicle`, { method: 'POST', body: fd }); const data = await res.json(); computedValue = data.current_value; document.getElementById('vehCalcVal').textContent = fmt(data.current_value); document.getElementById('vehDepNote').textContent = `${data.depreciation_rate}% p.a. depreciation`; document.getElementById('vehComputed').style.display = 'block'; } catch (e) { }
+    }
+    async function updateFdCalc() {
+      const principal = parseFloat(document.getElementById('fFdPrincipal')?.value) || 0;
+      const rate = parseFloat(document.getElementById('fFdRate')?.value) || 0;
+      const compLabel = getRadioVal('compGroup') || 'Quarterly';
+      const start = document.getElementById('fFdStart')?.value, mat = document.getElementById('fFdMaturity')?.value;
+      if (!principal || !rate || !start || !mat) return;
+      const compMap = { 'Simple': 'simple', 'Monthly': 'monthly', 'Quarterly': 'quarterly', 'Annually': 'annually' };
+      const fd = new FormData(); fd.append('principal', principal); fd.append('interest_rate', rate); fd.append('compounding', compMap[compLabel] || 'quarterly'); fd.append('start_date', start); fd.append('maturity_date', mat);
+      try { const res = await fetch(`${API}/networth/compute/fd`, { method: 'POST', body: fd }); const data = await res.json(); computedValue = data.current_value; document.getElementById('fdCurrentVal').textContent = fmt(data.current_value); document.getElementById('fdMaturityVal').textContent = fmt(data.maturity_value); document.getElementById('fdInterest').textContent = fmt(data.maturity_value - principal); document.getElementById('fdComputed').style.display = 'block'; } catch (e) { }
+    }
+    function updateInvCalc() {
+      const inv = parseFloat(document.getElementById('fInvInvested')?.value) || 0;
+      const cur = parseFloat(document.getElementById('fInvCurrent')?.value) || 0;
+      computedValue = cur;
+      if (inv > 0 && cur > 0) {
+        const gain = cur - inv, pct = ((gain / inv) * 100).toFixed(2);
+        const gel = document.getElementById('invGainLoss'), pel = document.getElementById('invReturnPct');
+        if (gel) { gel.textContent = fmt(gain); gel.className = 'comp-value ' + (gain >= 0 ? 'green' : 'red'); }
+        if (pel) { pel.textContent = pct + '%'; pel.className = 'comp-value ' + (gain >= 0 ? 'green' : 'red'); }
+        document.getElementById('invComputed').style.display = 'block';
+      }
+    }
+    async function updateLoanCalc() {
+      const principal = parseFloat(document.getElementById('fLoanPrincipal')?.value) || 0;
+      const rate = parseFloat(document.getElementById('fLoanRate')?.value) || 0;
+      const paid = parseFloat(document.getElementById('fLoanPaid')?.value) || 0;
+      const tenure = parseInt(document.getElementById('fLoanTenure')?.value) || 0;
+      const rPeriod = getRadioVal('ratePeriodGroup') || 'annual';
+      const intType = getRadioVal('intTypeGroup') || 'reducing';
+      if (!principal || !rate) return;
+      const fd = new FormData(); fd.append('principal', principal); fd.append('principal_paid', paid); fd.append('interest_rate', rate); fd.append('rate_period', rPeriod); fd.append('interest_type', intType); fd.append('tenure_months', tenure || 0);
+      try { const res = await fetch(`${API}/networth/compute/loan`, { method: 'POST', body: fd }); const data = await res.json(); computedValue = data.outstanding; document.getElementById('loanOutstanding').textContent = fmt(data.outstanding); document.getElementById('loanEmi').textContent = data.emi_amount > 0 ? fmt(data.emi_amount) : '—'; document.getElementById('loanMonthlyInt').textContent = fmt(data.monthly_interest); document.getElementById('loanComputed').style.display = 'block'; } catch (e) { }
+    }
+    function updateEmiCalc() {
+      const total = parseFloat(document.getElementById('fEmiTotal')?.value) || 0;
+      const emi = parseFloat(document.getElementById('fEmiAmount')?.value) || 0;
+      const months = parseInt(document.getElementById('fEmiTotalMonths')?.value) || 0;
+      const paid = parseInt(document.getElementById('fEmiPaidMonths')?.value) || 0;
+      if (total > 0 && emi > 0 && months > 0) { const paidAmt = emi * paid, outstanding = Math.max(total - paidAmt, 0); computedValue = outstanding; document.getElementById('emiOutstanding').textContent = fmt(outstanding); document.getElementById('emiPaid').textContent = fmt(paidAmt); document.getElementById('emiComputed').style.display = 'block'; }
+      else if (total > 0) { computedValue = total; }
+    }
+    async function updateMortgageCalc() {
+      const loan = parseFloat(document.getElementById('fMortLoanAmt')?.value) || 0, paid = parseFloat(document.getElementById('fMortPaid')?.value) || 0;
+      const rate = parseFloat(document.getElementById('fMortRate')?.value) || 0, tenure = parseInt(document.getElementById('fMortTenure')?.value) || 0;
+      const rp = getRadioVal('mortRatePeriodGroup') || 'annual', it = getRadioVal('mortIntTypeGroup') || 'reducing';
+      if (!loan || !rate) return;
+      const fd = new FormData(); fd.append('principal', loan); fd.append('principal_paid', paid); fd.append('interest_rate', rate); fd.append('rate_period', rp); fd.append('interest_type', it); fd.append('tenure_months', tenure || 0);
+      try { const res = await fetch(`${API}/networth/compute/loan`, { method: 'POST', body: fd }); const data = await res.json(); document.getElementById('mortOutstanding').textContent = fmt(data.outstanding); document.getElementById('mortEmi').textContent = data.emi_amount > 0 ? fmt(data.emi_amount) : '—'; document.getElementById('mortMonthlyInt').textContent = fmt(data.monthly_interest); document.getElementById('mortComputed').style.display = 'block'; } catch (e) { }
+    }
+    async function updateMortgageLiabCalc() {
+      const loan = parseFloat(document.getElementById('fMortLoanAmtL')?.value) || 0, paid = parseFloat(document.getElementById('fMortPaidL')?.value) || 0;
+      const rate = parseFloat(document.getElementById('fMortRateL')?.value) || 0, tenure = parseInt(document.getElementById('fMortTenureL')?.value) || 0;
+      const rp = getRadioVal('mortLiabRatePeriodGroup') || 'annual';
+      if (!loan || !rate) return;
+      const fd = new FormData(); fd.append('principal', loan); fd.append('principal_paid', paid); fd.append('interest_rate', rate); fd.append('rate_period', rp); fd.append('interest_type', 'reducing'); fd.append('tenure_months', tenure || 0);
+      try { const res = await fetch(`${API}/networth/compute/loan`, { method: 'POST', body: fd }); const data = await res.json(); computedValue = data.outstanding; document.getElementById('mortLiabOutstanding').textContent = fmt(data.outstanding); document.getElementById('mortLiabEmi').textContent = data.emi_amount > 0 ? fmt(data.emi_amount) : '—'; document.getElementById('mortLiabComputed').style.display = 'block'; } catch (e) { }
+    }
+    function updateLoanPendingCalc() {
+      const total = parseFloat(document.getElementById('fLoanTotalAmt')?.value) || 0, paid = parseFloat(document.getElementById('fLoanPaidAmt')?.value) || 0;
+      const el = document.getElementById('fLoanPendingAmt'); if (el && total > 0) el.value = Math.max(total - paid, 0).toFixed(0);
+    }
+    function updateBizCalc() {
+      const val = parseFloat(document.getElementById('fBizValue')?.value) || 0, own = parseFloat(document.getElementById('fBizOwnership')?.value) || 100;
+      const share = val * (own / 100), el = document.getElementById('fBizShareValue');
+      if (el && !el.value) el.value = share.toFixed(0);
+      computedValue = parseFloat(document.getElementById('fBizShareValue')?.value) || share;
+    }
+    function toggleLoanStatus(status) { const s = document.getElementById('loanCurrentSection'); if (s) s.style.display = status === 'new' ? 'none' : ''; }
+    function toggleLoanSection(show) { const p = document.getElementById('assetLoanPanel'); if (p) p.style.display = show ? 'block' : 'none'; }
+    function toggleLoanInterest(show) { const s = document.getElementById('loanInterestSection'); if (s) s.style.display = show ? 'block' : 'none'; }
+
+    /* ── HELPERS ── */
+    function getRadioVal(groupId) { const el = document.querySelector(`#${groupId} .radio-opt.checked input`); return el ? el.value : null; }
+    function radioSelect(lbl, groupId) { document.querySelectorAll(`#${groupId} .radio-opt`).forEach(l => l.classList.remove('checked')); lbl.classList.add('checked'); }
+    function attachLiveEvents() {
+      document.getElementById('fBizValue')?.addEventListener('input', updateBizCalc);
+      document.getElementById('fBizOwnership')?.addEventListener('input', updateBizCalc);
+      document.getElementById('fLoanTotalAmt')?.addEventListener('input', updateLoanPendingCalc);
+      // Apply initial karat visibility for Gold & Jewellery form
+      if (selCat === 'Gold & Jewellery') updateGoldCalc();
+    }
+    function populateComputed(item) {
+      computedValue = item.current_value;
+      setTimeout(() => {
+        if (selCat === 'Gold & Jewellery') updateGoldCalc();
+        if (selCat === 'Market Investments') updateInvCalc();
+        if (selCat === 'EMI / BNPL') updateEmiCalc();
+        if (selCat === 'Mortgage Asset') updateMortgageCalc();
+        if (selCat === 'Mortgage Loan') updateMortgageLiabCalc();
+        if (['Home Loan', 'Personal Loan', 'Vehicle Loan', 'Education Loan', 'Loan'].includes(selCat)) updateLoanCalc();
+      }, 100);
+    }
+
+    /* ── AI CLASSIFY ── */
+    async function runAiClassify() {
+      const desc = document.getElementById('fOtherDesc')?.value.trim();
+      if (!desc) { showToast('Enter a description first.', 'error'); return; }
+      const btn = document.getElementById('btnAiClassify'); btn.textContent = '⏳ Classifying…'; btn.disabled = true;
+      try {
+        const fd = new FormData(); fd.append('description', desc);
+        const res = await fetch(`${API}/networth/ai-classify`, { method: 'POST', body: fd }); const data = await res.json();
+        aiClassifyResult = data;
+        document.getElementById('aiResultBox').style.display = 'block';
+        document.getElementById('aiResultBox').innerHTML = `<div class="ai-result-box"><div class="ai-res-row"><span class="ai-res-label">Type</span><span class="ai-res-val">${data.entry_type}</span></div><div class="ai-res-row"><span class="ai-res-label">Category</span><span class="ai-res-val">${data.category}</span></div><div class="ai-res-row"><span class="ai-res-label">Name</span><span class="ai-res-val">${data.suggested_name}</span></div><div class="ai-res-row"><span class="ai-res-label">Notes</span><span class="ai-res-val" style="font-weight:400;color:var(--sl500)">${data.notes}</span></div></div>`;
+        showToast('AI classification done!', 'success');
+      } catch (e) { showToast('AI classification failed.', 'error'); }
+      finally { btn.textContent = '✨ Classify with AI'; btn.disabled = false; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       COLLECT META & SUBMIT
+    ═══════════════════════════════════════════════════════ */
+    function readLoanComputedFromDOM() {
+      const loanEl = document.getElementById('loanOutstanding');
+      if (loanEl && loanEl.textContent && loanEl.textContent !== '—') { const v = parseFloat(loanEl.textContent.replace(/[₹,LCr\s]/g, '')); if (v > 0) return v; }
+      const mortEl = document.getElementById('mortLiabOutstanding');
+      if (mortEl && mortEl.textContent && mortEl.textContent !== '—') { const v = parseFloat(mortEl.textContent.replace(/[₹,LCr\s]/g, '')); if (v > 0) return v; }
+      const emiEl = document.getElementById('emiOutstanding');
+      if (emiEl && emiEl.textContent && emiEl.textContent !== '—') { const v = parseFloat(emiEl.textContent.replace(/[₹,LCr\s]/g, '')); if (v > 0) return v; }
+      const ccEl = document.getElementById('fCcOutstanding'); if (ccEl) return parseFloat(ccEl.value) || 0;
+      return computedValue;
+    }
+
+    function collectMeta() {
+      const gv = id => document.getElementById(id)?.value || '';
+      const gn = id => parseFloat(document.getElementById(id)?.value) || 0;
+      const gi = id => parseInt(document.getElementById(id)?.value) || 0;
+      const rv = g => getRadioVal(g);
+      const name = gv('fName'); let meta = { name }, startDate = '', endDate = '';
+
+      function loanOnAssetMeta() {
+        const hasLoan = rv('hasLoanGroup') === 'true';
+        const loa = { has_loan: hasLoan, loan_category: rv('loanCatGroup') || 'Personal Loan', loan_total_amount: gn('fLoanTotalAmt'), loan_paid_amount: gn('fLoanPaidAmt'), loan_pending_amount: gn('fLoanPendingAmt'), loan_emi: gn('fLoanEmiAmt'), loan_has_interest: rv('loanHasIntGroup') !== 'false', loan_interest_rate: gn('fLoanIntRate'), loan_rate_period: rv('loanRatePeriodGroup') || 'annual', loan_interest_type: rv('loanIntTypeGroup') || 'reducing', loan_start_date: gv('fLoanStartDate'), loan_end_date: gv('fLoanEndDate') };
+        loanWillAddLiab = hasLoan && loa.loan_pending_amount > 0; return loa;
+      }
+
+      switch (selCat) {
+        case 'Gold & Jewellery': meta = { ...meta, metal_type: rv('metalTypeGroup') || 'Gold', karat: rv('karatGroup') || '22K', weight_g: gn('fGoldWeight'), rate_per_g: gn('fGoldRate'), ...loanOnAssetMeta() }; computedValue = meta.weight_g * meta.rate_per_g; break;
+        case 'Real Estate': meta = { ...meta, property_type: rv('propTypeGroup') || 'Apartment/Flat', area_sqft: gn('fAreaSqft'), purchase_price: gn('fRePurchasePrice'), current_price: gn('fReCurrentPrice'), purchase_date: gv('fRePurchaseDate'), ...loanOnAssetMeta() }; computedValue = meta.current_price; startDate = meta.purchase_date; break;
+        case 'Vehicle': meta = { ...meta, vehicle_type: rv('vehTypeGroup') || 'Car', make_model: gv('fVehModel'), purchase_price: gn('fVehPurchasePrice'), purchase_date: gv('fVehPurchaseDate'), depreciation_rate: 15, computed_value: computedValue, override_value: gn('fVehOverride'), ...loanOnAssetMeta() }; if (meta.override_value) computedValue = meta.override_value; startDate = meta.purchase_date; break;
+        case 'Fixed Deposit': meta = { ...meta, deposit_type_label: rv('depTypeGroup') || 'FD (Fixed Deposit)', principal: gn('fFdPrincipal'), interest_rate: gn('fFdRate'), compounding_label: rv('compGroup') || 'Quarterly', compounding: { 'Simple': 'simple', 'Monthly': 'monthly', 'Quarterly': 'quarterly', 'Annually': 'annually' }[rv('compGroup')] || 'quarterly', start_date: gv('fFdStart'), maturity_date: gv('fFdMaturity') }; startDate = meta.start_date; endDate = meta.maturity_date; break;
+        case 'Market Investments': meta = { ...meta, inv_type: rv('invTypeGroup') || 'Mutual Fund', payment_mode: rv('payModeGroup') || 'SIP (Monthly)', invested_amount: gn('fInvInvested'), current_value: gn('fInvCurrent'), expected_return: gn('fInvReturn'), start_date: gv('fInvStart') }; computedValue = meta.current_value; startDate = meta.start_date; break;
+        case 'Retirement Fund': meta = { ...meta, fund_type: rv('retTypeGroup') || 'EPF', current_balance: gn('fRetBalance'), monthly_contribution: gn('fRetContrib'), start_date: gv('fRetStart'), end_date: gv('fRetEnd') }; computedValue = meta.current_balance; startDate = meta.start_date; endDate = meta.end_date; break;
+        case 'Cash & Savings': meta = { ...meta, account_type: rv('cashTypeGroup') || 'Savings Account', current_balance: gn('fCashBalance') }; computedValue = meta.current_balance; break;
+        case 'Insurance': meta = { ...meta, insurance_type: rv('insTypeGroup') || 'Endowment', surrender_value: gn('fInsSurrValue'), annual_premium: gn('fInsPremium'), start_date: gv('fInsStart'), end_date: gv('fInsEnd') }; computedValue = meta.surrender_value; startDate = meta.start_date; endDate = meta.end_date; break;
+        case 'Business / Equity': meta = { ...meta, ownership_pct: gn('fBizOwnership'), business_value: gn('fBizValue'), share_value: gn('fBizShareValue') }; computedValue = meta.share_value || meta.business_value; break;
+        case 'Tax Refund': meta = { ...meta, refund_amount: gn('fTaxRefundAmt'), expected_date: gv('fTaxExpDate') }; computedValue = meta.refund_amount; endDate = meta.expected_date; break;
+        case 'Mortgage Asset': meta = { ...meta, collateral_type: rv('collTypeGroup') || 'Real Estate', collateral_value: gn('fCollValue'), loan_amount: gn('fMortLoanAmt'), principal_paid: gn('fMortPaid'), interest_rate: gn('fMortRate'), rate_period: rv('mortRatePeriodGroup') || 'annual', interest_type: rv('mortIntTypeGroup') || 'reducing', tenure_months: gi('fMortTenure'), lender_name: gv('fMortLender'), start_date: gv('fMortStart'), end_date: gv('fMortEnd'), has_loan: true, loan_category: 'Mortgage Loan', loan_total_amount: gn('fMortLoanAmt'), loan_paid_amount: gn('fMortPaid'), loan_pending_amount: Math.max(gn('fMortLoanAmt') - gn('fMortPaid'), 0), loan_interest_rate: gn('fMortRate'), loan_rate_period: rv('mortRatePeriodGroup') || 'annual', loan_interest_type: rv('mortIntTypeGroup') || 'reducing', loan_emi: 0, loan_start_date: gv('fMortStart'), loan_end_date: gv('fMortEnd'), loan_has_interest: true }; computedValue = meta.collateral_value; startDate = meta.start_date; endDate = meta.end_date; break;
+        case 'Home Loan': case 'Personal Loan': case 'Vehicle Loan': case 'Education Loan': case 'Loan': {
+          const loanDom = parseFloat(document.getElementById('loanOutstanding')?.textContent?.replace(/[₹,LCr\s]/g, '') || '0') || 0;
+          const principalAmt = gn('fLoanPrincipal'), paidAmt = gn('fLoanPaid');
+          const outstanding = loanDom > 0 ? loanDom : Math.max(principalAmt - paidAmt, principalAmt);
+          computedValue = outstanding;
+          meta = { ...meta, loan_type: selCat, principal_original: principalAmt, principal_paid: paidAmt, principal_outstanding: outstanding, interest_rate: gn('fLoanRate'), rate_period: rv('ratePeriodGroup') || 'annual', interest_type: rv('intTypeGroup') || 'reducing', loan_status: rv('loanStatusGroup') || 'current', start_date: gv('fLoanStart'), end_date: gv('fLoanEnd'), tenure_months: gi('fLoanTenure'), emi_amount: parseFloat(document.getElementById('loanEmi')?.textContent?.replace(/[₹,LCr\s]/g, '') || '0') || 0 };
+          startDate = meta.start_date; endDate = meta.end_date; break;
+        }
+        case 'Credit Card Due': meta = { ...meta, bank_name: gv('fCcBank'), outstanding: gn('fCcOutstanding'), min_due: gn('fCcMinDue'), due_date: gv('fCcDueDate'), interest_rate: gn('fCcRate') || 36 }; computedValue = meta.outstanding; endDate = meta.due_date; break;
+        case 'EMI / BNPL': { const eTotal = gn('fEmiTotal'), eEmi = gn('fEmiAmount'), eTotalM = gi('fEmiTotalMonths'), ePaidM = gi('fEmiPaidMonths'); const ePaid = eEmi * ePaidM; computedValue = eEmi > 0 && eTotalM > 0 ? Math.max(eTotal - ePaid, 0) : eTotal; meta = { ...meta, provider: gv('fEmiProvider'), item_name: gv('fEmiItem'), total_amount: eTotal, emi_amount: eEmi, months_total: eTotalM, months_paid: ePaidM, paid_amount: ePaid, start_date: gv('fEmiStart'), end_date: gv('fEmiEnd') }; startDate = meta.start_date; endDate = meta.end_date; break; }
+        case 'Mortgage Loan': { const mlDom = parseFloat(document.getElementById('mortLiabOutstanding')?.textContent?.replace(/[₹,LCr\s]/g, '') || '0') || 0; const mlLoan = gn('fMortLoanAmtL'), mlPaid = gn('fMortPaidL'); computedValue = mlDom > 0 ? mlDom : Math.max(mlLoan - mlPaid, mlLoan); meta = { ...meta, collateral_type: gv('fMortCollateral'), collateral_value: gn('fMortCollValue'), loan_amount: mlLoan, principal_paid: mlPaid, principal_outstanding: computedValue, interest_rate: gn('fMortRateL'), rate_period: rv('mortLiabRatePeriodGroup') || 'annual', interest_type: rv('mortLiabIntTypeGroup') || 'reducing', tenure_months: gi('fMortTenureL'), lender_name: gv('fMortLenderL'), start_date: gv('fMortStartL'), end_date: gv('fMortEndL'), emi_amount: parseFloat(document.getElementById('mortLiabEmi')?.textContent?.replace(/[₹,LCr\s]/g, '') || '0') || 0 }; startDate = meta.start_date; endDate = meta.end_date; break; }
+        case 'Other Asset': case 'Other Liability': meta = { ...meta, other_value: gn('fOtherValue'), description: gv('fOtherDesc'), start_date: gv('fOtherStart'), end_date: gv('fOtherEnd'), ai_type: aiClassifyResult?.entry_type || '', ai_category: aiClassifyResult?.category || '', ai_notes: aiClassifyResult?.notes || '' }; computedValue = meta.other_value; startDate = meta.start_date; endDate = meta.end_date; break;
+      }
+      return { meta, name, startDate, endDate };
+    }
+
+    async function submitEntry() {
+      if (!selCat) { showToast('Please select a category.', 'error'); return; }
+      const { meta, name, startDate, endDate } = collectMeta();
+      if (!name.trim()) { showToast('Name is required.', 'error'); return; }
+      if (computedValue < 0) { showToast('Value cannot be negative.', 'error'); return; }
+      const isLoanCat = LOAN_CATS.has(selCat);
+      if (!computedValue && !isLoanCat && !['Other Asset', 'Other Liability'].includes(selCat)) { showToast('Please fill in the required value fields.', 'error'); return; }
+      if (!computedValue && isLoanCat) { computedValue = readLoanComputedFromDOM(); if (!computedValue) { showToast('Please fill in the principal / loan amount.', 'error'); return; } }
+      let finalCat = selCat;
+      if ((selCat === 'Other Asset' || selCat === 'Other Liability') && aiClassifyResult) finalCat = aiClassifyResult.category || selCat;
+      const btn = document.getElementById('btnSubmit'); btn.disabled = true; document.getElementById('btnSubmitTxt').textContent = editId ? 'Saving…' : 'Adding…';
+      const fd = new FormData();
+      fd.append('user_id', userId); fd.append('entry_type', selType); fd.append('category', finalCat); fd.append('name', name.trim());
+      fd.append('current_value', computedValue); fd.append('raw_meta', JSON.stringify(meta)); fd.append('start_date', startDate || ''); fd.append('end_date', endDate || '');
+      try {
+        let res;
+        if (editId) res = await fetch(`${API}/networth/update/${editId}`, { method: 'PUT', body: fd });
+        else res = await fetch(`${API}/networth/add`, { method: 'POST', body: fd });
+        let data; try { data = await res.json(); } catch (e) { data = {}; }
+        if (!res.ok) { const ed = data.detail; let em = 'Server error'; if (typeof ed === 'string') em = ed; else if (Array.isArray(ed)) em = ed.map(e => e.msg || JSON.stringify(e)).join('; '); else if (ed) em = JSON.stringify(ed); throw new Error(em); }
+        const prevNW = state.net_worth || 0;
+        state = data; render(); closeModal();
+        pushNWChangeNotif(prevNW, data.net_worth || 0, editId ? `Updated: ${name.trim()}` : `Added: ${name.trim()}`, editId ? 'update' : 'add');
+        showToast(loanWillAddLiab ? 'Entry added ✓ + Loan added to Liabilities' : (editId ? 'Entry updated ✓' : 'Entry added ✓'), 'success');
+      } catch (e) { showToast(e.message || 'Failed to save.', 'error'); }
+      finally { btn.disabled = false; document.getElementById('btnSubmitTxt').textContent = editId ? 'Save Changes' : 'Add Entry'; }
+    }
+
+    async function deleteEntry(id) {
+      if (!userId) return;
+      if (!confirm('Delete this entry? Any attached loan liability will also be removed.')) return;
+      try {
+        const res = await fetch(`${API}/networth/delete/${id}?user_id=${userId}`, { method: 'DELETE' });
+        let data; try { data = await res.json(); } catch (e) { data = {}; }
+        if (!res.ok) { const ed = data.detail; let em = 'Delete failed'; if (typeof ed === 'string') em = ed; else if (Array.isArray(ed)) em = ed.map(e => e.msg || JSON.stringify(e)).join('; '); throw new Error(em); }
+        const prevNW2 = state.net_worth || 0;
+        state = data; render(); showToast('Entry deleted.', 'success');
+        pushNWChangeNotif(prevNW2, data.net_worth || 0, 'Entry deleted', 'delete');
+      } catch (e) { showToast(e.message || 'Delete failed.', 'error'); }
+    }
+
+    function showToast(msg, type = 'success') {
+      if (typeof msg !== 'string') msg = JSON.stringify(msg);
+      const t = document.createElement('div'); t.className = `toast toast-${type}`;
+      t.innerHTML = (type === 'success' ? '✅' : '❌') + ' ' + msg;
+      document.body.appendChild(t); setTimeout(() => t.remove(), 3400);
+    }
+
+    ['entryModal', 'listModal', 'detailModal'].forEach(id => {
+      document.getElementById(id)?.addEventListener('click', function (e) { if (e.target === this) this.classList.remove('open'); });
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') ['entryModal', 'listModal', 'detailModal'].forEach(id => document.getElementById(id)?.classList.remove('open'));
+    });
+
+    // ── NET WORTH CHANGE NOTIFICATIONS ──────────────────────────────────────
+    // Pushes a nw_update notification to localStorage so Notifications.html picks it up.
+    function pushNWChangeNotif(prevNW, newNW, label, action) {
+      const diff = newNW - prevNW;
+      if (Math.abs(diff) < 1) return; // no meaningful change
+      try {
+        const u = JSON.parse(localStorage.getItem('ft_user') || 'null');
+        const NS = 'finace_notifs';
+        const all = JSON.parse(localStorage.getItem(NS) || '[]');
+        const now = new Date();
+        const notif = {
+          id: `nw_${Date.now()}`,
+          userId: u ? u.id : null,
+          type: 'nw_update',
+          action,       // 'add' | 'update' | 'delete' | 'payment'
+          label,
+          prevNW,
+          newNW,
+          diff,
+          isRead: false,
+          status: 'info',
+          createdAt: now.toISOString(),
+          updatedAt: now.toISOString(),
+        };
+        all.push(notif);
+        localStorage.setItem(NS, JSON.stringify(all));
+        // bump unread badge
+        const unreadNow = all.filter(n => !n.isRead && n.status !== 'paid' && n.status !== 'dismissed').length;
+        localStorage.setItem('finace_notif_count', unreadNow);
+      } catch(e) { console.warn('[NW notif]', e); }
+    }
+  </script>
+
+  <!-- AI FLOAT BUTTON -->
+  <div
+    style="position:fixed;bottom:28px;right:28px;z-index:9000;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+
+    <button onclick="window.location.href='index.html'"
+      style="display:flex;align-items:center;gap:9px;background:linear-gradient(135deg,#00D4C8,#006B66);border:none;color:#fff;padding:11px 20px;border-radius:14px;font-size:.83rem;font-weight:700;cursor:pointer;box-shadow:0 8px 28px rgba(0,212,200,0.35);transition:all .25s;font-family:Inter,sans-serif"
+      onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 36px rgba(0,212,200,0.45)'"
+      onmouseout="this.style.transform='';this.style.boxShadow='0 8px 28px rgba(0,212,200,0.35)'">🤖 Ask AI
+      Advisor</button>
+  </div>
+
+  <!-- Universal Light Theme -->
+  <style>body.light-theme{background:#f0f4ff!important;color:#0f172a!important}.light-theme .aurora{display:none!important}.light-theme .sidebar{background:#fff!important;border-right:1px solid #e2e8f0!important}.light-theme .sb-name{color:#0f172a!important}.light-theme .sb-sub,.light-theme .sb-uemail{color:#64748b!important}.light-theme .nav-item{color:#64748b!important}.light-theme .nav-item.active{background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;color:#fff!important}.light-theme .main,.light-theme .content,.light-theme html{background:#f0f4ff!important}.light-theme .top-nav{background:rgba(255,255,255,.95)!important;border-bottom:1px solid #e2e8f0!important}.light-theme .top-nav *{color:#0f172a!important}.light-theme .notif-card,.light-theme .card,.light-theme .sum-card{background:#fff!important;border-color:#e2e8f0!important;color:#0f172a!important}.light-theme .notif-title,.light-theme .card-title{color:#0f172a!important}.light-theme h1,.light-theme h2,.light-theme p{color:#0f172a!important}</style>
+  <script>(function(){try{if(localStorage.getItem("finace_theme")==="light")document.body.classList.add("light-theme")}catch(e){}})();</script>
+</body>
+
+</html>

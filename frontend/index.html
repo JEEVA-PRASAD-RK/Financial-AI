@@ -4,17 +4,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Finace</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./style.css"/>
+  <title>Finace — Smart Finance Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./finace-dark.css" />
+  <!-- Apply saved theme immediately to avoid flash -->
+  <script>try{var t=localStorage.getItem('ft_theme')||localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <style>
+    /* ═══════════════════════════════════════
+       FINACE AI CHAT — DARK THEME OVERRIDE
+    ═══════════════════════════════════════ */
+    :root{--teal:#00D4C8;--violet:#8B5CF6;--bg:#080c14;--bg2:#0d1220;--glass:rgba(255,255,255,.04);--glassh:rgba(255,255,255,.08);--border:rgba(255,255,255,.08);--text:#f0f4ff;--mu:rgba(255,255,255,.45);--green:#00E87A;--red:#FF4D6A;--gold:#FFB020;}
+    html,body{background:var(--bg)!important;color:var(--text)!important;font-family:'Outfit','Inter',sans-serif!important;overflow:hidden!important;}
+
+    /* Sidebar */
+    .sidebar{background:rgba(10,14,25,.97)!important;border-right:1px solid var(--border)!important;box-shadow:none!important;}
+    .sidebar-brand{border-bottom:1px solid var(--border)!important;}
+    .brand-name{color:var(--text)!important;}
+    .brand-sub{color:var(--mu)!important;}
+    .nav-item{color:var(--mu)!important;font-family:'Outfit',sans-serif!important;}
+    .nav-item:hover{background:var(--glassh)!important;color:var(--text)!important;}
+    .nav-item.active{background:linear-gradient(135deg,var(--teal),#006B66)!important;color:#000!important;box-shadow:0 4px 14px rgba(0,212,200,.25)!important;}
+    .sidebar-user{border-top:1px solid var(--border)!important;}
+    .user-row-sb{background:var(--glass)!important;}
+    .user-name{color:var(--text)!important;}
+    .user-email{color:var(--mu)!important;}
+    .logout-btn{color:var(--red)!important;}
+    .logout-btn:hover{background:rgba(255,77,106,.08)!important;}
+
+    /* Top nav */
+    .chat-top-nav{background:rgba(8,12,20,.92)!important;border-bottom:1px solid var(--border)!important;backdrop-filter:blur(20px)!important;}
+    .rate-btn{background:rgba(255,176,32,.08)!important;border:1px solid rgba(255,176,32,.2)!important;color:var(--gold)!important;}
+    .theme-toggle-btn{width:36px!important;height:36px!important;padding:0!important;border-radius:50%!important;background:var(--glass)!important;border:1px solid var(--border)!important;color:var(--mu)!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:.9rem!important;flex-shrink:0!important;}
+    .theme-toggle-btn:hover{border-color:rgba(0,212,200,.4)!important;background:rgba(0,212,200,.08)!important;}
+    .login-btn{background:linear-gradient(135deg,var(--teal),#006B66)!important;border:none!important;color:#000!important;font-weight:700!important;}
+    .login-btn:hover{background:linear-gradient(135deg,#00B8AC,var(--teal))!important;}
+
+    /* Topic cards */
+    .topics-title{color:var(--text)!important;}
+    .topic-card{background:var(--glass)!important;border:1px solid var(--border)!important;}
+    .topic-card:hover{border-color:rgba(0,212,200,.35)!important;background:rgba(0,212,200,.06)!important;box-shadow:0 4px 16px rgba(0,212,200,.1)!important;transform:translateY(-2px)!important;}
+    .topic-name{color:var(--teal)!important;}
+    .topic-desc{color:var(--mu)!important;}
+
+    /* Chat area */
+    .chat-header{background:var(--bg2)!important;border:1px solid var(--border)!important;border-bottom:none!important;}
+    .chat-title{color:var(--text)!important;}
+    .new-chat-btn{background:linear-gradient(135deg,var(--teal),#006B66)!important;color:#000!important;box-shadow:0 4px 12px rgba(0,212,200,.25)!important;}
+    .chat-messages{background:rgba(8,12,20,.6)!important;border:1px solid var(--border)!important;backdrop-filter:blur(10px)!important;}
+    .chat-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1)!important;}
+
+    /* AI & user bubbles */
+    .ai-bubble{background:rgba(255,255,255,.04)!important;border:1px solid rgba(255,255,255,.08)!important;}
+    .ai-bubble p,.ai-bubble li{color:rgba(240,244,255,.88)!important;}
+    .ai-bubble strong{color:var(--text)!important;}
+    .chat-msg-list li{color:rgba(240,244,255,.8)!important;}
+    .chat-msg-list li::before{color:var(--teal)!important;}
+    .chat-msg-time{color:rgba(255,255,255,.25)!important;}
+    .user-bubble{background:linear-gradient(135deg,var(--teal),#006B66)!important;}
+    .user-bubble p{color:#000!important;font-weight:500!important;}
+
+    /* Input area */
+    .chat-input-box{background:rgba(255,255,255,.04)!important;border:1.5px solid rgba(255,255,255,.1)!important;box-shadow:none!important;}
+    .chat-input-box:focus-within{border-color:rgba(0,212,200,.4)!important;box-shadow:0 0 0 3px rgba(0,212,200,.08)!important;}
+    .chat-input-box input{color:var(--text)!important;}
+    .chat-input-box input::placeholder{color:rgba(255,255,255,.3)!important;}
+    .send-btn{background:linear-gradient(135deg,var(--teal),#006B66)!important;color:#000!important;font-weight:700!important;box-shadow:0 3px 10px rgba(0,212,200,.3)!important;}
+    .send-btn:hover{box-shadow:0 5px 14px rgba(0,212,200,.4)!important;}
+    .chat-tip{color:rgba(255,255,255,.25)!important;}
+    .file-preview-pill{background:rgba(0,212,200,.08)!important;border:1px solid rgba(0,212,200,.2)!important;color:var(--teal)!important;}
+    .star-chat-btn{background:none!important;border:none!important;color:rgba(255,255,255,.3)!important;}
+    .star-chat-btn:hover{color:var(--gold)!important;}
+
+    /* AI response formatting */
+    .ai-header-1{color:var(--text)!important;border-bottom:1px solid rgba(255,255,255,.08)!important;}
+    .ai-header-2{color:rgba(240,244,255,.9)!important;border-bottom:1px solid rgba(255,255,255,.06)!important;}
+    .ai-header-3{color:rgba(255,255,255,.6)!important;}
+    .ai-h1,.ai-h2,.ai-h3{color:var(--text)!important;}
+    .ai-list-num{color:var(--teal)!important;}
+    .ai-list-bullet{color:var(--teal)!important;}
+    .ai-list-text{color:rgba(240,244,255,.88)!important;}
+
+    /* Auth modal */
+    .auth-overlay{background:rgba(0,0,0,.8)!important;backdrop-filter:blur(8px)!important;}
+    .auth-modal{background:var(--bg2)!important;border:1px solid var(--border)!important;}
+    .auth-logo-name{color:var(--text)!important;}
+    .auth-logo-sub{color:var(--mu)!important;}
+    .auth-title{color:var(--text)!important;}
+    .auth-sub{color:var(--mu)!important;}
+    .auth-field label{color:var(--mu)!important;}
+    .auth-field input{background:rgba(255,255,255,.05)!important;border:1.5px solid var(--border)!important;color:var(--text)!important;border-radius:12px!important;}
+    .auth-field input:focus{border-color:rgba(0,212,200,.5)!important;background:rgba(0,212,200,.04)!important;}
+    .auth-field input::placeholder{color:rgba(255,255,255,.28)!important;}
+    .auth-submit{background:linear-gradient(135deg,var(--teal),#006B66)!important;color:#000!important;font-weight:700!important;}
+    .auth-err{background:rgba(255,77,106,.08)!important;border:1px solid rgba(255,77,106,.25)!important;color:var(--red)!important;}
+    .auth-ok{background:rgba(0,232,122,.08)!important;border:1px solid rgba(0,232,122,.25)!important;color:var(--green)!important;}
+    .auth-switch{color:var(--mu)!important;}
+    .auth-switch a{color:var(--teal)!important;}
+    .auth-close{color:var(--mu)!important;}
+    .auth-close:hover{color:var(--red)!important;}
+    .otp-box{background:rgba(255,255,255,.05)!important;border:1.5px solid var(--border)!important;color:var(--text)!important;}
+    .otp-box:focus{border-color:rgba(0,212,200,.5)!important;}
+    .otp-hint,.otp-resend{color:var(--mu)!important;}
+
+    /* Onboarding */
+    .onboard-overlay{background:rgba(0,0,0,.85)!important;backdrop-filter:blur(10px)!important;}
+    .onboard-box{background:var(--bg2)!important;border:1px solid var(--border)!important;}
+    .onboard-title{color:var(--text)!important;}
+    .onboard-stepbadge{background:rgba(0,212,200,.12)!important;color:var(--teal)!important;}
+    .onboard-skip{color:var(--mu)!important;}
+    .onboard-progress{background:rgba(255,255,255,.08)!important;}
+    .onboard-bar{background:linear-gradient(90deg,var(--teal),#006B66)!important;}
+    .oq-label{color:var(--text)!important;}
+    .oq-input{background:rgba(255,255,255,.05)!important;border:1.5px solid var(--border)!important;color:var(--text)!important;}
+    .oq-input:focus{border-color:rgba(0,212,200,.5)!important;}
+    .oq-opt{background:rgba(255,255,255,.04)!important;border:1.5px solid rgba(255,255,255,.1)!important;color:var(--mu)!important;}
+    .oq-opt:hover{border-color:rgba(0,212,200,.3)!important;color:var(--text)!important;}
+    .oq-opt.sel{background:rgba(0,212,200,.1)!important;border-color:rgba(0,212,200,.45)!important;color:var(--teal)!important;}
+    .onboard-next{background:linear-gradient(135deg,var(--teal),#006B66)!important;color:#000!important;font-weight:700!important;}
+    .onboard-back{background:var(--glass)!important;border:1px solid var(--border)!important;color:var(--mu)!important;}
+    .congrats-banner{background:rgba(0,232,122,.08)!important;border:1px solid rgba(0,232,122,.2)!important;color:var(--green)!important;}
+    .onboard-done h2,.onboard-done p{color:var(--text)!important;}
+
+    /* Toast */
+    .toast{background:rgba(13,18,32,.95)!important;border:1px solid var(--border)!important;backdrop-filter:blur(12px)!important;}
+
+    /* Gold rate details modal */
+    .rate-details-overlay,.rate-details-modal{background:var(--bg2)!important;border-color:var(--border)!important;color:var(--text)!important;}
+  </style>
 </head>
 
 <body>
   <div class="app">
     <aside class="sidebar">
       <div class="sidebar-brand">
-        <div class="brand-icon" style="background:none;box-shadow:none;padding:0;overflow:hidden"><img
-            src="FinaceLogo.jpeg" alt="Finace" style="width:42px;height:42px;object-fit:contain;border-radius:12px" />
+        <div class="brand-icon" style="background:none;box-shadow:none;padding:0;overflow:hidden">
+          <img src="FinaceLogo.jpeg" alt="Finace"
+            style="width:42px;height:42px;object-fit:contain;border-radius:12px" />
         </div>
         <div>
           <div class="brand-name">Finace</div>
@@ -22,28 +148,31 @@
         </div>
       </div>
       <nav class="sidebar-nav">
-        <button class="nav-item active" id="nav-ai" onclick="showPage('ai');setNav(this)"><span class="ni-icon">✦</span>
-          AI Advisor</button>
-        <button class="nav-item" id="nav-dash" onclick=" window.location.href = 'dashboard.html';setNav(this)"><span
-            class="ni-icon">⊞</span> Dashboard</button>
-        <button class="nav-item" id="nav-invest" onclick="window.location.href = 'investment.html';setNav(this)"><span
+        <button class="nav-item" onclick="window.location.href='Home.html'"> <span>🏠</span> Home</button>
+        <button class="nav-item" id="nav-dash" onclick="goToDashboard();setNav(this)"> <span class="ni-icon">⊞</span>
+          Dashboard</button>
+        <button class="nav-item" id="nav-invest" onclick="goToInvestment();setNav(this)"> <span
             class="ni-icon">📈</span> Investments</button>
-        
+        <button class="nav-item" id="nav-suggestions" onclick="goToSuggestions();setNav(this)"> <span
+            class="ni-icon">⭐</span> Suggestions</button>
+        <button class="nav-item" id="nav-assets" onclick="goToAssets();setNav(this)"> <span class="ni-icon">⚖️</span>
+          Net Worth</button>
       </nav>
       <div class="sidebar-user">
         <div class="user-row-sb">
-          <div class="user-av" id="sidebar-av">JD</div>
+          <!-- clicking avatar or name → profile -->
+          <div class="user-av" id="sidebar-av" style="cursor:pointer" title="My Profile" onclick="goToProfile()">?</div>
           <div>
-            <div class="user-name" id="sidebar-name">Guest</div>
+            <div class="user-name" id="sidebar-name" style="cursor:pointer" onclick="goToProfile()">Guest</div>
             <div class="user-email" id="sidebar-email">Not logged in</div>
           </div>
         </div>
-        <button class="logout-btn" onclick="doLogout()">→ Logout</button>
+        <button class="logout-btn" id="sidebar-logout-btn" onclick="doLogout()" style="display: none;">→ Logout</button>
       </div>
     </aside>
     <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
     <main class="main">
-      <!-- AI PAGE -->
       <!-- AI PAGE -->
       <div id="page-ai" class="page active ai-page">
 
@@ -52,31 +181,30 @@
           <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
           <button class="rate-btn" id="rate-btn" onclick="showRateDetails()">
             <span class="coin gold-coin">Au</span>
-            <span id="gold-val">...</span>
+            <span id="gold-val">—</span>
             <span class="coin-divider">/</span>
             <span class="coin silver-coin">Ag</span>
-            <span id="silver-val">...</span>
+            <span id="silver-val">—</span>
           </button>
+
           <div class="nav-spacer"></div>
           <div class="nav-right">
-            <button class="login-btn" id="login-btn" onclick="openAuth('login')">👤 Login / Register</button>
-            <div class="avatar-dropdown" id="avatar-dropdown">
-              <button class="user-avatar-btn" id="user-avatar-btn" onclick="toggleAvatarMenu(event)">
-                <div class="uab-av" id="uab-initials">?</div>
-                <span id="uab-name-txt">User</span>
-                <span style="font-size:.65rem;opacity:.7">▾</span>
-              </button>
-              <div class="avatar-dropdown-menu" id="avatar-menu">
-                <button class="adm-item" onclick="goUserProfile()">👤 My Profile</button>
-                <div class="adm-divider"></div>
-                <button class="adm-item danger" onclick="doLogout()">→ Logout</button>
-              </div>
+            <button class="login-btn" id="login-btn" onclick="window.location.href='auth.html'">👤 Login / Register</button>
+            <!-- Hidden trigger for guest banner -->
+            <button id="guest-banner-login-trigger" style="display:none" onclick="window.location.href='auth.html'"></button>
+            <!-- Simple user avatar for logged in users - ONLY AVATAR, NO NAME, NO LINK -->
+            <div id="logged-in-avatar" style="display: none;">
+              <div class="uab-av" id="uab-initials" style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5, #7c3aed); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: #fff;">?</div>
             </div>
+            <!-- Theme toggle — rightmost -->
+            <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Toggle theme">
+              <span class="theme-icon" id="theme-icon">🌙</span>
+            </button>
           </div>
         </div>
 
-        <!-- Topics Section — INSIDE #page-ai -->
-        <div class="topics-section">
+        <!-- Topics Section -->
+        <div class="topics-section" id="topics-section">
           <div class="topics-title">Popular Topics</div>
           <div class="topics-grid">
             <div class="topic-card" onclick="startTopic('Savings Strategy')">
@@ -112,8 +240,12 @@
           </div>
         </div>
 
-        <!-- Chat Area — INSIDE #page-ai -->
+        <!-- Chat Area -->
         <div class="chat-area">
+          <div class="chat-header">
+            <div class="chat-title">AI Financial Advisor</div>
+            <button class="new-chat-btn" onclick="startNewChat()" title="Start New Chat">✨ New Chat</button>
+          </div>
           <div class="chat-messages" id="chat">
             <div class="msg-row">
               <div class="ai-bubble">
@@ -131,7 +263,7 @@
           </div>
         </div>
 
-        <!-- Input Area — INSIDE #page-ai -->
+        <!-- Input Area -->
         <div class="chat-input-area">
           <div class="file-preview-pill" id="file-preview">
             <span>📎</span><span id="file-preview-name">file.pdf</span>
@@ -151,352 +283,20 @@
           <div class="chat-tip">💡 Tip: Ask specific questions for better advice. Example: "How to improve CIBIL score?"
           </div>
         </div>
-
-      
-      <!-- DASHBOARD -->
-      <div id="page-dashboard" class="page" style="overflow-y:auto">
-        <div id="fo-panel-wrap" style="display:none;padding:22px 24px;flex:1">
-          <div class="fo-panel">
-            <div class="fo-header">
-              <div>
-                <div class="fo-title" id="fo-title">Overview</div>
-                <div class="fo-sub" id="fo-sub"></div>
-              </div><button class="fo-close" onclick="closeFoPanel()">✕</button>
-            </div>
-            <div id="fo-content"></div>
-          </div>
-        </div>
-        <div id="dash-main" class="dash-page">
-          <div class="dash-title">Welcome back, <span id="dash-name">there</span>!</div>
-          <div class="dash-sub">Select a section to view detailed insights</div>
-          <div class="dash-cards-grid">
-            <div class="dash-card" onclick="openPanel('fo')">
-              <div class="dash-card-top">
-                <div class="dash-card-icon dci-blue">💼</div>
-                <div class="dash-card-arrow">›</div>
-              </div>
-              <h3>Financial Overview</h3>
-              <div class="dash-card-desc">Balance, income &amp; expenses</div>
-              <div class="dash-card-footer">
-                <div class="dash-card-stat" id="dc-balance">₹20,35,001</div>
-                <div class="dash-card-link" onclick="event.stopPropagation();openPanel('fo')">View Details →</div>
-              </div>
-            </div>
-            <div class="dash-card" onclick="openPanel('sc')">
-              <div class="dash-card-top">
-                <div class="dash-card-icon dci-purple">📊</div>
-                <div class="dash-card-arrow">›</div>
-              </div>
-              <h3>Spending by Category</h3>
-              <div class="dash-card-desc">Track your expenses</div>
-              <div class="dash-card-footer">
-                <div class="dash-card-stat">6 Categories</div>
-                <div class="dash-card-link" onclick="event.stopPropagation();openPanel('sc')">View Details →</div>
-              </div>
-            </div>
-            <div class="dash-card" onclick="openPanel('bt')">
-              <div class="dash-card-top">
-                <div class="dash-card-icon dci-orange">🎯</div>
-                <div class="dash-card-arrow">›</div>
-              </div>
-              <h3>Budget Tracking</h3>
-              <div class="dash-card-desc">Monitor your budgets</div>
-              <div class="dash-card-footer">
-                <div class="dash-card-stat">4 Active</div>
-                <div class="dash-card-link" onclick="event.stopPropagation();openPanel('bt')">View Details →</div>
-              </div>
-            </div>
-            <div class="dash-card" onclick="openPanel('sg')">
-              <div class="dash-card-top">
-                <div class="dash-card-icon dci-pink">🐷</div>
-                <div class="dash-card-arrow">›</div>
-              </div>
-              <h3>Savings Goals</h3>
-              <div class="dash-card-desc">Track your progress</div>
-              <div class="dash-card-footer">
-                <div class="dash-card-stat" id="dc-goals">3 Goals</div>
-                <div class="dash-card-link" onclick="event.stopPropagation();openPanel('sg')">View Details →</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- PROFILE -->
-      <div id="page-profile" class="page" style="overflow-y:auto">
-        <div class="profile-page">
-          <div class="profile-header">
-            <h1>My Profile</h1>
-            <p>Update your financial details for more personalised advice</p>
-          </div>
-          <div class="profile-form-card">
-            <div class="pf-section-head">
-              <div class="pf-sec-icon">👤</div>
-              <div>
-                <div class="pf-sec-title">Basic Information</div>
-                <div class="pf-sec-desc">Your personal details</div>
-              </div>
-            </div>
-            <div class="pf-body">
-              <div class="pf-grid">
-                <div class="pf-group"><label>Full Name</label><input type="text" id="f-name" placeholder="John Doe" />
-                </div>
-                <div class="pf-group"><label>Email</label><input type="email" id="f-email"
-                    placeholder="john@example.com" />
-                </div>
-                <div class="pf-group"><label>Age</label><input type="number" id="f-age" placeholder="24" min="18"
-                    max="80" /></div>
-                <div class="pf-group"><label>Employment</label><select id="f-emp">
-                    <option value="">Select status</option>
-                    <option>Salaried — Private</option>
-                    <option>Salaried — Government</option>
-                    <option>Self-Employed / Freelancer</option>
-                    <option>Business Owner</option>
-                    <option>Student</option>
-                  </select></div>
-              </div>
-            </div>
-            <div class="pf-section-head">
-              <div class="pf-sec-icon" style="background:linear-gradient(135deg,#059669,#10b981)">💰</div>
-              <div>
-                <div class="pf-sec-title">Income &amp; Savings</div>
-                <div class="pf-sec-desc">Monthly figures in ₹</div>
-              </div>
-            </div>
-            <div class="pf-body">
-              <div class="pf-grid">
-                <div class="pf-group"><label>Monthly Income</label>
-                  <div class="inp-pre-w"><span class="inp-pre">₹</span><input type="number" id="f-income"
-                      placeholder="50000" /></div>
-                </div>
-                <div class="pf-group"><label>Monthly Expenses</label>
-                  <div class="inp-pre-w"><span class="inp-pre">₹</span><input type="number" id="f-expenses"
-                      placeholder="30000" /></div>
-                </div>
-                <div class="pf-group"><label>Monthly Savings</label>
-                  <div class="inp-pre-w"><span class="inp-pre">₹</span><input type="number" id="f-savings"
-                      placeholder="10000" /></div>
-                </div>
-                <div class="pf-group"><label>Total Savings</label>
-                  <div class="inp-pre-w"><span class="inp-pre">₹</span><input type="number" id="f-tsavings"
-                      placeholder="200000" /></div>
-                </div>
-              </div>
-            </div>
-            <div class="pf-section-head">
-              <div class="pf-sec-icon" style="background:linear-gradient(135deg,#dc2626,#ef4444)">🏦</div>
-              <div>
-                <div class="pf-sec-title">Debts &amp; EMIs</div>
-                <div class="pf-sec-desc">Enter 0 if none</div>
-              </div>
-            </div>
-            <div class="pf-body">
-              <div class="pf-grid">
-                <div class="pf-group"><label>Total Debt</label>
-                  <div class="inp-pre-w"><span class="inp-pre">₹</span><input type="number" id="f-debt"
-                      placeholder="0" />
-                  </div>
-                </div>
-                <div class="pf-group"><label>Monthly EMI</label>
-                  <div class="inp-pre-w"><span class="inp-pre">₹</span><input type="number" id="f-emi"
-                      placeholder="0" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="pf-section-head">
-              <div class="pf-sec-icon" style="background:linear-gradient(135deg,#d97706,#f59e0b)">🎯</div>
-              <div>
-                <div class="pf-sec-title">Goals &amp; Risk</div>
-                <div class="pf-sec-desc">What are you working towards?</div>
-              </div>
-            </div>
-            <div class="pf-body">
-              <div class="pf-group full" style="margin-bottom:13px"><label>Select your goals</label>
-                <div class="goal-grid-pf">
-                  <label class="goal-pf" onclick="toggleGoal(this)"><input type="checkbox" value="emergency" />
-                    <div class="g-cb"></div><span class="g-em">🛡️</span><span class="g-tx">Emergency Fund</span>
-                  </label>
-                  <label class="goal-pf" onclick="toggleGoal(this)"><input type="checkbox" value="house" />
-                    <div class="g-cb"></div><span class="g-em">🏠</span><span class="g-tx">Buy a Home</span>
-                  </label>
-                  <label class="goal-pf" onclick="toggleGoal(this)"><input type="checkbox" value="invest" />
-                    <div class="g-cb"></div><span class="g-em">📈</span><span class="g-tx">Invest</span>
-                  </label>
-                  <label class="goal-pf" onclick="toggleGoal(this)"><input type="checkbox" value="debt" />
-                    <div class="g-cb"></div><span class="g-em">💳</span><span class="g-tx">Clear Debt</span>
-                  </label>
-                  <label class="goal-pf" onclick="toggleGoal(this)"><input type="checkbox" value="retire" />
-                    <div class="g-cb"></div><span class="g-em">🌴</span><span class="g-tx">Retirement</span>
-                  </label>
-                  <label class="goal-pf" onclick="toggleGoal(this)"><input type="checkbox" value="tax" />
-                    <div class="g-cb"></div><span class="g-em">💰</span><span class="g-tx">Save Tax</span>
-                  </label>
-                </div>
-              </div>
-              <div class="pf-grid">
-                <div class="pf-group"><label>Risk Tolerance</label><select id="f-risk">
-                    <option value="">Select</option>
-                    <option>Conservative</option>
-                    <option>Moderate</option>
-                    <option>Aggressive</option>
-                  </select></div>
-                <div class="pf-group"><label>Investment Horizon</label><select id="f-horizon">
-                    <option value="">Select</option>
-                    <option>Short-term (0-2 yr)</option>
-                    <option>Medium-term (2-5 yr)</option>
-                    <option>Long-term (5+ yr)</option>
-                  </select></div>
-              </div>
-            </div>
-            <div class="pf-footer"><button class="pf-submit" onclick="saveProfile()">Save Profile →</button></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- USER PROFILE PAGE -->
-      <div id="page-userprofile" class="page" style="overflow-y:auto">
-        <div class="userprofile-page">
-
-          <!-- Hero card -->
-          <div class="up-hero">
-            <div class="up-av-big" id="up-av-big">?</div>
-            <div class="up-hero-info">
-              <div class="up-hero-name" id="up-hero-name">—</div>
-              <div class="up-hero-email" id="up-hero-email">—</div>
-              <div class="up-hero-dob"><span>🎂</span> <span id="up-hero-dob">—</span></div>
-            </div>
-          </div>
-
-          <!-- Basic info (read-only) -->
-          <div class="up-card">
-            <div class="up-card-head">
-              <div class="up-card-title"><span>👤</span> Account Details</div>
-            </div>
-            <div class="up-card-body">
-              <div class="up-info-grid">
-                <div class="up-info-item">
-                  <div class="up-info-label">Full Name</div>
-                  <div class="up-info-value" id="up-name-val">—</div>
-                </div>
-                <div class="up-info-item">
-                  <div class="up-info-label">Email Address</div>
-                  <div class="up-info-value" id="up-email-val">—</div>
-                </div>
-                <div class="up-info-item">
-                  <div class="up-info-label">Date of Birth</div>
-                  <div class="up-info-value" id="up-dob-val">—</div>
-                </div>
-                <div class="up-info-item">
-                  <div class="up-info-label">Gender</div>
-                  <div class="up-info-value" id="up-gender-val"><span class="up-info-empty">Not set</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Additional info (editable) -->
-          <div class="up-card" id="up-addl-card">
-            <div class="up-card-head">
-              <div class="up-card-title"><span>📊</span> Additional Information</div>
-              <div style="display:flex;gap:8px">
-                <button class="up-edit-btn" id="up-edit-btn" onclick="startEditAddl()">✏️ Edit</button>
-                <button class="up-save-btn" id="up-save-btn" onclick="saveAddlInfo()">💾 Save Changes</button>
-              </div>
-            </div>
-            <div class="up-card-body">
-              <div class="up-info-grid">
-
-                <div class="up-info-item">
-                  <div class="up-info-label">Monthly Income</div>
-                  <div class="up-info-value" id="up-income-val"><span class="up-info-empty">Not filled</span></div>
-                  <div style="position:relative"><span
-                      style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:.82rem;font-weight:600;color:#4f46e5;z-index:1;pointer-events:none">₹</span><input
-                      class="up-input" id="up-income-input" type="number" placeholder="e.g. 50000"
-                      style="padding-left:24px" /></div>
-                </div>
-
-                <div class="up-info-item">
-                  <div class="up-info-label">Monthly Expense</div>
-                  <div class="up-info-value" id="up-expense-val"><span class="up-info-empty">Not filled</span></div>
-                  <div style="position:relative"><span
-                      style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:.82rem;font-weight:600;color:#4f46e5;z-index:1;pointer-events:none">₹</span><input
-                      class="up-input" id="up-expense-input" type="number" placeholder="e.g. 30000"
-                      style="padding-left:24px" /></div>
-                </div>
-
-                <div class="up-info-item">
-                  <div class="up-info-label">Gender</div>
-                  <div class="up-info-value" id="up-gender-val2"><span class="up-info-empty">Not set</span></div>
-                  <select class="up-select" id="up-gender-select">
-                    <option value="">Select gender</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Non-binary</option>
-                    <option>Prefer not to say</option>
-                  </select>
-                </div>
-
-                <div class="up-info-item">
-                  <div class="up-info-label">Working Field</div>
-                  <div class="up-info-value" id="up-field-val"><span class="up-info-empty">Not set</span></div>
-                  <select class="up-select" id="up-field-select">
-                    <option value="">Select field</option>
-                    <option>IT / Tech</option>
-                    <option>Finance</option>
-                    <option>Healthcare</option>
-                    <option>Education</option>
-                    <option>Business</option>
-                    <option>Government</option>
-                    <option>Student</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-
-                <div class="up-info-item">
-                  <div class="up-info-label">Insurance</div>
-                  <div class="up-info-value" id="up-insurance-val"><span class="up-info-empty">Not set</span></div>
-                  <select class="up-select" id="up-insurance-select">
-                    <option value="">Select</option>
-                    <option>Yes — Health</option>
-                    <option>Yes — Life</option>
-                    <option>Both</option>
-                    <option>No</option>
-                  </select>
-                </div>
-
-                <div class="up-info-item">
-                  <div class="up-info-label">Emergency Fund</div>
-                  <div class="up-info-value" id="up-emergency-val"><span class="up-info-empty">Not set</span></div>
-                  <select class="up-select" id="up-emergency-select">
-                    <option value="">Select</option>
-                    <option>Yes, 3-6 months</option>
-                    <option>Yes, 6+ months</option>
-                    <option>Working on it</option>
-                    <option>Not yet</option>
-                  </select>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <!-- Logout button -->
-          <button class="up-logout-btn" onclick="doLogout();showPage('ai');setNav(document.getElementById('nav-ai'))">
-            → Sign Out
-          </button>
-
-        </div>
-      </div><!-- /userprofile page -->
+      </div><!-- /page-ai -->
     </main>
   </div>
+
   <div class="toast" id="toast"><span id="toast-icon">✅</span> <span id="toast-text">Done!</span></div>
+
   <!-- AUTH OVERLAY -->
   <div class="auth-overlay" id="auth-overlay">
     <div class="auth-modal">
       <button class="auth-close" onclick="closeAuth()">✕</button>
       <div class="auth-logo">
-        <div class="auth-logo-icon" style="background:none;box-shadow:none;padding:0;overflow:hidden"><img
-            src="FinaceLogo.jpeg" alt="Finace" style="width:36px;height:36px;object-fit:contain;border-radius:10px" />
+        <div class="auth-logo-icon" style="background:none;box-shadow:none;padding:0;overflow:hidden">
+          <img src="FinaceLogo.jpeg" alt="Finace"
+            style="width:36px;height:36px;object-fit:contain;border-radius:10px" />
         </div>
         <div>
           <div class="auth-logo-name">Finace</div>
@@ -506,6 +306,7 @@
       <div id="auth-content"></div>
     </div>
   </div>
+
   <!-- ONBOARDING OVERLAY -->
   <div class="onboard-overlay" id="onboard-overlay">
     <div class="onboard-box">
@@ -515,22 +316,127 @@
 
   <script>
     const API = 'http://127.0.0.1:8000';
-    let P = { name: 'Guest', fullName: 'Guest', email: '', age: 0, income: 0, expenses: 0, savings: 0, tsavings: 0, debt: 0, emi: 0, risk: 'Moderate', horizon: 'Long-term (5+ yr)', goals: [] };
     let chatHistory = [];
     let currentUser = null;
-    let pendingEmail = '';
     let obAnswers = {};
+    let P = { income: 0, expenses: 0, savings: 0, tsavings: 0, debt: 0, emi: 0, risk: '', horizon: '', goals: [] };
+    let metalRates = { gold: 0, silver: 0 };
+    let sidebarOpen = false;
     let obStep = 0;
-    const KB = `SAVINGS: 50-30-20 rule. Emergency=6x expenses. Step-up SIP 10%/yr. CIBIL: 750+ excellent; pay on time, keep utilization <30%. LOANS: Home 8.5-9.5%; EMI ~950/lakh@9%/20yr. INVESTMENTS: Nifty50 index, ELSS 80C, PPF 7.1% EEE, NPS 80CCD(1B). TAX: 80C 1.5L, 80D 25K. GOLD: 6841/g; SGB best.`;
+    let OB_STEPS = [];
+    let currentPopupSuggestion = '';
 
-    /* ── ROUTING ── */
-    function showPage(n) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-' + n).classList.add('active'); if (n === 'ai') syncAiPage(); if (n === 'dashboard') syncDash(); }
-    function setNav(el) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); }
-    function syncAiPage() { document.getElementById('ai-greet-name').textContent = currentUser ? currentUser.name : 'there'; const now = new Date(); document.getElementById('ai-time').textContent = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }); }
-    function syncDash() { document.getElementById('dash-name').textContent = currentUser ? currentUser.name : 'there'; document.getElementById('dc-balance').textContent = '₹' + P.tsavings.toLocaleString('en-IN'); const g = P.goals.length; document.getElementById('dc-goals').textContent = g + ' Goal' + (g !== 1 ? 's' : ''); }
-    syncAiPage(); syncDash();
+    /* ── SESSION ──────────────────────────────────────────── */
+    function persistSession() {
+      try {
+        if (currentUser) {
+          localStorage.setItem('ft_user', JSON.stringify(currentUser));
+          localStorage.setItem('ft_ob', JSON.stringify(obAnswers));
+          localStorage.setItem('ft_P', JSON.stringify(P));
+        }
+      } catch (e) { console.warn('persistSession:', e); }
+    }
+    function restoreSession() {
+      try {
+        const storedUser = localStorage.getItem('ft_user');
+        const storedOb = localStorage.getItem('ft_ob');
+        const storedP = localStorage.getItem('ft_P');
 
-    /* ── API HELPER ── */
+        // Hide logout buttons by default
+        document.querySelector('.logout-btn')?.classList.add('hidden');
+        document.querySelector('.avatar-dropdown-menu .adm-item.danger')?.classList.add('hidden');
+
+        if (storedUser) {
+          currentUser = JSON.parse(storedUser);
+          if (storedOb) obAnswers = JSON.parse(storedOb);
+          if (storedP) P = { ...P, ...JSON.parse(storedP) };
+          if (currentUser.profile) {
+            if (currentUser.profile.monthly_income) P.income = parseFloat(currentUser.profile.monthly_income) || P.income;
+            if (currentUser.profile.monthly_expense) P.expenses = parseFloat(currentUser.profile.monthly_expense) || P.expenses;
+            if (currentUser.profile.gender) obAnswers['ob-gender'] = currentUser.profile.gender;
+            if (currentUser.profile.work_field) obAnswers['ob-field'] = currentUser.profile.work_field;
+            if (currentUser.profile.has_insurance) obAnswers['ob-insurance'] = currentUser.profile.has_insurance;
+            if (currentUser.profile.emergency_fund) obAnswers['ob-emergency'] = currentUser.profile.emergency_fund;
+          }
+          setLoggedIn();
+        }
+      } catch (e) { console.warn('restoreSession:', e); }
+    }
+
+    /* ── CHAT PERSISTENCE ──────────────────────────────────── */
+    function saveChatHistory() {
+      if (currentUser) {
+        try { localStorage.setItem('chat_history_' + currentUser.id, JSON.stringify(chatHistory)); } catch (e) { }
+      }
+    }
+    function loadChatHistory() {
+      if (currentUser) {
+        try {
+          const saved = localStorage.getItem('chat_history_' + currentUser.id);
+          if (saved) { chatHistory = JSON.parse(saved); rebuildChatFromHistory(); }
+        } catch (e) { }
+      }
+    }
+    function rebuildChatFromHistory() {
+      const chatContainer = document.getElementById('chat');
+      const welcomeMessage = chatContainer.querySelector('.msg-row');
+      chatContainer.innerHTML = '';
+      if (welcomeMessage) chatContainer.appendChild(welcomeMessage);
+      chatHistory.forEach(msg => {
+        if (msg.role === 'user') addMessage(msg.content, 'user');
+        else if (msg.role === 'assistant') addMessage(msg.content, 'bot');
+      });
+    }
+    function startNewChat() {
+      if (confirm('Start a new chat? This will clear the current conversation.')) {
+        chatHistory = [];
+        saveChatHistory();
+        document.getElementById('chat').innerHTML = `
+          <div class="msg-row">
+            <div class="ai-bubble">
+              <p>👋 Hi <strong id="ai-greet-name">${currentUser?.name || 'there'}</strong>! I'm your Smart Finance Assistant.</p>
+              <ul class="chat-msg-list" style="margin-top:8px">
+                <li>"How much should I save each month?"</li>
+                <li>"Which loan is right for me?"</li>
+                <li>"How do I improve my CIBIL score?"</li>
+                <li>"What is the best SIP for beginners?"</li>
+              </ul>
+              <p style="margin-top:10px">I'm here to help you make informed financial decisions! 🎯</p>
+              <div class="chat-msg-time" id="ai-time">—</div>
+            </div>
+          </div>`;
+        showToast('✨', 'New chat started!');
+      }
+    }
+
+    /* ── ROUTING ────────────────────────────────────────────── */
+    function showPage(n) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const pg = document.getElementById('page-' + n);
+      if (pg) pg.classList.add('active');
+      if (n === 'ai') syncAiPage();
+    }
+    function setNav(el) {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      if (el) el.classList.add('active');
+    }
+
+    /* ── NAVIGATION — all pages accessible without login ─── */
+    function goToDashboard() { persistSession(); window.location.href = 'dashboard.html'; }
+    function goToInvestment() { persistSession(); window.location.href = 'investment.html'; }
+    function goToSuggestions() { persistSession(); window.location.href = 'suggestions.html'; }
+    function goToAssets() { persistSession(); window.location.href = 'networth.html'; }
+    function goToProfile() { persistSession(); window.location.href = 'profile.html'; }
+    function goUserProfile() { document.getElementById('avatar-menu')?.classList.remove('open'); goToProfile(); }
+
+    function syncAiPage() {
+      document.getElementById('ai-greet-name').textContent = currentUser ? currentUser.name : 'there';
+      const now = new Date();
+      document.getElementById('ai-time').textContent = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    }
+    syncAiPage();
+
+    /* ── API HELPER ─────────────────────────────────────────── */
     async function apiPost(path, formData) {
       const res = await fetch(API + path, { method: 'POST', body: formData });
       const data = await res.json();
@@ -538,23 +444,22 @@
       return data;
     }
 
-    /* ── AUTH MODAL ── */
+    /* ── AUTH MODAL ─────────────────────────────────────────── */
     function openAuth(mode) { document.getElementById('auth-overlay').classList.add('open'); mode === 'login' ? renderLogin() : renderRegister(); }
     function closeAuth() { document.getElementById('auth-overlay').classList.remove('open'); }
     function showAuthErr(m) { const e = document.getElementById('auth-err'); if (e) { e.textContent = m; e.style.display = 'block'; } }
-    function showAuthOk(m) { const e = document.getElementById('auth-ok'); if (e) { e.textContent = m; e.style.display = 'block'; } }
     function setBtnLoading(id, loading, label) { const b = document.getElementById(id); if (b) { b.disabled = loading; b.textContent = loading ? 'Please wait…' : label; } }
 
     function renderLogin() {
       document.getElementById('auth-content').innerHTML = `
-    <div class="auth-title">Welcome back 👋</div>
-    <div class="auth-sub">Sign in to get personalised financial advice</div>
-    <div class="auth-err" id="auth-err"></div>
-    <div class="auth-ok" id="auth-ok"></div>
-    <div class="auth-field"><label>Email Address</label><input type="email" id="li-email" placeholder="you@example.com"/></div>
-    <div class="auth-field"><label>Password</label><input type="password" id="li-pass" placeholder="••••••••"/></div>
-    <button class="auth-submit" id="li-btn" onclick="doLogin()">Sign In</button>
-    <div class="auth-switch">Don't have an account? <a onclick="renderRegister()">Create one</a></div>`;
+        <div class="auth-title">Welcome back 👋</div>
+        <div class="auth-sub">Sign in to get personalised financial advice</div>
+        <div class="auth-err" id="auth-err"></div>
+        <div class="auth-ok" id="auth-ok"></div>
+        <div class="auth-field"><label>Email Address</label><input type="email" id="li-email" placeholder="you@example.com"/></div>
+        <div class="auth-field"><label>Password</label><input type="password" id="li-pass" placeholder="••••••••"/></div>
+        <button class="auth-submit" id="li-btn" onclick="doLogin()">Sign In</button>
+        <div class="auth-switch">Don't have an account? <a onclick="renderRegister()">Create one</a></div>`;
       setTimeout(() => {
         document.getElementById('li-email')?.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
         document.getElementById('li-pass')?.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
@@ -564,19 +469,18 @@
 
     function renderRegister() {
       document.getElementById('auth-content').innerHTML = `
-    <div class="auth-title">Create account ✨</div>
-    <div class="auth-sub">Join Finace for personalised guidance</div>
-    <div class="auth-err" id="auth-err"></div>
-    <div class="auth-field"><label>Full Name</label><input type="text" id="reg-name" placeholder="Your full name"/></div>
-    <div class="auth-field"><label>Email Address</label><input type="email" id="reg-email" placeholder="you@example.com"/></div>
-    <div class="auth-field"><label>Date of Birth</label><input type="date" id="reg-dob"/></div>
-    <div class="auth-field"><label>Password</label><input type="password" id="reg-pass" placeholder="At least 8 characters"/></div>
-    <button class="auth-submit" id="reg-btn" onclick="doRegister()">Create Account &amp; Verify Email</button>
-    <div class="auth-switch">Already have an account? <a onclick="renderLogin()">Sign in</a></div>`;
+        <div class="auth-title">Create account ✨</div>
+        <div class="auth-sub">Join Finace for personalised guidance</div>
+        <div class="auth-err" id="auth-err"></div>
+        <div class="auth-field"><label>Full Name</label><input type="text" id="reg-name" placeholder="Your full name"/></div>
+        <div class="auth-field"><label>Email Address</label><input type="email" id="reg-email" placeholder="you@example.com"/></div>
+        <div class="auth-field"><label>Date of Birth</label><input type="date" id="reg-dob"/></div>
+        <div class="auth-field"><label>Password</label><input type="password" id="reg-pass" placeholder="At least 8 characters"/></div>
+        <button class="auth-submit" id="reg-btn" onclick="doRegister()">Create Account &amp; Verify Email</button>
+        <div class="auth-switch">Already have an account? <a onclick="renderLogin()">Sign in</a></div>`;
       setTimeout(() => document.getElementById('reg-name')?.focus(), 80);
     }
 
-    /* ── LOGIN → calls POST /login ── */
     async function doLogin() {
       const email = document.getElementById('li-email')?.value.trim();
       const pass = document.getElementById('li-pass')?.value;
@@ -612,7 +516,6 @@
       }
     }
 
-    /* ── REGISTER → calls POST /register ── */
     async function doRegister() {
       const name = document.getElementById('reg-name')?.value.trim();
       const email = document.getElementById('reg-email')?.value.trim();
@@ -621,7 +524,6 @@
       if (!name || !email || !dob || !pass) { showAuthErr('Please fill in all fields.'); return; }
       if (pass.length < 8) { showAuthErr('Password must be at least 8 characters.'); return; }
       setBtnLoading('reg-btn', true, 'Create Account & Verify Email');
-      pendingEmail = email;
       try {
         const fd = new FormData(); fd.append('full_name', name); fd.append('email', email); fd.append('dob', dob); fd.append('password', pass);
         await apiPost('/register', fd);
@@ -632,19 +534,17 @@
       }
     }
 
-    /* ── OTP SCREEN ── */
     function renderOTP(name, email) {
       document.getElementById('auth-content').innerHTML = `
-    <div class="auth-title">Verify your email 📬</div>
-    <div class="auth-sub">We sent a 6-digit code to <strong>${email}</strong>. Check your inbox!</div>
-    <div class="auth-err" id="auth-err"></div>
-    <div class="otp-hint">Enter the 6-digit OTP</div>
-    <div class="otp-wrap">${[0, 1, 2, 3, 4, 5].map(i => `<input class="otp-box" id="otp${i}" maxlength="1" type="text" inputmode="numeric"/>`).join('')}</div>
-    <button class="auth-submit" id="otp-btn" onclick="doVerifyOTP('${name}','${email}')">Verify &amp; Continue →</button>
-    <div class="otp-resend" onclick="doResendOTP('${email}')">↺ Resend OTP</div>`;
+        <div class="auth-title">Verify your email 📬</div>
+        <div class="auth-sub">We sent a 6-digit code to <strong>${email}</strong>. Check your inbox!</div>
+        <div class="auth-err" id="auth-err"></div>
+        <div class="otp-hint">Enter the 6-digit OTP</div>
+        <div class="otp-wrap">${[0, 1, 2, 3, 4, 5].map(i => `<input class="otp-box" id="otp${i}" maxlength="1" type="text" inputmode="numeric"/>`).join('')}</div>
+        <button class="auth-submit" id="otp-btn" onclick="doVerifyOTP('${name}','${email}')">Verify &amp; Continue →</button>
+        <div class="otp-resend" onclick="doResendOTP('${email}')">↺ Resend OTP</div>`;
       setTimeout(() => { setupOTPInputs(name, email); document.getElementById('otp0')?.focus(); }, 80);
     }
-
     function setupOTPInputs(name, email) {
       for (let i = 0; i < 6; i++) {
         const el = document.getElementById('otp' + i); if (!el) continue;
@@ -652,10 +552,8 @@
         el.addEventListener('keydown', e => { if (e.key === 'Backspace' && !el.value && i > 0) document.getElementById('otp' + (i - 1))?.focus(); });
       }
     }
-
     function getOTPValue() { return [0, 1, 2, 3, 4, 5].map(i => document.getElementById('otp' + i)?.value || '').join(''); }
 
-    /* ── VERIFY OTP → calls POST /verify-otp ── */
     async function doVerifyOTP(name, email) {
       const otp = getOTPValue();
       if (otp.length < 6) { showAuthErr('Please enter all 6 digits.'); return; }
@@ -664,15 +562,11 @@
         const fd = new FormData(); fd.append('email', email); fd.append('otp', otp);
         const data = await apiPost('/verify-otp', fd);
         currentUser = {
-          id: data.user.id,
-          name: data.user.full_name.split(' ')[0],
-          fullName: data.user.full_name,
-          email: data.user.email,
-          dob: data.user.dob || null,
-          created_at: data.user.created_at || null,
+          id: data.user.id, name: data.user.full_name.split(' ')[0],
+          fullName: data.user.full_name, email: data.user.email,
+          dob: data.user.dob || null, created_at: data.user.created_at || null,
           initials: data.user.full_name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2),
-          token: data.token,
-          profile: {}
+          token: data.token, profile: {}
         };
         closeAuth(); setLoggedIn();
         setTimeout(() => openOnboarding(), 350);
@@ -681,33 +575,39 @@
         showAuthErr(err.message);
       }
     }
-
-    /* ── RESEND OTP → calls POST /resend-otp ── */
     async function doResendOTP(email) {
-      try {
-        const fd = new FormData(); fd.append('email', email);
-        await apiPost('/resend-otp', fd);
-        showToast('📬', 'New OTP sent to ' + email);
-      } catch (err) { showToast('❌', err.message); }
+      try { const fd = new FormData(); fd.append('email', email); await apiPost('/resend-otp', fd); showToast('📬', 'New OTP sent to ' + email); }
+      catch (err) { showToast('❌', err.message); }
     }
 
-    /* ── SET LOGGED IN STATE ── */
+    /* ── SET LOGGED IN ──────────────────────────────────────── */
     function setLoggedIn() {
       const u = currentUser;
-      document.getElementById('login-btn').style.display = 'none';
-      const uab = document.getElementById('user-avatar-btn'); uab.style.display = 'flex';
+      const loginBtn = document.getElementById('login-btn');
+      if (loginBtn) loginBtn.style.display = 'none';
+
+      // Show simple avatar (no dropdown, no name, no link)
+      const loggedInAvatar = document.getElementById('logged-in-avatar');
+      if (loggedInAvatar) loggedInAvatar.style.display = 'block';
+
+      // Show sidebar logout button
+      const sidebarLogoutBtn = document.getElementById('sidebar-logout-btn');
+      if (sidebarLogoutBtn) sidebarLogoutBtn.style.display = 'flex';
+
       document.getElementById('uab-initials').textContent = u.initials;
-      document.getElementById('uab-name-txt').textContent = u.name;
       document.getElementById('sidebar-name').textContent = u.fullName;
       document.getElementById('sidebar-email').textContent = u.email;
       document.getElementById('sidebar-av').textContent = u.initials;
-      document.querySelector('.topics-section').classList.add('hidden');
-      syncAiPage(); syncDash();
-      // Persist for profile.html
-      try {
-        sessionStorage.setItem('ft_user', JSON.stringify(currentUser));
-        sessionStorage.setItem('ft_ob', JSON.stringify(obAnswers));
-      } catch (_) { }
+
+      // Hide topics after login (show only AI)
+      document.getElementById('topics-section')?.classList.add('hidden');
+      syncAiPage();
+      persistSession();
+      loadChatHistory();
+
+      // Remove guest banner if visible
+      const banner = document.getElementById('guest-banner');
+      if (banner) banner.style.display = 'none';
     }
 
     function toggleSidebar() {
@@ -718,20 +618,41 @@
     }
 
     function doLogout() {
-      if (!currentUser) return;
       currentUser = null;
-      try { sessionStorage.removeItem('ft_user'); sessionStorage.removeItem('ft_ob'); } catch (_) { }
-      document.getElementById('login-btn').style.display = 'flex';
-      document.getElementById('user-avatar-btn').style.display = 'none';
+
+      // Hide ALL logout buttons
+      document.querySelectorAll('.logout-btn, .avatar-dropdown-menu .adm-item.danger').forEach(btn => {
+        btn?.classList.add('hidden');
+      });
+
+      // Hide sidebar logout button
+      const sidebarLogoutBtn = document.getElementById('sidebar-logout-btn');
+      if (sidebarLogoutBtn) sidebarLogoutBtn.style.display = 'none';
+
+      try {
+        localStorage.removeItem('ft_user');
+        localStorage.removeItem('ft_ob');
+        localStorage.removeItem('ft_P');
+      } catch (_) { }
+
+      const loginBtn = document.getElementById('login-btn');
+      if (loginBtn) loginBtn.style.display = 'flex';
+
+      // Hide simple avatar
+      const loggedInAvatar = document.getElementById('logged-in-avatar');
+      if (loggedInAvatar) loggedInAvatar.style.display = 'none';
+
       document.getElementById('sidebar-name').textContent = 'Guest';
       document.getElementById('sidebar-email').textContent = 'Not logged in';
       document.getElementById('sidebar-av').textContent = '?';
-      syncAiPage(); syncDash();
+
+      syncAiPage();
       showToast('👋', 'Logged out successfully.');
+      location.reload();
     }
 
-    /* ── ONBOARDING ── */
-    const OB_STEPS = [
+    /* ── ONBOARDING ─────────────────────────────────────────── */
+    OB_STEPS = [
       {
         qs: [
           { id: 'ob-income', label: 'What is your monthly income (approx)?', type: 'number', placeholder: 'e.g. 50000', prefix: '₹' },
@@ -758,22 +679,22 @@
     function renderOBStep() {
       const total = OB_STEPS.length, step = OB_STEPS[obStep], pct = Math.round((obStep / total) * 100), isLast = obStep === total - 1;
       const qsHTML = step.qs.map(q => {
-        if (q.type === 'congrats') { if (!q.condVals.includes(obAnswers[q.condition] || '')) return ''; return `<div class="congrats-banner">🎉 <span>You're already on the right track! Insurance is a great financial habit — keep it up.</span></div>`; }
+        if (q.type === 'congrats') { if (!q.condVals.includes(obAnswers[q.condition] || '')) return ''; return `<div class="congrats-banner">🎉 <span>You're already on the right track! Insurance is a great financial habit.</span></div>`; }
         if (q.type === 'number') return `<div class="oq"><div class="oq-label">${q.label}</div><div style="position:relative"><span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:.82rem;font-weight:600;color:#4f46e5">${q.prefix || ''}</span><input class="oq-input" id="${q.id}" type="number" placeholder="${q.placeholder}" style="padding-left:${q.prefix ? '26px' : '12px'}" value="${obAnswers[q.id] || ''}"/></div></div>`;
-        if (q.type === 'opts') return `<div class="oq"><div class="oq-label">${q.label}</div><div class="oq-options">${q.opts.map(o => `<div class="oq-opt${obAnswers[q.id] === o ? ' sel' : ''}" onclick="selectOBOpt(this,'${q.id}','${o.replace(/'/g, '&#39;')}')">${o}</div>`).join('')}</div></div>`;
+        if (q.type === 'opts') return `<div class="oq"><div class="oq-label">${q.label}</div><div class="oq-options">${q.opts.map(o => `<div class="oq-opt${obAnswers[q.id] === o ? ' sel' : ''}" onclick="selectOBOpt(this,'${q.id}','${o.replace(/'/g, "&#39;")}')">${o}</div>`).join('')}</div></div>`;
         return '';
       }).join('');
       document.getElementById('onboard-content').innerHTML = `
-    <div class="onboard-top">
-      <div class="onboard-title">Tell us about yourself 👤</div>
-      <div class="onboard-meta"><span class="onboard-stepbadge">Step ${obStep + 1} of ${total}</span><button class="onboard-skip" onclick="skipOnboarding()">Skip for now</button></div>
-    </div>
-    <div class="onboard-progress"><div class="onboard-bar" style="width:${pct}%"></div></div>
-    <div class="onboard-questions">${qsHTML}</div>
-    <div class="onboard-nav">
-      ${obStep > 0 ? `<button class="onboard-back" onclick="obGoBack()">← Back</button>` : '<div></div>'}
-      <button class="onboard-next" id="ob-next-btn" onclick="obNext()">${isLast ? 'Finish ✓' : 'Next →'}</button>
-    </div>`;
+        <div class="onboard-top">
+          <div class="onboard-title">Tell us about yourself 👤</div>
+          <div class="onboard-meta"><span class="onboard-stepbadge">Step ${obStep + 1} of ${total}</span><button class="onboard-skip" onclick="skipOnboarding()">Skip for now</button></div>
+        </div>
+        <div class="onboard-progress"><div class="onboard-bar" style="width:${pct}%"></div></div>
+        <div class="onboard-questions">${qsHTML}</div>
+        <div class="onboard-nav">
+          ${obStep > 0 ? `<button class="onboard-back" onclick="obGoBack()">← Back</button>` : '<div></div>'}
+          <button class="onboard-next" id="ob-next-btn" onclick="obNext()">${isLast ? 'Finish ✓' : 'Next →'}</button>
+        </div>`;
     }
 
     function selectOBOpt(el, qid, val) {
@@ -782,318 +703,662 @@
       if (OB_STEPS[obStep].qs.some(q => q.type === 'congrats' && q.condition === qid)) renderOBStep();
     }
     function obGoBack() { if (obStep > 0) { obStep--; renderOBStep(); } }
-
-    /* ── ONBOARDING NEXT → on last step calls POST /onboarding ── */
     function obNext() {
-      // Save any number inputs from current step
-      OB_STEPS[obStep].qs.forEach(q => {
-        if (q.type === 'number') { const el = document.getElementById(q.id); if (el) obAnswers[q.id] = el.value; }
-      });
-      if (obStep < OB_STEPS.length - 1) {
-        obStep++;
-        renderOBStep();
-      } else {
-        // Show done screen IMMEDIATELY — no async blocking
+      OB_STEPS[obStep].qs.forEach(q => { if (q.type === 'number') { const el = document.getElementById(q.id); if (el) obAnswers[q.id] = el.value; } });
+      if (obStep < OB_STEPS.length - 1) { obStep++; renderOBStep(); }
+      else {
         if (obAnswers['ob-income']) P.income = parseFloat(obAnswers['ob-income']) || P.income;
         if (obAnswers['ob-expense']) P.expenses = parseFloat(obAnswers['ob-expense']) || P.expenses;
         showOBDone();
-        // Fire-and-forget: save to MySQL in background
         if (currentUser) {
-          const fd = new FormData();
-          fd.append('user_id', currentUser.id);
-          fd.append('monthly_income', obAnswers['ob-income'] || 0);
-          fd.append('monthly_expense', obAnswers['ob-expense'] || 0);
-          fd.append('gender', obAnswers['ob-gender'] || '');
-          fd.append('work_field', obAnswers['ob-field'] || '');
-          fd.append('has_insurance', obAnswers['ob-insurance'] || '');
-          fd.append('emergency_fund', obAnswers['ob-emergency'] || '');
+          const fd = new FormData(); fd.append('user_id', currentUser.id); fd.append('monthly_income', obAnswers['ob-income'] || 0); fd.append('monthly_expense', obAnswers['ob-expense'] || 0); fd.append('gender', obAnswers['ob-gender'] || ''); fd.append('work_field', obAnswers['ob-field'] || ''); fd.append('has_insurance', obAnswers['ob-insurance'] || ''); fd.append('emergency_fund', obAnswers['ob-emergency'] || '');
           apiPost('/onboarding', fd).catch(e => console.warn('Onboarding save:', e.message));
         }
       }
     }
-
-    function skipOnboarding() { document.getElementById('onboard-overlay').classList.remove('open'); showToast('💡', 'You can update your profile anytime from the Profile tab!'); }
-
+    function skipOnboarding() { document.getElementById('onboard-overlay').classList.remove('open'); showToast('💡', 'You can update your profile anytime!'); }
     function showOBDone() {
       document.getElementById('onboard-content').innerHTML = `
-    <div class="onboard-done">
-      <span class="onboard-done-icon">🎉</span>
-      <h2>Thank you for your patience!</h2>
-      <p>By knowing your income, expenses, field and financial goals, we can now give you <strong>more personalised financial answers</strong> tailored specifically to your life situation.</p>
-      <p style="font-size:.78rem;color:#a5b4fc;margin-bottom:20px;margin-top:-10px">This window will close automatically in 5 seconds…</p>
-      <button onclick="finishOnboarding()" style="
-        width:100%;padding:14px;border-radius:10px;border:none;
-        background:linear-gradient(135deg,#4f46e5,#7c3aed);
-        color:#fff;font-family:Inter,sans-serif;font-size:.95rem;font-weight:700;
-        cursor:pointer;box-shadow:0 4px 16px rgba(79,70,229,0.4);
-        transition:all 0.18s;
-      " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
-        Go to AI Advisor →
-      </button>
-    </div>`;
-      // Auto-close after 5s if user doesn't click
-      setTimeout(() => {
-        if (document.getElementById('onboard-overlay').classList.contains('open')) {
-          finishOnboarding();
-        }
-      }, 5000);
+        <div class="onboard-done">
+          <span class="onboard-done-icon">🎉</span>
+          <h2>Thank you for your patience!</h2>
+          <p>We can now give you <strong>more personalised financial answers</strong> tailored to your life situation.</p>
+          <p style="font-size:.78rem;color:#a5b4fc;margin-bottom:20px;margin-top:-10px">This window will close automatically in 5 seconds…</p>
+          <button onclick="finishOnboarding()" style="width:100%;padding:14px;border-radius:10px;border:none;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-family:Inter,sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(79,70,229,0.4);transition:all 0.18s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">Go to AI Advisor →</button>
+        </div>`;
+      setTimeout(() => { if (document.getElementById('onboard-overlay').classList.contains('open')) finishOnboarding(); }, 5000);
     }
-
     function finishOnboarding() {
       document.getElementById('onboard-overlay').classList.remove('open');
-      syncDash(); syncAiPage();
+      syncAiPage(); persistSession();
       showToast('🚀', 'You\'re all set, ' + (currentUser?.name || 'there') + '! Ask me anything.');
+      if (currentUser && !sessionStorage.getItem('ai_suggestion_shown'))
+        setTimeout(() => showAISuggestion(), 1500);
     }
 
-    /* ── DASHBOARD PANELS ── */
-    function openPanel(type) {
-      document.getElementById('dash-main').style.display = 'none';
-      document.getElementById('fo-panel-wrap').style.display = 'block';
-      const t = { fo: ['Financial Overview', 'Balance, income & expenses'], sc: ['Spending by Category', 'Track your expenses'], bt: ['Budget Tracking', 'Monitor your budgets'], sg: ['Savings Goals', 'Track your progress'] };
-      document.getElementById('fo-title').textContent = t[type][0];
-      document.getElementById('fo-sub').textContent = t[type][1];
-      const c = document.getElementById('fo-content');
-      if (type === 'fo') { const sr = P.income > 0 ? ((P.savings / P.income) * 100).toFixed(1) : 0; const avail = P.income - P.expenses; c.innerHTML = `<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;margin-bottom:13px"><div class="fo-card blue"><div class="fo-card-header"><div class="fo-card-label">Total Balance</div><div class="fo-card-icon-wrap fci-blue">💼</div></div><div class="fo-card-val">₹${P.tsavings.toLocaleString('en-IN')}</div><div class="fo-card-change" style="color:rgba(255,255,255,.85)">↑ +8.5% from last month</div></div><div class="fo-card"><div class="fo-card-header"><div class="fo-card-label">Monthly Income</div><div class="fo-card-icon-wrap fci-green">↗</div></div><div class="fo-card-val">₹${P.income.toLocaleString('en-IN')}</div><div class="fo-card-change fc-up">+12.3% vs last month</div></div><div class="fo-card"><div class="fo-card-header"><div class="fo-card-label">Monthly Expenses</div><div class="fo-card-icon-wrap fci-red">↘</div></div><div class="fo-card-val">₹${P.expenses.toLocaleString('en-IN')}</div><div class="fo-card-change fc-down">+5.2% vs last month</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:13px"><div class="fo-card-sm"><div class="fo-card-header"><div class="fo-card-label">Savings Rate</div><div class="fo-card-icon-wrap fci-purple">🐷</div></div><div class="fo-card-val">${sr}%</div><div class="fo-card-change" style="color:${parseFloat(sr) >= 20 ? '#16a34a' : '#d97706'}">${parseFloat(sr) >= 20 ? '✓ Above target' : '→ Target: 20%+'}</div></div><div class="fo-card-sm"><div class="fo-card-header"><div class="fo-card-label">Available to Spend</div><div class="fo-card-icon-wrap" style="background:#dbeafe;color:#2563eb">$</div></div><div class="fo-card-val">₹${avail.toLocaleString('en-IN')}</div><div class="fo-card-change" style="color:#8892a4">After essential expenses</div></div></div>`; }
-      else if (type === 'sc') { const cats = [{ n: 'Housing / Rent', p: 35, c: '#4f46e5', i: '🏠' }, { n: 'Food & Dining', p: 20, c: '#f97316', i: '🍽️' }, { n: 'Transport', p: 10, c: '#0ea5e9', i: '🚗' }, { n: 'Health', p: 8, c: '#10b981', i: '💊' }, { n: 'Entertainment', p: 12, c: '#a855f7', i: '🎬' }, { n: 'Others', p: 15, c: '#f59e0b', i: '📦' }]; c.innerHTML = `<div style="display:flex;flex-direction:column;gap:11px">${cats.map(x => `<div style="background:#f8f9fc;border-radius:11px;padding:13px 15px;display:flex;align-items:center;gap:13px"><div style="width:36px;height:36px;border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center">${x.i}</div><div style="flex:1"><div style="font-size:.82rem;font-weight:600;color:#1a1a2e;margin-bottom:5px">${x.n}</div><div style="height:6px;background:#e8ecf4;border-radius:3px;overflow:hidden"><div style="height:100%;width:${x.p}%;background:${x.c};border-radius:3px"></div></div></div><div style="font-size:.82rem;font-weight:700;color:${x.c};min-width:34px;text-align:right">${x.p}%</div></div>`).join('')}</div>`; }
-      else if (type === 'bt') { const b = [{ n: 'Groceries', s: 8200, l: 10000, c: '#10b981' }, { n: 'Entertainment', s: 4800, l: 5000, c: '#f97316' }, { n: 'Transport', s: 3100, l: 4000, c: '#0ea5e9' }, { n: 'Health', s: 1200, l: 3000, c: '#a855f7' }]; c.innerHTML = `<div style="display:flex;flex-direction:column;gap:11px">${b.map(x => { const p = Math.round((x.s / x.l) * 100), ov = p > 90; return `<div style="background:#f8f9fc;border-radius:11px;padding:14px 16px"><div style="display:flex;justify-content:space-between;margin-bottom:7px"><span style="font-size:.84rem;font-weight:600;color:#1a1a2e">${x.n}</span><span style="font-size:.76rem;font-weight:600;color:${ov ? '#dc2626' : '#5a6478'}">₹${x.s.toLocaleString()}/₹${x.l.toLocaleString()}</span></div><div style="height:8px;background:#e8ecf4;border-radius:4px;overflow:hidden"><div style="height:100%;width:${p}%;background:${ov ? '#ef4444' : x.c};border-radius:4px"></div></div><div style="font-size:.71rem;color:${ov ? '#dc2626' : '#8892a4'};margin-top:4px">${p}% used${ov ? ' — Over budget!' : ''}</div></div>`; }).join('')}</div>`; }
-      else if (type === 'sg') { const g = [{ n: 'Emergency Fund', t: 300000, s: 180000, i: '🛡️', c: '#4f46e5' }, { n: 'Home Down Payment', t: 1000000, s: 420000, i: '🏠', c: '#10b981' }, { n: 'Europe Trip', t: 200000, s: 85000, i: '✈️', c: '#f97316' }]; c.innerHTML = `<div style="display:flex;flex-direction:column;gap:13px">${g.map(x => { const p = Math.round((x.s / x.t) * 100); return `<div style="background:#f8f9fc;border-radius:11px;padding:14px 16px;display:flex;align-items:flex-start;gap:13px"><div style="width:40px;height:40px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">${x.i}</div><div style="flex:1"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.86rem;font-weight:700;color:#1a1a2e">${x.n}</span><span style="font-size:.76rem;font-weight:700;color:${x.c}">${p}%</span></div><div style="font-size:.73rem;color:#8892a4;margin-bottom:7px">₹${x.s.toLocaleString()} of ₹${x.t.toLocaleString()}</div><div style="height:7px;background:#e8ecf4;border-radius:3px;overflow:hidden"><div style="height:100%;width:${p}%;background:${x.c};border-radius:3px"></div></div></div></div>`; }).join('')}</div>`; }
-    }
-    function closeFoPanel() { document.getElementById('dash-main').style.display = ''; document.getElementById('fo-panel-wrap').style.display = 'none'; }
+    /* ── AI SUGGESTION POPUP ────────────────────────────────── */
+    async function showAISuggestion() {
+      if (!currentUser) return;
+      try {
+        const fd = new FormData();
+        fd.append('user_id', currentUser.id);
+        const data = await apiPost('/generate-suggestion', fd);
 
-    /* ── PROFILE ── */
-    function toggleGoal(lbl) { lbl.classList.toggle('sel'); }
-    function saveProfile() {
-      const goals = [...document.querySelectorAll('.goal-pf.sel')].map(l => l.querySelector('input').value);
-      const name = document.getElementById('f-name').value || P.fullName;
-      P = { name: name.split(' ')[0] || P.name, fullName: name, email: document.getElementById('f-email').value || P.email, age: parseInt(document.getElementById('f-age').value) || P.age, employment: document.getElementById('f-emp').value || P.employment, income: parseFloat(document.getElementById('f-income').value) || P.income, expenses: parseFloat(document.getElementById('f-expenses').value) || P.expenses, savings: parseFloat(document.getElementById('f-savings').value) || P.savings, tsavings: parseFloat(document.getElementById('f-tsavings').value) || P.tsavings, debt: parseFloat(document.getElementById('f-debt').value) || 0, emi: parseFloat(document.getElementById('f-emi').value) || 0, risk: document.getElementById('f-risk').value || P.risk, horizon: document.getElementById('f-horizon').value || P.horizon, goals: goals.length ? goals : P.goals };
-      document.getElementById('sidebar-name').textContent = P.fullName;
-      document.getElementById('sidebar-email').textContent = P.email;
-      document.getElementById('sidebar-av').textContent = P.fullName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-      syncDash(); syncAiPage(); showToast('✅', 'Profile saved!');
+        currentPopupSuggestion = data.suggestion;
+        const formattedSuggestion = formatSuggestionText(data.suggestion);
+
+        const popup = document.createElement('div');
+        popup.id = 'ai-suggestion-popup';
+        popup.innerHTML = `
+          <div class="suggestion-overlay" onclick="if(event.target===this) closeAISuggestion()">
+            <div class="suggestion-modal">
+              <div class="suggestion-header">
+                <div class="suggestion-icon">✨</div>
+                <h3>Your Personalized Financial Recommendation</h3>
+                <button class="suggestion-close" onclick="closeAISuggestion()">×</button>
+              </div>
+              <div class="suggestion-content">
+                <div class="suggestion-text">${formattedSuggestion}</div>
+                <div class="suggestion-actions">
+                  <button class="suggestion-btn primary" id="popup-save-btn" onclick="saveCurrentPopupSuggestion()">⭐ Save to Suggestions</button>
+                  <button class="suggestion-btn secondary" onclick="closeAISuggestion()">Skip for now</button>
+                </div>
+              </div>
+            </div>
+          </div>`;
+        document.body.appendChild(popup);
+        sessionStorage.setItem('ai_suggestion_shown', 'true');
+      } catch (error) {
+        console.error('Failed to generate AI suggestion:', error);
+      }
     }
 
-    /* ── CHAT ── */
-    document.getElementById('message').addEventListener('keypress', function (e) { if (e.key === 'Enter') sendMessage(); });
+    function closeAISuggestion() {
+      const popup = document.getElementById('ai-suggestion-popup');
+      if (popup) popup.remove();
+    }
+
+    async function saveCurrentPopupSuggestion() {
+      if (!currentUser) return;
+      if (!currentPopupSuggestion) return;
+
+      if (typeof window.checkSuggestionLimit === 'function') {
+        if (!window.checkSuggestionLimit()) {
+          return;
+        }
+      }
+
+      const saveBtn = document.getElementById('popup-save-btn');
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '⏳ Saving...';
+      }
+
+      try {
+        const fd = new FormData();
+        fd.append('user_id', currentUser.id);
+        fd.append('suggestion_text', currentPopupSuggestion);
+        fd.append('suggestion_type', 'ai_recommendation');
+        fd.append('source', 'registration_flow');
+        await apiPost('/save-suggestion', fd);
+        showToast('✅', 'Suggestion saved to your profile!');
+        closeAISuggestion();
+      } catch (error) {
+        showToast('❌', 'Failed to save suggestion');
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = '⭐ Save to Suggestions';
+        }
+      }
+    }
+
+    function formatSuggestionText(text) {
+      if (!text) return '';
+
+      let html = text;
+      html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      html = html.replace(/\*{3,}/g, '');
+      html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, '<em>$1</em>');
+      html = html.replace(/^###\s+(.+)$/gm, '<div class="ai-h3">$1</div>');
+      html = html.replace(/^##\s+(.+)$/gm, '<div class="ai-h2">$1</div>');
+      html = html.replace(/^#\s+(.+)$/gm, '<div class="ai-h1">$1</div>');
+      html = html.replace(/^(\d+)\.\s+(.+)$/gm, '<div class="ai-list-item"><span class="ai-list-num">$1.</span><span class="ai-list-text">$2</span></div>');
+      html = html.replace(/^[•\-\*]\s+(.+)$/gm, '<div class="ai-list-item"><span class="ai-list-bullet">●</span><span class="ai-list-text">$1</span></div>');
+      html = html.replace(/\n\n/g, '<div class="ai-para-break"></div>');
+      html = html.replace(/\n/g, '<br>');
+
+      return html;
+    }
+
+    /* ── STAR CHAT MESSAGE ──────────────────────────────────── */
+    async function starChatMessage(btn, messageText) {
+      if (!currentUser) { showToast('⚠️', 'Please log in to save suggestions'); return; }
+      if (!messageText || messageText === 'Thinking…') { showToast('⚠️', 'Cannot save this message'); return; }
+
+      if (typeof window.checkSuggestionLimit === 'function') {
+        if (!window.checkSuggestionLimit()) {
+          return;
+        }
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '⏳';
+      try {
+        const fd = new FormData(); fd.append('user_id', currentUser.id); fd.append('suggestion_text', messageText); fd.append('suggestion_type', 'starred_chat'); fd.append('source', 'ai_chat');
+        await apiPost('/save-suggestion', fd);
+        showToast('⭐', 'Message saved to Suggestions!');
+        btn.innerHTML = '⭐'; btn.style.color = '#f59e0b'; btn.style.cursor = 'default';
+      } catch (error) { showToast('❌', 'Failed to save: ' + (error.message || 'Unknown error')); btn.disabled = false; btn.innerHTML = '☆'; }
+    }
+
+    /* ── FILE ───────────────────────────────────────────────── */
     function onFileSelected(input) { const f = input.files[0]; if (!f) return; document.getElementById('file-preview-name').textContent = f.name; document.getElementById('file-preview').style.display = 'flex'; }
     function clearFile() { document.getElementById('file').value = ''; document.getElementById('file-preview').style.display = 'none'; }
     function startTopic(t) { document.getElementById('message').value = 'Tell me about ' + t; sendMessage(); }
-    function addMessage(text, type) {
-      const wrap = document.getElementById('chat'), d = document.createElement('div');
-      if (type === 'user') { d.className = 'msg-row user-row-msg'; d.innerHTML = `<div class="user-bubble"><p>${escHtml(text)}</p></div>`; }
-      else { d.className = 'msg-row'; d.innerHTML = `<div class="ai-bubble"><p>${escHtml(text)}</p></div>`; }
-      wrap.appendChild(d); wrap.scrollTop = wrap.scrollHeight;
-      return type === 'bot' ? d.querySelector('p') : d;
-    }
-    async function sendMessage() {
-      const msgEl = document.getElementById('message'), message = msgEl.value.trim(), file = document.getElementById('file').files[0];
-      if (message === '' && !file) return;
-      addMessage(message || '📎 ' + file.name, 'user'); msgEl.value = '';
-      // After: addMessage(message + (file ? ' + File: ' + file.name : ''), 'user');
-      document.querySelector('.topics-section').classList.add('hidden');  // Hide after first message
 
-      const form = new FormData(); form.append('message', message); if (file) form.append('file', file);
-      const loading = addMessage('Thinking…', 'bot'); clearFile();
-      chatHistory.push({ role: 'user', content: message || '[File: ' + file?.name + ']' });
+    /* ── ADD MESSAGE ────────────────────────────────────────── */
+    function addMessage(text, type) {
+      const wrap = document.getElementById('chat');
+      const d = document.createElement('div');
+      if (type === 'user') {
+        d.className = 'msg-row user-row-msg';
+        d.innerHTML = `<div class="user-bubble"><p>${escHtml(text)}</p></div>`;
+      } else {
+        d.className = 'msg-row';
+        d.dataset.msgText = text;
+        d.innerHTML = `<div class="ai-bubble-container">
+          <div class="ai-bubble">${formatReply(text)}</div>
+          <button class="star-chat-btn" title="Save to Suggestions" onclick="starChatMessage(this, this.closest('.msg-row').dataset.msgText)">☆</button>
+        </div>`;
+      }
+      wrap.appendChild(d);
+      wrap.scrollTop = wrap.scrollHeight;
+      return type === 'bot' ? d.querySelector('.ai-bubble') : d;
+    }
+
+    /* ── SEND MESSAGE ───────────────────────────────────────── */
+    async function sendMessage() {
+      const msgEl = document.getElementById('message');
+      const message = msgEl.value.trim();
+      const file = document.getElementById('file').files[0];
+      if (message === '' && !file) return;
+
+      addMessage(message || '📎 ' + file.name, 'user');
+      msgEl.value = '';
+      document.getElementById('topics-section')?.classList.add('hidden');
+
+      const wrap = document.getElementById('chat');
+      const loadDiv = document.createElement('div');
+      loadDiv.className = 'msg-row'; loadDiv.dataset.msgText = '';
+      loadDiv.innerHTML = `<div class="ai-bubble-container">
+        <div class="ai-bubble thinking-bubble"><span class="thinking-dots">Thinking<span>.</span><span>.</span><span>.</span></span></div>
+        <button class="star-chat-btn" disabled>☆</button>
+      </div>`;
+      wrap.appendChild(loadDiv); wrap.scrollTop = wrap.scrollHeight;
+      const thinkBubble = loadDiv.querySelector('.ai-bubble');
+      const starBtn = loadDiv.querySelector('.star-chat-btn');
+
+      const form = new FormData();
+      form.append('message', message);
+      if (file) form.append('file', file);
+      if (currentUser) form.append('user_id', currentUser.id);
+      clearFile();
+
+      chatHistory.push({ role: 'user', content: message || ('[File: ' + (file?.name) + ']') });
+      saveChatHistory();
+
+      let reply = '';
       try {
         const res = await fetch(API + '/chat', { method: 'POST', body: form });
-        const data = await res.json(); const reply = data.reply || 'No response.';
-        loading.innerHTML = formatReply(reply); chatHistory.push({ role: 'assistant', content: reply });
-        document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
-        return;
-      } catch (_) { }
-      // Fallback Anthropic API
-      const userCtx = currentUser ? `User: ${currentUser.fullName} | Income: ₹${P.income} | Field: ${obAnswers['ob-field'] || '?'} | Insurance: ${obAnswers['ob-insurance'] || '?'} | Emergency: ${obAnswers['ob-emergency'] || '?'}` : 'Guest user';
-      const sys = `You are Finace's Smart Finance Assistant for Indian earners. Be warm, friendly, concise. Use bullets for lists. End with a next step. Never guarantee returns.\n${KB}\n${userCtx}`;
-      try {
-        const res = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 800, system: sys, messages: chatHistory }) });
-        const data = await res.json(); const reply = data.content?.map(c => c.text || '').join('') || 'Sorry, something went wrong.';
-        chatHistory.push({ role: 'assistant', content: reply }); loading.innerHTML = formatReply(reply);
-        document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
-      } catch (e) { loading.innerText = 'Error connecting to AI server.'; }
+        const data = await res.json();
+        reply = data.reply || 'No response.';
+      } catch (_) {
+        const userCtx = currentUser
+          ? `User: ${currentUser.fullName} | Income: ₹${P.income} | Field: ${obAnswers['ob-field'] || '?'} | Insurance: ${obAnswers['ob-insurance'] || '?'} | Emergency: ${obAnswers['ob-emergency'] || '?'}`
+          : 'Guest user — no profile data available';
+        const sys = `You are Finace's Smart Finance Assistant for Indian earners. Be warm, friendly, concise. Use bullets for lists. End with a next step. Never guarantee returns.\n${userCtx}`;
+        try {
+          const res = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 800, system: sys, messages: chatHistory })
+          });
+          const data = await res.json();
+          reply = data.content?.map(c => c.text || '').join('') || 'Sorry, something went wrong.';
+        } catch (e) { reply = 'Error connecting to AI server.'; }
+      }
+
+      thinkBubble.innerHTML = formatReply(reply);
+      thinkBubble.classList.remove('thinking-bubble');
+      loadDiv.dataset.msgText = reply;
+      starBtn.disabled = false;
+      chatHistory.push({ role: 'assistant', content: reply });
+      saveChatHistory();
+      wrap.scrollTop = wrap.scrollHeight;
     }
-    const sendChat = sendMessage;
-    function formatReply(t) { return escHtml(t).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>'); }
+
+    /* ── FORMAT REPLY ───────────────────────────────────────── */
+    function formatReply(t) {
+      if (!t) return '';
+      let html = escHtml(t);
+      html = html.replace(/\*{3,}/g, '');
+      html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, '<em>$1</em>');
+      html = html.replace(/^###\s+(.+)$/gm, '<div class="ai-h3">$1</div>');
+      html = html.replace(/^##\s+(.+)$/gm, '<div class="ai-h2">$1</div>');
+      html = html.replace(/^#\s+(.+)$/gm, '<div class="ai-h1">$1</div>');
+      html = html.replace(/^(\d+)\.\s+(.+)$/gm, '<div class="ai-list-item"><span class="ai-list-num">$1.</span><span class="ai-list-text">$2</span></div>');
+      html = html.replace(/^[•\-\*]\s+(.+)$/gm, '<div class="ai-list-item"><span class="ai-list-bullet">●</span><span class="ai-list-text">$1</span></div>');
+      html = html.replace(/\n\n/g, '<div class="ai-para-break"></div>');
+      html = html.replace(/\n/g, '<br>');
+      return html;
+    }
     function escHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
-    /* ── TOAST ── */
-    function showToast(icon, msg) { document.getElementById('toast-icon').textContent = icon; document.getElementById('toast-text').textContent = msg; const t = document.getElementById('toast'); t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3200); }
+    /* ── TOAST ──────────────────────────────────────────────── */
+    function showToast(icon, msg) {
+      document.getElementById('toast-icon').textContent = icon;
+      document.getElementById('toast-text').textContent = msg;
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3200);
+    }
 
-    /* ── LOAD METAL RATES from your DB ── */
+    /* ── METAL RATES ────────────────────────────────────────── */
+    let rateUpdateInterval = null, lastRateUpdate = null;
     async function loadMetalRates() {
       try {
-        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        const today = new Date().toISOString().split('T')[0];
         const res = await fetch(`${API}/metal-rates?date=${today}`);
+        if (!res.ok) throw new Error('Server error');
         const data = await res.json();
-
-        // Get TODAY's 22KT Gold + Silver
-        const gold22k = data.rates.find(r =>
-          r.metal === 'Gold' && r.karat === '22KT'
-        );
-        const silver = data.rates.find(r =>
-          r.metal === 'Silver'
-        );
-
-        // Update button text: "₹XXXX / ₹XX"
+        const gold22k = data.rates?.find(r => r.metal === 'Gold' && r.karat === '22KT');
+        const silver = data.rates?.find(r => r.metal === 'Silver');
         if (gold22k && silver) {
-          const goldPrice = parseFloat(gold22k. price).toLocaleString('en-IN');
-          const silverPrice = parseFloat(silver.price).toLocaleString('en-IN');
-          document.getElementById('gold-val').textContent = '₹' + goldPrice;
-          document.getElementById('silver-val').textContent = '₹' + silverPrice;
-        } else {
-          document.getElementById('gold-val').textContent = '—';
-          document.getElementById('silver-val').textContent = '—';
+          document.getElementById('gold-val').textContent = '₹' + parseFloat(gold22k.price).toLocaleString('en-IN');
+          document.getElementById('silver-val').textContent = '₹' + parseFloat(silver.price).toLocaleString('en-IN');
+          localStorage.setItem('lastGoldRate', gold22k.price); localStorage.setItem('lastSilverRate', silver.price); localStorage.setItem('lastRateUpdate', new Date().toISOString());
+          return;
         }
-
+        throw new Error('Rates not found');
       } catch (error) {
-        console.error('Rate fetch error:', error);
-        document.getElementById('rate-text').textContent = 'Fetch error';
-      }
-    }
-
-
-
-    /* ── AVATAR DROPDOWN ── */
-    function toggleAvatarMenu(e) {
-      e.stopPropagation();
-      document.getElementById('avatar-menu').classList.toggle('open');
-    }
-    document.addEventListener('click', function () {
-      const m = document.getElementById('avatar-menu');
-      if (m) m.classList.remove('open');
-    });
-
-    /* ── GO TO USER PROFILE PAGE ── */
-    function goUserProfile() {
-      document.getElementById('avatar-menu').classList.remove('open');
-      if (!currentUser) { showToast('⚠️', 'Please log in first.'); return; }
-      // Save latest obAnswers before navigating
-      try {
-        sessionStorage.setItem('ft_user', JSON.stringify(currentUser));
-        sessionStorage.setItem('ft_ob', JSON.stringify(obAnswers));
-      } catch (_) { }
-      window.location.href = 'profile.html';
-    }
-
-    /* ── POPULATE USER PROFILE PAGE ── */
-    function populateUserProfile() {
-      if (!currentUser) return;
-      const u = currentUser;
-      // Hero
-      document.getElementById('up-av-big').textContent = u.initials || '?';
-      document.getElementById('up-hero-name').textContent = u.fullName || u.name;
-      document.getElementById('up-hero-email').textContent = u.email || '—';
-      const dobFmt = u.dob ? new Date(u.dob).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
-      document.getElementById('up-hero-dob').textContent = dobFmt;
-      // Account card
-      document.getElementById('up-name-val').textContent = u.fullName || u.name;
-      document.getElementById('up-email-val').textContent = u.email || '—';
-      document.getElementById('up-dob-val').textContent = dobFmt;
-      // Gender in account card (from onboarding)
-      const genderEl = document.getElementById('up-gender-val');
-      genderEl.innerHTML = u.gender
-        ? u.gender
-        : '<span class="up-info-empty">Not set</span>';
-      // Additional info (populate from saved answers or currentUser profile)
-      const profile = currentUser.profile || {};
-      setAddlDisplay('up-income-val', profile.monthly_income ? '₹' + parseFloat(profile.monthly_income).toLocaleString('en-IN') : null, 'up-income-input', profile.monthly_income || '');
-      setAddlDisplay('up-expense-val', profile.monthly_expense ? '₹' + parseFloat(profile.monthly_expense).toLocaleString('en-IN') : null, 'up-expense-input', profile.monthly_expense || '');
-      setAddlDisplay('up-gender-val2', profile.gender || obAnswers['ob-gender'] || null, 'up-gender-select', profile.gender || obAnswers['ob-gender'] || '');
-      setAddlDisplay('up-field-val', profile.work_field || obAnswers['ob-field'] || null, 'up-field-select', profile.work_field || obAnswers['ob-field'] || '');
-      setAddlDisplay('up-insurance-val', profile.has_insurance || obAnswers['ob-insurance'] || null, 'up-insurance-select', profile.has_insurance || obAnswers['ob-insurance'] || '');
-      setAddlDisplay('up-emergency-val', profile.emergency_fund || obAnswers['ob-emergency'] || null, 'up-emergency-select', profile.emergency_fund || obAnswers['ob-emergency'] || '');
-    }
-
-    function setAddlDisplay(valId, displayText, inputId, inputVal) {
-      const valEl = document.getElementById(valId);
-      const inpEl = document.getElementById(inputId);
-      if (valEl) {
-        valEl.innerHTML = displayText
-          ? String(displayText)
-          : '<span class="up-info-empty">Not filled</span>';
-      }
-      if (inpEl) inpEl.value = inputVal || '';
-    }
-
-    /* ── START EDITING ADDITIONAL INFO ── */
-    function startEditAddl() {
-      document.getElementById('up-addl-card').classList.add('editing');
-    }
-
-    /* ── SAVE ADDITIONAL INFO → POST /onboarding ── */
-    async function saveAddlInfo() {
-      if (!currentUser) { showToast('⚠️', 'Not logged in.'); return; }
-      const btn = document.getElementById('up-save-btn');
-      btn.textContent = 'Saving…'; btn.disabled = true;
-
-      const income = document.getElementById('up-income-input').value;
-      const expense = document.getElementById('up-expense-input').value;
-      const gender = document.getElementById('up-gender-select').value;
-      const field = document.getElementById('up-field-select').value;
-      const ins = document.getElementById('up-insurance-select').value;
-      const emerg = document.getElementById('up-emergency-select').value;
-
-      const fd = new FormData();
-      fd.append('user_id', currentUser.id);
-      fd.append('monthly_income', income || 0);
-      fd.append('monthly_expense', expense || 0);
-      fd.append('gender', gender);
-      fd.append('work_field', field);
-      fd.append('has_insurance', ins);
-      fd.append('emergency_fund', emerg);
-
-      try {
-        await apiPost('/onboarding', fd);
-        // Update local cache
-        if (!currentUser.profile) currentUser.profile = {};
-        currentUser.profile.monthly_income = income;
-        currentUser.profile.monthly_expense = expense;
-        currentUser.profile.gender = gender;
-        currentUser.profile.work_field = field;
-        currentUser.profile.has_insurance = ins;
-        currentUser.profile.emergency_fund = emerg;
-        currentUser.gender = gender;
-        // Also update obAnswers for AI context
-        obAnswers['ob-income'] = income;
-        obAnswers['ob-expense'] = expense;
-        obAnswers['ob-gender'] = gender;
-        obAnswers['ob-field'] = field;
-        obAnswers['ob-insurance'] = ins;
-        obAnswers['ob-emergency'] = emerg;
-        // Also update P for dashboard
-        if (income) P.income = parseFloat(income);
-        if (expense) P.expenses = parseFloat(expense);
-        document.getElementById('up-addl-card').classList.remove('editing');
-        populateUserProfile();
-        showToast('✅', 'Profile updated successfully!');
-      } catch (err) {
-        showToast('❌', 'Save failed: ' + err.message);
-      } finally {
-        btn.textContent = '💾 Save Changes'; btn.disabled = false;
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      // Restore session if user navigated back from profile.html
-      try {
-        const stored = sessionStorage.getItem('ft_user');
-        const storedOb = sessionStorage.getItem('ft_ob');
-        if (stored) {
-          currentUser = JSON.parse(stored);
-          if (storedOb) obAnswers = JSON.parse(storedOb);
-          if (currentUser.profile) {
-            if (currentUser.profile.monthly_income) P.income = parseFloat(currentUser.profile.monthly_income) || P.income;
-            if (currentUser.profile.monthly_expense) P.expenses = parseFloat(currentUser.profile.monthly_expense) || P.expenses;
-            if (currentUser.profile.gender) obAnswers['ob-gender'] = currentUser.profile.gender;
-            if (currentUser.profile.work_field) obAnswers['ob-field'] = currentUser.profile.work_field;
-            if (currentUser.profile.has_insurance) obAnswers['ob-insurance'] = currentUser.profile.has_insurance;
-            if (currentUser.profile.emergency_fund) obAnswers['ob-emergency'] = currentUser.profile.emergency_fund;
+        const cachedGold = localStorage.getItem('lastGoldRate'), cachedSilver = localStorage.getItem('lastSilverRate'), lastUpdate = localStorage.getItem('lastRateUpdate');
+        if (cachedGold && cachedSilver && lastUpdate) {
+          const age = Date.now() - new Date(lastUpdate).getTime();
+          if (age < 24 * 60 * 60 * 1000) {
+            document.getElementById('gold-val').textContent = '₹' + parseFloat(cachedGold).toLocaleString('en-IN');
+            document.getElementById('silver-val').textContent = '₹' + parseFloat(cachedSilver).toLocaleString('en-IN');
+            return;
           }
-          setLoggedIn();
         }
-      } catch (_) { }
-      syncAiPage(); syncDash(); loadMetalRates();
+        document.getElementById('gold-val').textContent = '₹6,500';
+        document.getElementById('silver-val').textContent = '₹75';
+      }
+    }
+    function showRateDetails() { showToast('🪙', 'Gold & silver rates are live market prices'); }
+    function startRateAutoUpdate() { loadMetalRates(); rateUpdateInterval = setInterval(() => loadMetalRates(), 10 * 60 * 1000); lastRateUpdate = new Date(); }
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) { const age = lastRateUpdate ? Date.now() - lastRateUpdate.getTime() : Infinity; if (age > 10 * 60 * 1000) { loadMetalRates(); lastRateUpdate = new Date(); } } });
+    window.addEventListener('beforeunload', () => { if (rateUpdateInterval) clearInterval(rateUpdateInterval); });
+
+    /* ── AVATAR DROPDOWN ────────────────────────────────────── */
+    function toggleAvatarMenu(e) { e.stopPropagation(); document.getElementById('avatar-menu')?.classList.toggle('open'); }
+    document.addEventListener('click', () => { const m = document.getElementById('avatar-menu'); if (m) m.classList.remove('open'); });
+
+    /* ── THEME ──────────────────────────────────────────────── */
+    function initTheme() { setTheme(localStorage.getItem('ft_theme') || localStorage.getItem('theme') || 'light'); }
+    function toggleTheme() { const c = document.documentElement.getAttribute('data-theme') || 'light', n = c === 'light' ? 'dark' : 'light'; setTheme(n); localStorage.setItem('ft_theme', n); }
+    function setTheme(theme) { document.documentElement.setAttribute('data-theme', theme); const icon = document.getElementById('theme-icon'); if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙'; }
+
+    /* ── DOM READY ──────────────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('.logout-btn')?.classList.add('hidden');
+      document.querySelector('.avatar-dropdown-menu .adm-item.danger')?.classList.add('hidden');
+
+      if (window.location.hash === '#login' && !currentUser) {
+        setTimeout(() => openAuth('login'), 350);
+        history.replaceState(null, '', window.location.pathname);
+      }
+      restoreSession();
+      syncAiPage();
+      startRateAutoUpdate();
+      initTheme();
+
+      // Enter key sends message
+      const msgInput = document.getElementById('message');
+      if (msgInput) msgInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+
+      // Wire sidebar avatar → profile
+      ['sidebar-av'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.style.cursor = 'pointer'; el.addEventListener('click', () => goToProfile()); }
+      });
+
+      // Guest banner trigger wiring
+      const bannerTrigger = document.getElementById('guest-banner-login-trigger');
+      if (bannerTrigger) bannerTrigger.addEventListener('click', () => openAuth('login'));
+
+      // Show AI suggestion for returning users
+      if (currentUser && !sessionStorage.getItem('ai_suggestion_shown'))
+        setTimeout(() => showAISuggestion(), 1500);
+
+      // Inject guest banner if not logged in
+      if (!currentUser) {
+        const banner = document.createElement('div');
+        banner.id = 'guest-banner';
+        banner.style.cssText = 'position:sticky;top:0;z-index:9998;background:linear-gradient(90deg,#4f46e5,#7c3aed);color:#fff;padding:9px 18px;display:flex;align-items:center;justify-content:space-between;font-family:Inter,sans-serif;font-size:.82rem;font-weight:600;box-shadow:0 2px 12px rgba(79,70,229,.35);flex-wrap:wrap;gap:8px;';
+        banner.innerHTML = `<span>👋 You're browsing as a <strong>Guest</strong> — AI chat works without login!</span>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="opacity:.85;font-weight:400">Log in to save your history & get personalized advice.</span>
+            <button onclick="window.location.href='auth.html'; this.closest('#guest-banner').remove()" style="padding:6px 16px;border-radius:7px;border:1.5px solid rgba(255,255,255,.5);background:rgba(255,255,255,.15);color:#fff;font-family:Inter,sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap">Login →</button>
+            <button onclick="this.closest('#guest-banner').remove()" style="background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:1rem;padding:2px 4px">✕</button>
+          </div>`;
+        document.querySelector('.main')?.prepend(banner);
+      }
     });
   </script>
+
+  <!-- Structured AI bubble styles + star button + AI Suggestion Popup Styles -->
+  <style>
+    .ai-bubble .ai-h1 {
+      font-size: .98rem;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin: 10px 0 4px
+    }
+
+    .ai-bubble .ai-h2 {
+      font-size: .92rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 8px 0 3px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 3px
+    }
+
+    .ai-bubble .ai-h3 {
+      font-size: .86rem;
+      font-weight: 700;
+      color: #4f46e5;
+      margin: 6px 0 2px
+    }
+
+    .ai-bubble .ai-list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 4px 0;
+      font-size: .855rem;
+      line-height: 1.55
+    }
+
+    .ai-bubble .ai-list-num {
+      font-weight: 700;
+      color: #4f46e5;
+      min-width: 18px;
+      flex-shrink: 0
+    }
+
+    .ai-bubble .ai-list-bullet {
+      color: #4f46e5;
+      font-size: .55rem;
+      margin-top: 5px;
+      flex-shrink: 0
+    }
+
+    .ai-bubble .ai-list-text {
+      flex: 1
+    }
+
+    .ai-bubble .ai-para-break {
+      height: 8px
+    }
+
+    .thinking-bubble {
+      opacity: .7
+    }
+
+    .thinking-dots span {
+      animation: blink 1.2s infinite
+    }
+
+    .thinking-dots span:nth-child(2) {
+      animation-delay: .2s
+    }
+
+    .thinking-dots span:nth-child(3) {
+      animation-delay: .4s
+    }
+
+    @keyframes blink {
+
+      0%,
+      80%,
+      100% {
+        opacity: 0
+      }
+
+      40% {
+        opacity: 1
+      }
+    }
+
+    .ai-bubble-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px
+    }
+
+    .star-chat-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      color: #c7d2fe;
+      padding: 2px 4px;
+      border-radius: 6px;
+      transition: color .18s, transform .15s;
+      flex-shrink: 0;
+      align-self: flex-end;
+      margin-bottom: 2px;
+      line-height: 1
+    }
+
+    .star-chat-btn:hover:not(:disabled) {
+      color: #f59e0b;
+      transform: scale(1.2)
+    }
+
+    .star-chat-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed
+    }
+
+    /* ── AI SUGGESTION POPUP STYLES ── */
+    .suggestion-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(10, 16, 35, 0.65);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .suggestion-modal {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border-radius: 24px;
+      max-width: 560px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.22), 0 12px 24px rgba(79, 70, 229, 0.15);
+      border: 1px solid rgba(79, 70, 229, 0.1);
+      animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .suggestion-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 28px 16px;
+      position: relative;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.05) 0%, rgba(124, 58, 237, 0.03) 100%);
+      border-radius: 24px 24px 0 0;
+      border-bottom: 1px solid rgba(79, 70, 229, 0.08);
+    }
+
+    .suggestion-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .suggestion-header h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1a1a2e, #4f46e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .suggestion-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .suggestion-close:hover {
+      background: rgba(79, 70, 229, 0.1);
+      border-color: #4f46e5;
+      color: #4f46e5;
+      transform: scale(1.1);
+    }
+
+    .suggestion-content {
+      padding: 20px 28px 28px;
+    }
+
+    .suggestion-text {
+      background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+      border: 1px solid rgba(79, 70, 229, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: #374151;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.05);
+      max-height: 350px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    .suggestion-text::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #4f46e5, #7c3aed);
+      border-radius: 16px 16px 0 0;
+    }
+
+    .suggestion-text strong { color: #1a1a2e; font-weight: 700; }
+    .suggestion-text em { color: #64748b; font-style: italic; }
+    .suggestion-text .ai-h1 { font-size: 1.05rem; font-weight: 700; color: #1a1a2e; margin: 12px 0 6px 0; padding-bottom: 4px; border-bottom: 2px solid #e2e8f0; }
+    .suggestion-text .ai-h2 { font-size: 0.95rem; font-weight: 700; color: #1a1a2e; margin: 10px 0 4px 0; padding-bottom: 3px; border-bottom: 1px solid #e2e8f0; }
+    .suggestion-text .ai-h3 { font-size: 0.88rem; font-weight: 700; color: #4f46e5; margin: 8px 0 3px 0; }
+    .suggestion-text .ai-list-item { display: flex; align-items: flex-start; gap: 8px; padding: 2px 0; font-size: 0.88rem; line-height: 1.55; }
+    .suggestion-text .ai-list-num { font-weight: 700; color: #4f46e5; min-width: 20px; flex-shrink: 0; }
+    .suggestion-text .ai-list-bullet { color: #4f46e5; font-size: 0.55rem; margin-top: 5px; flex-shrink: 0; }
+    .suggestion-text .ai-list-text { flex: 1; }
+    .suggestion-text .ai-para-break { height: 8px; }
+
+    .suggestion-text::-webkit-scrollbar { width: 6px; }
+    .suggestion-text::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 3px; }
+    .suggestion-text::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+    .suggestion-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .suggestion-btn {
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 150px;
+    }
+
+    .suggestion-btn.primary {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      box-shadow: 0 8px 24px rgba(79, 70, 229, 0.35);
+    }
+
+    .suggestion-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(79, 70, 229, 0.45);
+    }
+
+    .suggestion-btn.secondary {
+      background: rgba(255, 255, 255, 0.8);
+      color: #64748b;
+      border: 2px solid rgba(79, 70, 229, 0.15);
+      backdrop-filter: blur(8px);
+    }
+
+    .suggestion-btn.secondary:hover {
+      background: rgba(79, 70, 229, 0.05);
+      border-color: #4f46e5;
+      color: #4f46e5;
+      transform: translateY(-1px);
+    }
+  </style>
+  <script src="index_fix.js"></script>
 </body>
 
 </html>

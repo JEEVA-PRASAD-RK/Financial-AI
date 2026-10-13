@@ -13,17 +13,17 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+if __package__:
+    from .config import get_database_config
+else:
+    from config import get_database_config
+
 
 # -------------------------
 # MYSQL CONNECTION
 # -------------------------
 
-conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="0000",
-    database="finance_ai"
-)
+conn = mysql.connector.connect(**get_database_config(autocommit=False))
 
 cursor = conn.cursor()
 
@@ -91,33 +91,103 @@ def scrape_grt(driver):
             EC.presence_of_element_located((By.TAG_NAME, "body"))
         )
 
+        # Wait a bit for any dynamic content to load
+        time.sleep(3)
+
         page_text = driver.find_element(By.TAG_NAME, "body").text
         html      = driver.page_source
 
+        print("  GRT page content length:", len(page_text))
+
+        # Try multiple strategies for each karat
         karat_map = {"24": "24KT", "22": "22KT", "18": "18KT", "14": "14KT"}
         for num, key in karat_map.items():
+            found = False
+
+            # Strategy 1: Original pattern
             m = re.search(
                 rf"GOLD\s*{num}\s*KT\s*/\s*1g\s*[-\u2013]\s*(?:Rs\.?|₹)\s*([\d,]+)",
                 page_text, re.I
             )
-            if not m:
-                m = re.search(
-                    rf"GOLD[^<]{{0,10}}{num}\s*KT[^<]{{0,30}}(?:Rs\.?|₹)\s*([\d,]+)",
-                    html, re.I
-                )
             if m:
                 rates[key] = int(m.group(1).replace(",", ""))
-                print(f"  GRT {key}: Rs{rates[key]}")
+                print(f"  GRT {key} (method 1): Rs{rates[key]}")
+                found = True
+                continue
 
+            # Strategy 2: More flexible pattern
+            m = re.search(
+                rf"GOLD\s*{num}\s*KT[^:]*[:\-\u2013]\s*(?:Rs\.?|₹)\s*([\d,]+)",
+                page_text, re.I
+            )
+            if m:
+                rates[key] = int(m.group(1).replace(",", ""))
+                print(f"  GRT {key} (method 2): Rs{rates[key]}")
+                found = True
+                continue
+
+            # Strategy 3: HTML parsing
+            m = re.search(
+                rf"GOLD[^<]*{num}\s*KT[^<]*?(?:Rs\.?|₹)\s*([\d,]+)",
+                html, re.I
+            )
+            if m:
+                rates[key] = int(m.group(1).replace(",", ""))
+                print(f"  GRT {key} (method 3): Rs{rates[key]}")
+                found = True
+                continue
+
+            # Strategy 4: Very loose pattern
+            m = re.search(
+                rf"{num}\s*KT.*?(?:Rs\.?|₹)\s*([\d,]+)",
+                page_text, re.I
+            )
+            if m:
+                rates[key] = int(m.group(1).replace(",", ""))
+                print(f"  GRT {key} (method 4): Rs{rates[key]}")
+                found = True
+                continue
+
+            if not found:
+                print(f"  GRT {key}: NOT FOUND")
+
+        # Try multiple strategies for silver
+        silver_found = False
+
+        # Strategy 1: Original pattern
         silver_m = re.search(
             r"SILVER\s*1g\s*[-\u2013]\s*(?:Rs\.?|₹)\s*([\d,]+)",
             page_text, re.I
         )
-        if not silver_m:
-            silver_m = re.search(r"SILVER[^<]{0,20}(?:Rs\.?|₹)\s*([\d,]+)", html, re.I)
         if silver_m:
             rates["Silver"] = int(silver_m.group(1).replace(",", ""))
-            print(f"  GRT Silver: Rs{rates['Silver']}")
+            print(f"  GRT Silver (method 1): Rs{rates['Silver']}")
+            silver_found = True
+
+        # Strategy 2: More flexible pattern
+        if not silver_found:
+            silver_m = re.search(
+                r"SILVER[^:]*[:\-\u2013]\s*(?:Rs\.?|₹)\s*([\d,]+)",
+                page_text, re.I
+            )
+            if silver_m:
+                rates["Silver"] = int(silver_m.group(1).replace(",", ""))
+                print(f"  GRT Silver (method 2): Rs{rates['Silver']}")
+                silver_found = True
+
+        # Strategy 3: HTML parsing
+        if not silver_found:
+            silver_m = re.search(
+                r"SILVER[^<]*?(?:Rs\.?|₹)\s*([\d,]+)",
+                html, re.I
+            )
+            if silver_m:
+                rates["Silver"] = int(silver_m.group(1).replace(",", ""))
+                print(f"  GRT Silver (method 3): Rs{rates['Silver']}")
+                silver_found = True
+
+        if not silver_found:
+            print("  GRT Silver: NOT FOUND")
 
     except Exception as e:
         print("GRT ERROR:", e)
@@ -127,10 +197,11 @@ def scrape_grt(driver):
 
 def scrape_thangamayil(driver):
     """
-    Thangamayil red header bar:
+    Thangamayil red header bar should show:
       GOLD RATE 22k (1gm): Rs13,835
       GOLD RATE 24k (1gm): Rs15,093
       GOLD RATE 18k (1gm): Rs11,320
+      GOLD RATE 14k (1gm): Rs8,810
       SILVER RATE (1gm):   Rs260
     """
     driver.get("https://www.thangamayil.com")
@@ -141,25 +212,114 @@ def scrape_thangamayil(driver):
             EC.presence_of_element_located((By.TAG_NAME, "body"))
         )
 
-        page_text = driver.find_element(By.TAG_NAME, "body").text
+        # Wait a bit for any dynamic content to load
+        time.sleep(3)
 
+        page_text = driver.find_element(By.TAG_NAME, "body").text
+        html = driver.page_source
+
+        print("  Thangamayil page content length:", len(page_text))
+
+        # Try to scrape all karats directly
         karat_map = {"22": "22KT", "24": "24KT", "18": "18KT", "14": "14KT"}
         for num, key in karat_map.items():
+            found = False
+
+            # Strategy 1: Original pattern
             m = re.search(
                 rf"GOLD\s*RATE\s*{num}[kK]\s*\(1gm\)\s*:\s*(?:Rs\.?|₹)\s*([\d,]+)",
                 page_text
             )
             if m:
                 rates[key] = int(m.group(1).replace(",", ""))
-                print(f"  Thangamayil {key}: Rs{rates[key]}")
+                print(f"  Thangamayil {key} (method 1): Rs{rates[key]}")
+                found = True
+                continue
 
+            # Strategy 2: More flexible pattern
+            m = re.search(
+                rf"GOLD\s*RATE\s*{num}[kK]\s*\(1gm\)\s*[-\u2013]\s*(?:Rs\.?|₹)\s*([\d,]+)",
+                page_text, re.I
+            )
+            if m:
+                rates[key] = int(m.group(1).replace(",", ""))
+                print(f"  Thangamayil {key} (method 2): Rs{rates[key]}")
+                found = True
+                continue
+
+            # Strategy 3: HTML parsing
+            m = re.search(
+                rf"GOLD[^<]*{num}[kK][^<]*?(?:Rs\.?|₹)\s*([\d,]+)",
+                html, re.I
+            )
+            if m:
+                rates[key] = int(m.group(1).replace(",", ""))
+                print(f"  Thangamayil {key} (method 3): Rs{rates[key]}")
+                found = True
+                continue
+
+            # Strategy 4: Very loose pattern
+            m = re.search(
+                rf"{num}[kK].*?(?:Rs\.?|₹)\s*([\d,]+)",
+                page_text, re.I
+            )
+            if m:
+                rates[key] = int(m.group(1).replace(",", ""))
+                print(f"  Thangamayil {key} (method 4): Rs{rates[key]}")
+                found = True
+                continue
+
+            if not found:
+                print(f"  Thangamayil {key}: NOT FOUND")
+
+        # Try multiple strategies for silver
+        silver_found = False
+
+        # Strategy 1: Original pattern
         silver_m = re.search(
             r"SILVER\s*RATE\s*\(1gm\)\s*:\s*(?:Rs\.?|₹)\s*([\d,]+)",
             page_text
         )
         if silver_m:
             rates["Silver"] = int(silver_m.group(1).replace(",", ""))
-            print(f"  Thangamayil Silver: Rs{rates['Silver']}")
+            print(f"  Thangamayil Silver (method 1): Rs{rates['Silver']}")
+            silver_found = True
+
+        # Strategy 2: More flexible pattern
+        if not silver_found:
+            silver_m = re.search(
+                r"SILVER\s*RATE\s*\(1gm\)\s*[-\u2013]\s*(?:Rs\.?|₹)\s*([\d,]+)",
+                page_text, re.I
+            )
+            if silver_m:
+                rates["Silver"] = int(silver_m.group(1).replace(",", ""))
+                print(f"  Thangamayil Silver (method 2): Rs{rates['Silver']}")
+                silver_found = True
+
+        # Strategy 3: HTML parsing
+        if not silver_found:
+            silver_m = re.search(
+                r"SILVER[^<]*?(?:Rs\.?|₹)\s*([\d,]+)",
+                html, re.I
+            )
+            if silver_m:
+                rates["Silver"] = int(silver_m.group(1).replace(",", ""))
+                print(f"  Thangamayil Silver (method 3): Rs{rates['Silver']}")
+                silver_found = True
+
+        # Strategy 4: Very loose pattern
+        if not silver_found:
+            silver_m = re.search(
+                r"SILVER.*?(?:Rs\.?|₹)\s*([\d,]+)",
+                page_text, re.I
+            )
+            if silver_m:
+                rates["Silver"] = int(silver_m.group(1).replace(",", ""))
+                print(f"  Thangamayil Silver (method 4): Rs{rates['Silver']}")
+                silver_found = True
+
+        if not silver_found:
+            print("  Thangamayil Silver: NOT FOUND")
 
     except Exception as e:
         print("THANGAMAYIL ERROR:", e)
@@ -169,8 +329,11 @@ def scrape_thangamayil(driver):
 
 def scrape_lalitha(driver):
     """
-    Lalitha modal is already in the DOM on page load:
+    Lalitha modal should show all karats:
+      Gold (24KT / 1g)   Rs15,093
       Gold (22KT / 1g)   Rs13,835
+      Gold (18KT / 1g)   Rs11,320
+      Gold (14KT / 1g)   Rs8,810
       Silver (1g)        Rs260
     """
     driver.get("https://www.lalithaajewellery.com")
@@ -185,61 +348,165 @@ def scrape_lalitha(driver):
         html      = driver.page_source
         page_text = driver.find_element(By.TAG_NAME, "body").text
 
-        # Strategy 1: parse from HTML source (modal in DOM even if hidden)
-        gold_m = re.search(
-            r"Gold\s*\(\s*22\s*KT\s*/\s*1g\s*\)[^₹Rs]{0,50}(?:₹|Rs\.?)\s*([\d,]+)",
-            html, re.I | re.DOTALL
-        )
+        print("  Lalitha page content length:", len(page_text))
+
+        # Try to scrape all karats directly
+        karat_map = {"24": "24KT", "22": "22KT", "18": "18KT", "14": "14KT"}
+        for num, key in karat_map.items():
+            found = False
+
+            # Strategy 1: HTML parsing with specific karat
+            gold_m = re.search(
+                rf"Gold\s*\(\s*{num}\s*KT\s*/\s*1g\s*\)[^₹Rs]{0,50}(?:₹|Rs\.?)\s*([\d,]+)",
+                html, re.I | re.DOTALL
+            )
+            if gold_m:
+                rates[key] = int(gold_m.group(1).replace(",", ""))
+                print(f"  Lalitha {key} (HTML): Rs{rates[key]}")
+                found = True
+                continue
+
+            # Strategy 2: Page text parsing
+            gold_m = re.search(
+                rf"Gold\s*\(\s*{num}\s*KT\s*/\s*1g\s*\)\s*(?:₹|Rs\.?)\s*([\d,]+)",
+                page_text, re.I
+            )
+            if gold_m:
+                rates[key] = int(gold_m.group(1).replace(",", ""))
+                print(f"  Lalitha {key} (text): Rs{rates[key]}")
+                found = True
+                continue
+
+            # Strategy 3: More flexible HTML pattern
+            gold_m = re.search(
+                rf"{num}\s*KT[^₹Rs]*?(?:₹|Rs\.?)\s*([\d,]+)",
+                html, re.I
+            )
+            if gold_m:
+                rates[key] = int(gold_m.group(1).replace(",", ""))
+                print(f"  Lalitha {key} (flex HTML): Rs{rates[key]}")
+                found = True
+                continue
+
+            # Strategy 4: More flexible text pattern
+            gold_m = re.search(
+                rf"{num}\s*KT.*?(?:₹|Rs\.?)\s*([\d,]+)",
+                page_text, re.I
+            )
+            if gold_m:
+                rates[key] = int(gold_m.group(1).replace(",", ""))
+                print(f"  Lalitha {key} (flex text): Rs{rates[key]}")
+                found = True
+                continue
+
+            if not found:
+                print(f"  Lalitha {key}: NOT FOUND")
+
+        # Try multiple strategies for silver
+        silver_found = False
+
+        # Strategy 1: HTML parsing
         silver_m = re.search(
             r"Silver\s*\(\s*1g\s*\)[^₹Rs]{0,50}(?:₹|Rs\.?)\s*([\d,]+)",
             html, re.I | re.DOTALL
         )
-
-        if gold_m:
-            rates["22KT"] = int(gold_m.group(1).replace(",", ""))
-            print(f"  Lalitha 22KT (HTML): Rs{rates['22KT']}")
         if silver_m:
             rates["Silver"] = int(silver_m.group(1).replace(",", ""))
             print(f"  Lalitha Silver (HTML): Rs{rates['Silver']}")
+            silver_found = True
 
-        # Strategy 2: visible body text fallback
-        if not rates:
-            g = re.search(r"Gold\s*\(\s*22KT\s*/\s*1g\s*\)\s*(?:₹|Rs\.?)\s*([\d,]+)", page_text, re.I)
-            s = re.search(r"Silver\s*\(\s*1g\s*\)\s*(?:₹|Rs\.?)\s*([\d,]+)", page_text, re.I)
-            if g:
-                rates["22KT"] = int(g.group(1).replace(",", ""))
-            if s:
-                rates["Silver"] = int(s.group(1).replace(",", ""))
+        # Strategy 2: Page text parsing
+        if not silver_found:
+            silver_m = re.search(
+                r"Silver\s*\(\s*1g\s*\)\s*(?:₹|Rs\.?)\s*([\d,]+)",
+                page_text, re.I
+            )
+            if silver_m:
+                rates["Silver"] = int(silver_m.group(1).replace(",", ""))
+                print(f"  Lalitha Silver (text): Rs{rates['Silver']}")
+                silver_found = True
 
-        # Strategy 3: JS click fallback
-        if not rates:
-            print("  Lalitha: Trying JS click...")
+        # Strategy 3: Flexible HTML pattern
+        if not silver_found:
+            silver_m = re.search(
+                r"Silver[^₹Rs]*?(?:₹|Rs\.?)\s*([\d,]+)",
+                html, re.I
+            )
+            if silver_m:
+                rates["Silver"] = int(silver_m.group(1).replace(",", ""))
+                print(f"  Lalitha Silver (flex HTML): Rs{rates['Silver']}")
+                silver_found = True
+
+        # Strategy 4: Flexible text pattern
+        if not silver_found:
+            silver_m = re.search(
+                r"Silver.*?(?:₹|Rs\.?)\s*([\d,]+)",
+                page_text, re.I
+            )
+            if silver_m:
+                rates["Silver"] = int(silver_m.group(1).replace(",", ""))
+                print(f"  Lalitha Silver (flex text): Rs{rates['Silver']}")
+                silver_found = True
+
+        if not silver_found:
+            print("  Lalitha Silver: NOT FOUND")
+
+        # Strategy 5: Try clicking on gold rate elements if still missing data
+        if len(rates) < 3:  # If we didn't find most of the rates
+            print("  Lalitha: Trying to click gold rate elements...")
             try:
+                # Try to find and click on elements that might contain gold rates
                 driver.execute_script("""
                     var els = document.querySelectorAll('*');
                     for (var i = 0; i < els.length; i++) {
-                        if (els[i].textContent.trim().includes("Today's Gold Rate")) {
-                            els[i].click(); break;
+                        var text = els[i].textContent.trim();
+                        if (text.includes("Gold Rate") || text.includes("Today's Gold") || text.includes("Gold")) {
+                            els[i].click();
+                            break;
                         }
                     }
                 """)
                 time.sleep(2)
-                page_text = driver.find_element(By.TAG_NAME, "body").text
-                g = re.search(r"Gold.*?22.*?(?:₹|Rs\.?)\s*([\d,]+)", page_text, re.I)
-                s = re.search(r"Silver.*?(?:₹|Rs\.?)\s*([\d,]+)", page_text, re.I)
-                if g:
-                    rates["22KT"] = int(g.group(1).replace(",", ""))
-                if s:
-                    rates["Silver"] = int(s.group(1).replace(",", ""))
-            except Exception as js_err:
-                print(f"  Lalitha JS click failed: {js_err}")
 
-        # Derive other karats from 22KT
+                # Re-parse after clicking
+                page_text = driver.find_element(By.TAG_NAME, "body").text
+                html = driver.page_source
+
+                # Try parsing again with the new content
+                for num, key in karat_map.items():
+                    if key not in rates:
+                        gold_m = re.search(
+                            rf"{num}\s*KT.*?(?:₹|Rs\.?)\s*([\d,]+)",
+                            page_text, re.I
+                        )
+                        if gold_m:
+                            rates[key] = int(gold_m.group(1).replace(",", ""))
+                            print(f"  Lalitha {key} (after click): Rs{rates[key]}")
+
+                if "Silver" not in rates:
+                    silver_m = re.search(
+                        r"Silver.*?(?:₹|Rs\.?)\s*([\d,]+)",
+                        page_text, re.I
+                    )
+                    if silver_m:
+                        rates["Silver"] = int(silver_m.group(1).replace(",", ""))
+                        print(f"  Lalitha Silver (after click): Rs{rates['Silver']}")
+
+            except Exception as js_err:
+                print(f"  Lalitha click attempt failed: {js_err}")
+
+        # Fallback: Derive missing karats from 22KT if we have it
         if "22KT" in rates:
             p22 = rates["22KT"]
-            rates.setdefault("24KT", round(p22 * 24 / 22 / 10) * 10)
-            rates.setdefault("18KT", round(p22 * 18 / 22 / 10) * 10)
-            rates.setdefault("14KT", round(p22 * 14 / 22 / 10) * 10)
+            if "24KT" not in rates:
+                rates.setdefault("24KT", round(p22 * 24 / 22 / 10) * 10)
+                print(f"  Lalitha 24KT (derived): Rs{rates['24KT']}")
+            if "18KT" not in rates:
+                rates.setdefault("18KT", round(p22 * 18 / 22 / 10) * 10)
+                print(f"  Lalitha 18KT (derived): Rs{rates['18KT']}")
+            if "14KT" not in rates:
+                rates.setdefault("14KT", round(p22 * 14 / 22 / 10) * 10)
+                print(f"  Lalitha 14KT (derived): Rs{rates['14KT']}")
 
     except Exception as e:
         print("LALITHA ERROR:", e)
@@ -364,4 +631,3 @@ if __name__ == "__main__":
             time.sleep(60)
     finally:
         conn.close()
-    

@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Notifications — Finace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="finace-dark.css" />
+  <!-- Apply saved theme before render to avoid flash -->
+  <script>try{var t=localStorage.getItem('ft_theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <style>
+    :root {
+      --bg: #080c14; --bg2: #0d1220;
+      --teal: #00D4C8; --teal-dim: rgba(0,212,200,0.12);
+      --violet: #8B5CF6; --violet-dim: rgba(139,92,246,0.12);
+      --green: #00E87A; --green-dim: rgba(0,232,122,0.1);
+      --gold: #FFB020; --gold-dim: rgba(255,176,32,0.1);
+      --red: #FF4D6A; --red-dim: rgba(255,77,106,0.12);
+      --orange: #FF7043; --orange-dim: rgba(255,112,67,0.12);
+      --amber: #FFB020; --amber-dim: rgba(255,176,32,0.12);
+      --glass: rgba(255,255,255,0.04); --glassh: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08); --borderh: rgba(0,212,200,0.3);
+      --mu: rgba(255,255,255,0.45); --text: #f0f4ff;
+      --sidebar-w: 230px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    button{font-family:'Outfit',sans-serif;cursor:pointer}
+
+    /* AURORA */
+    .aurora{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+    .aurora-1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,200,0.07) 0%,transparent 70%);top:-200px;left:-100px;animation:drift1 18s ease-in-out infinite}
+    .aurora-2{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,0.07) 0%,transparent 70%);bottom:-150px;right:-100px;animation:drift2 22s ease-in-out infinite}
+    @keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(60px,40px)}}
+    @keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-50px,-30px)}}
+
+    /* LAYOUT */
+    .layout{display:flex;min-height:100vh;position:relative;z-index:1}
+
+    /* SIDEBAR */
+    .sidebar{width:var(--sidebar-w);flex-shrink:0;background:rgba(13,18,32,0.92);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:10;backdrop-filter:blur(20px)}
+    .sb-brand{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+    .sb-logo{width:38px;height:38px;border-radius:10px;overflow:hidden;flex-shrink:0}
+    .sb-logo img{width:100%;height:100%;object-fit:contain}
+    .sb-name{font-size:.92rem;font-weight:800;color:var(--text)}
+    .sb-sub{font-size:.6rem;color:var(--mu);text-transform:uppercase;letter-spacing:1.5px;margin-top:1px}
+    .sb-nav{flex:1;padding:14px 10px;overflow-y:auto}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;font-size:.84rem;font-weight:500;color:var(--mu);cursor:pointer;transition:all .18s;margin-bottom:3px;border:none;background:none;width:100%;text-align:left;font-family:inherit;text-decoration:none}
+    .nav-item:hover{background:var(--glass);color:var(--text)}
+    .nav-item.active{background:linear-gradient(135deg,rgba(0,212,200,0.18),rgba(139,92,246,0.12));color:var(--teal);border:1px solid rgba(0,212,200,0.2);font-weight:600}
+    .sb-user{padding:14px;border-top:1px solid var(--border)}
+    .sb-av{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--teal),var(--violet));display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:#000;flex-shrink:0;cursor:pointer}
+    .sb-uname{font-size:.82rem;font-weight:600;color:var(--text);cursor:pointer}
+    .sb-uemail{font-size:.68rem;color:var(--mu);word-break:break-all}
+    .sb-logout{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:7px;font-size:.78rem;font-weight:500;color:var(--red);cursor:pointer;border:none;background:none;font-family:inherit;width:100%;transition:background .15s;margin-top:6px}
+    .sb-logout:hover{background:rgba(255,77,106,0.1)}
+
+    /* MAIN */
+    .main{flex:1;display:flex;flex-direction:column;min-width:0}
+    .top-nav{background:rgba(8,12,20,0.92);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;backdrop-filter:blur(20px);position:sticky;top:0;z-index:50}
+    .tn-title{font-size:1rem;font-weight:700;display:flex;align-items:center;gap:10px}
+    .tn-icon{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--teal),#00A89E);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#000}
+    .tn-actions{display:flex;gap:8px;align-items:center}
+    .btn-mark-all{background:var(--glass);border:1px solid var(--border);color:var(--mu);padding:7px 14px;border-radius:8px;font-size:.74rem;font-weight:500;transition:all .2s}
+    .btn-mark-all:hover{border-color:var(--borderh);color:var(--text)}
+
+    .content{padding:24px 28px 40px;flex:1}
+
+    /* STATS BAR */
+    .stats-bar{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap}
+    .stat-pill{background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:7px 16px;font-size:.72rem;display:flex;align-items:center;gap:7px;transition:all .2s}
+    .stat-pill:hover{border-color:var(--borderh);background:var(--glassh)}
+    .sp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+    .sp-label{color:var(--mu)}
+    .sp-val{font-weight:700}
+
+    /* FILTER TABS */
+    .filter-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+    .ftab{padding:7px 16px;border-radius:20px;font-size:.76rem;font-weight:500;border:1px solid var(--border);background:var(--glass);color:var(--mu);cursor:pointer;transition:all .2s}
+    .ftab:hover{border-color:var(--borderh);color:var(--text)}
+    .ftab.active{background:var(--teal-dim);border-color:rgba(0,212,200,0.4);color:var(--teal);font-weight:600}
+
+    /* SECTION LABEL */
+    .sec-label{font-size:.6rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--mu);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+    .sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+    /* NOTIFICATION CARDS */
+    .notif-list{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+    .notif-card{background:var(--glass);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;transition:all .25s;animation:fadeUp .35s ease both;position:relative;overflow:hidden}
+    .notif-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0 2px 2px 0}
+    .notif-card:hover{border-color:rgba(255,255,255,0.14);background:var(--glassh)}
+    .notif-card.unread{border-color:rgba(0,212,200,0.18)}
+    .notif-card.unread::after{content:'';position:absolute;top:14px;right:14px;width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px rgba(0,212,200,0.6)}
+
+    /* Normal reminders */
+    .notif-card.type-liab::before{background:var(--red)}
+    .notif-card.type-asset::before{background:var(--green)}
+
+    /* Snooze states */
+    .notif-card.snooze-1::before{background:var(--amber)}
+    .notif-card.snooze-2::before{background:var(--orange)}
+
+    /* Warning cards */
+    .notif-card.warn-orange{background:rgba(255,112,67,0.07);border:1.5px solid rgba(255,112,67,0.35)}
+    .notif-card.warn-orange::before{background:var(--orange);width:4px}
+    .notif-card.warn-yellow{background:rgba(255,176,32,0.07);border:1.5px solid rgba(255,176,32,0.35)}
+    .notif-card.warn-yellow::before{background:var(--amber);width:4px}
+
+    .notif-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+    .notif-icon.liab{background:rgba(255,77,106,0.15)}
+    .notif-icon.asset{background:rgba(0,232,122,0.12)}
+    .notif-icon.warn-o{background:rgba(255,112,67,0.2)}
+    .notif-icon.warn-y{background:rgba(255,176,32,0.2)}
+
+    .notif-body{flex:1;min-width:0}
+    .notif-warn-badge{display:inline-flex;align-items:center;gap:5px;font-size:.6rem;font-weight:700;padding:2px 9px;border-radius:4px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+    .nwb-orange{background:rgba(255,112,67,0.2);color:var(--orange);border:1px solid rgba(255,112,67,0.3)}
+    .nwb-yellow{background:rgba(255,176,32,0.18);color:var(--amber);border:1px solid rgba(255,176,32,0.3)}
+    .notif-title{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.3}
+    .notif-desc{font-size:.76rem;color:var(--mu);line-height:1.6;margin-bottom:12px}
+    .notif-desc .amt{font-weight:700;color:var(--text)}
+    .notif-desc .name{font-weight:600;color:var(--teal)}
+    .notif-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .btn-yes{padding:7px 18px;border-radius:8px;border:1px solid rgba(0,232,122,0.4);background:rgba(0,232,122,0.12);color:var(--green);font-size:.78rem;font-weight:600;transition:all .2s;font-family:'Outfit',sans-serif}
+    .btn-yes:hover{background:rgba(0,232,122,0.2);border-color:rgba(0,232,122,0.6);transform:translateY(-1px)}
+    .btn-no{padding:7px 16px;border-radius:8px;border:1px solid var(--border);background:var(--glass);color:var(--mu);font-size:.78rem;font-weight:500;transition:all .2s;font-family:'Outfit',sans-serif}
+    .btn-no:hover{border-color:rgba(255,255,255,0.2);color:var(--text)}
+    .notif-meta{font-size:.65rem;color:var(--mu);margin-top:8px;display:flex;align-items:center;gap:10px}
+    .meta-tag{background:var(--glass);border:1px solid var(--border);border-radius:4px;padding:1px 7px;font-size:.6rem}
+
+    /* EMPTY STATE */
+    .empty-state{text-align:center;padding:60px 20px}
+    .empty-icon{font-size:2.8rem;margin-bottom:14px}
+    .empty-state h3{font-size:1rem;font-weight:700;margin-bottom:6px}
+    .empty-state p{font-size:.8rem;color:var(--mu)}
+
+    /* AI FLOAT */
+    .ai-float{position:fixed;bottom:28px;right:28px;z-index:150}
+    .ai-btn{display:flex;align-items:center;gap:10px;padding:0 20px 0 6px;height:50px;border-radius:99px;background:linear-gradient(135deg,var(--violet),#4f46e5);border:none;font-size:.82rem;font-weight:700;color:#fff;box-shadow:0 8px 28px rgba(139,92,246,.55);transition:all .25s;cursor:pointer}
+    .ai-btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(139,92,246,.65)}
+    .ai-btn-icon{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(13,18,32,.98);border:1px solid var(--border);border-radius:10px;padding:10px 18px;font-size:.78rem;display:flex;align-items:center;gap:8px;z-index:400;transition:transform .3s cubic-bezier(.25,.8,.25,1),opacity .3s;opacity:0;white-space:nowrap;backdrop-filter:blur(12px)}
+    .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+    /* CONFIRM MODAL */
+    .confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
+    .confirm-overlay.open{display:flex}
+    .confirm-box{background:#0d1220;border:1px solid rgba(0,212,200,0.2);border-radius:18px;padding:28px 28px 24px;max-width:420px;width:100%;animation:popIn .3s ease}
+    @keyframes popIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+    .confirm-icon{font-size:2rem;margin-bottom:12px;text-align:center}
+    .confirm-title{font-size:1rem;font-weight:800;margin-bottom:6px;text-align:center}
+    .confirm-desc{font-size:.8rem;color:var(--mu);line-height:1.6;text-align:center;margin-bottom:20px}
+    .confirm-actions{display:flex;gap:10px;justify-content:center}
+    .cbtn-confirm{padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,var(--green),#00a858);border:none;color:#000;font-family:'Outfit',sans-serif;font-size:.84rem;font-weight:700;cursor:pointer;transition:all .2s}
+    .cbtn-confirm:hover{opacity:.88;transform:translateY(-1px)}
+    .cbtn-cancel{padding:10px 20px;border-radius:10px;background:var(--glass);border:1px solid var(--border);color:var(--mu);font-family:'Outfit',sans-serif;font-size:.84rem;font-weight:500;cursor:pointer;transition:all .2s}
+    .cbtn-cancel:hover{border-color:var(--borderh);color:var(--text)}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    @media(max-width:900px){.sidebar{display:none}.content{padding:16px 16px 30px}}
+  </style>
+</head>
+<body>
+<div class="aurora"><div class="aurora-1"></div><div class="aurora-2"></div></div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo"><img src="FinaceLogo.jpeg" alt="Finace"/></div>
+      <div><div class="sb-name">Finace</div><div class="sb-sub">Smart Finance</div></div>
+    </div>
+    <nav class="sb-nav">
+      <a class="nav-item" href="Home.html">🏠 Home</a>
+      <a class="nav-item" href="dashboard.html">📊 Dashboard</a>
+      <a class="nav-item" href="investment.html">📈 Investments</a>
+      <a class="nav-item" href="suggestions.html">⭐ Suggestions</a>
+      <a class="nav-item" href="networth.html">⚖️ Net Worth</a>
+      <a class="nav-item active" href="notifications.html">🔔 Notifications</a>
+    </nav>
+    <div class="sb-user">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <div class="sb-av" id="sbAv" onclick="window.location.href='profile.html'">?</div>
+        <div style="min-width:0">
+          <div class="sb-uname" id="sbName">Guest</div>
+          <div class="sb-uemail" id="sbEmail">Not logged in</div>
+        </div>
+      </div>
+      <button class="sb-logout" id="sbLogoutBtn" style="display:none" onclick="logout()">→ Logout</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- TOP NAV -->
+    <div class="top-nav">
+      <div class="tn-title">
+        <div class="tn-icon">🔔</div>Notifications
+      </div>
+      <div class="tn-actions">
+        <button class="btn-mark-all" onclick="markAllRead()">✓ Mark all read</button>
+        <button class="btn-mark-all" onclick="clearDismissed()">🗑 Clear dismissed</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- STATS BAR -->
+      <div class="stats-bar" id="statsBar">
+        <div class="stat-pill"><div class="sp-dot" style="background:var(--teal)"></div><span class="sp-label">Total</span><span class="sp-val" id="statTotal">0</span></div>
+        <div class="stat-pill"><div class="sp-dot" style="background:var(--red)"></div><span class="sp-label">Unread</span><span class="sp-val" id="statUnread">0</span></div>
+        <div class="stat-pill"><div class="sp-dot" style="background:var(--orange)"></div><span class="sp-label">Warnings</span><span class="sp-val" id="statWarn">0</span></div>
+        <div class="stat-pill"><div class="sp-dot" style="background:var(--green)"></div><span class="sp-label">Paid this month</span><span class="sp-val" id="statPaid">0</span></div>
+      </div>
+
+      <!-- FILTER TABS -->
+      <div class="filter-tabs">
+        <button class="ftab active" data-filter="all" onclick="setFilter('all',this)">All</button>
+        <button class="ftab" data-filter="unread" onclick="setFilter('unread',this)">Unread</button>
+        <button class="ftab" data-filter="warning" onclick="setFilter('warning',this)">⚠ Warnings</button>
+        <button class="ftab" data-filter="liability" onclick="setFilter('liability',this)">💸 Liabilities</button>
+        <button class="ftab" data-filter="asset" onclick="setFilter('asset',this)">🏦 Assets</button>
+        <button class="ftab" data-filter="nw_update" onclick="setFilter('nw_update',this)">⚖️ Net Worth</button>
+      </div>
+
+      <!-- NOTIFICATION SECTIONS -->
+      <div id="warnSection" style="display:none">
+        <div class="sec-label">Action needed</div>
+        <div class="notif-list" id="warnList"></div>
+      </div>
+
+      <div id="activeSection">
+        <div class="sec-label">Active reminders</div>
+        <div class="notif-list" id="activeList"></div>
+      </div>
+
+      <div id="paidSection" style="display:none">
+        <div class="sec-label">Paid this month</div>
+        <div class="notif-list" id="paidList"></div>
+      </div>
+
+      <div class="empty-state" id="emptyState" style="display:none">
+        <div class="empty-icon">🔕</div>
+        <h3>No notifications</h3>
+        <p>Add liabilities or assets in Net Worth to get smart payment reminders.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box" id="confirmBox">
+    <div class="confirm-icon" id="confirmIcon">✅</div>
+    <div class="confirm-title" id="confirmTitle">Confirm payment</div>
+    <div class="confirm-desc" id="confirmDesc">Are you sure you paid this amount?</div>
+    <div class="confirm-actions">
+      <button class="cbtn-cancel" onclick="closeConfirm(); console.log('[Button] Cancel clicked');">Cancel</button>
+      <button class="cbtn-confirm" id="confirmBtn" onclick="console.log('[Button] Confirm clicked'); executeYes();">Yes, confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- AI FLOAT -->
+<div class="ai-float">
+  <button class="ai-btn" onclick="window.location.href='index.html'">
+    <div class="ai-btn-icon">🤖</div>Ask AI Advisor
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span id="toastIcon">✅</span> <span id="toastText"></span></div>
+
+<script>
+const API = 'http://127.0.0.1:8000';
+let currentUser = null;
+let notifications = [];
+let currentFilter = 'all';
+let pendingYesId = null;
+
+// ── STORAGE HELPERS ──
+const NS = 'finace_notifs';
+function loadNotifs() {
+  try { return JSON.parse(localStorage.getItem(NS) || '[]'); } catch(e) { return []; }
+}
+function saveNotifs(arr) {
+  try { localStorage.setItem(NS, JSON.stringify(arr)); } catch(e) {}
+}
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded', async () => {
+  const u = JSON.parse(localStorage.getItem('ft_user') || 'null');
+  if (u) {
+    currentUser = u;
+    document.getElementById('sbAv').textContent = u.initials || (u.fullName || u.name || 'U')[0].toUpperCase();
+    document.getElementById('sbName').textContent = u.fullName || u.name || '—';
+    document.getElementById('sbEmail').textContent = u.email || '—';
+    document.getElementById('sbLogoutBtn').style.display = 'flex';
+    await generateReminders();
+  } else {
+    showDemoNotifications();
+  }
+  render();
+});
+
+function logout() {
+  localStorage.removeItem('ft_user');
+  window.location.href = 'Home.html';
+}
+
+// ── GENERATE REMINDERS FROM NETWORTH DATA ──
+async function generateReminders() {
+  if (!currentUser) return;
+  notifications = loadNotifs().filter(n => n.userId === currentUser.id);
+
+  try {
+    const res = await fetch(`${API}/networth/all?user_id=${currentUser.id}`);
+    const data = await res.json();
+    const allItems = [...(data.assets || []), ...(data.liabilities || [])];
+    const now = new Date();
+    const monthKey = `${now.getFullYear()}-${now.getMonth()}`;
+    const dayOfMonth = now.getDate();
+    const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    const daysLeft = daysInMonth - dayOfMonth;
+
+    for (const item of allItems) {
+      const meta = item.raw_meta || {};
+      const emi = parseFloat(meta.emi_amount) || 0;
+      const monthlyContrib = parseFloat(meta.monthly_contribution) || 0;
+      const outstanding = parseFloat(item.current_value) || 0;
+      const isLiability = item.entry_type === 'liability';
+
+      // Determine if this item has a monthly payment
+      let paymentAmount = 0;
+      let paymentLabel = '';
+      let frequency = 'monthly';
+
+      if (isLiability) {
+        if (emi > 0) { paymentAmount = emi; paymentLabel = 'EMI'; }
+        else if (['Credit Card Due', 'EMI / BNPL'].includes(item.category)) {
+          paymentAmount = outstanding; paymentLabel = 'outstanding balance';
+        }
+        // Mortgage / loan outstanding
+        if (!paymentAmount && outstanding > 0 && ['Home Loan','Vehicle Loan','Personal Loan','Education Loan','Mortgage Loan'].includes(item.category)) {
+          paymentAmount = outstanding * 0.02; // approximate
+          paymentLabel = 'estimated EMI';
+        }
+      } else {
+        // Asset monthly contributions
+        if (monthlyContrib > 0) { paymentAmount = monthlyContrib; paymentLabel = 'monthly contribution'; frequency = 'monthly'; }
+        else if (meta.payment_mode && (meta.payment_mode.includes('SIP') || meta.payment_mode.includes('Monthly'))) {
+          const sip = parseFloat(meta.sip_amount || meta.invested_amount / 12) || 0;
+          if (sip > 0) { paymentAmount = sip; paymentLabel = 'SIP instalment'; }
+        }
+      }
+
+      if (!paymentAmount) continue;
+
+      const notifId = `${item.id}_${monthKey}`;
+      const exists = notifications.find(n => n.id === notifId);
+      if (exists) {
+        // Update escalation state
+        updateEscalation(exists, daysLeft, dayOfMonth);
+        continue;
+      }
+
+      // Create new notification
+      const notif = {
+        id: notifId,
+        itemId: item.id,
+        userId: currentUser.id,
+        entryType: item.entry_type,
+        category: item.category,
+        name: item.name,
+        amount: paymentAmount,
+        label: paymentLabel,
+        outstanding: outstanding,
+        frequency,
+        monthKey,
+        status: 'pending',   // pending | snoozed | warned | paid | dismissed
+        snoozeCount: 0,
+        snoozeUntil: null,
+        isRead: false,
+        createdAt: now.toISOString(),
+        updatedAt: now.toISOString(),
+        isWarning: false,
+        warningType: isLiability ? 'orange' : 'yellow',
+      };
+      updateEscalation(notif, daysLeft, dayOfMonth);
+      console.log('[Notif] item id:', item.id, 'name:', item.name, 'type:', item.entry_type);
+      notifications.push(notif);
+    }
+  } catch(e) {
+    console.warn('[Notifications]', e.message);
+    showDemoNotifications();
+  }
+
+  saveNotifs([...loadNotifs().filter(n => n.userId !== currentUser.id), ...notifications]);
+}
+
+function updateEscalation(notif, daysLeft, dayOfMonth) {
+  if (notif.status === 'paid' || notif.status === 'dismissed') return;
+  if (daysLeft <= 1 && notif.snoozeCount >= 2) {
+    notif.isWarning = true;
+    notif.status = 'warned';
+  } else if (notif.snoozeUntil) {
+    const until = new Date(notif.snoozeUntil);
+    if (new Date() >= until) {
+      notif.status = 'pending';
+    }
+  }
+}
+
+// ── DEMO (guest) ──
+function showDemoNotifications() {
+  const now = new Date();
+  const mk = `${now.getFullYear()}-${now.getMonth()}`;
+  notifications = [
+    { id:'d1', itemId:1, entryType:'liability', category:'Home Loan', name:'SBI Home Loan', amount:24500, label:'EMI', outstanding:2200000, monthKey:mk, status:'pending', snoozeCount:0, snoozeUntil:null, isRead:false, isWarning:false, warningType:'orange', createdAt:now.toISOString(), updatedAt:now.toISOString() },
+    { id:'d2', itemId:2, entryType:'liability', category:'Vehicle Loan', name:'Car Loan', amount:8200, label:'EMI', outstanding:380000, monthKey:mk, status:'warned', snoozeCount:2, snoozeUntil:null, isRead:false, isWarning:true, warningType:'orange', createdAt:now.toISOString(), updatedAt:now.toISOString() },
+    { id:'d3', itemId:3, entryType:'asset', category:'Market Investments', name:'HDFC Flexicap SIP', amount:5000, label:'SIP instalment', outstanding:185000, monthKey:mk, status:'pending', snoozeCount:0, snoozeUntil:null, isRead:false, isWarning:false, warningType:'yellow', createdAt:now.toISOString(), updatedAt:now.toISOString() },
+    { id:'d4', itemId:4, entryType:'asset', category:'Retirement Fund', name:'EPF Contribution', amount:3000, label:'monthly contribution', outstanding:520000, monthKey:mk, status:'snoozed', snoozeCount:1, snoozeUntil:null, isRead:true, isWarning:false, warningType:'yellow', createdAt:now.toISOString(), updatedAt:now.toISOString() },
+    { id:'d5', itemId:5, entryType:'liability', category:'Credit Card Due', name:'HDFC Credit Card', amount:45000, label:'outstanding balance', outstanding:45000, monthKey:mk, status:'paid', snoozeCount:0, snoozeUntil:null, isRead:true, isWarning:false, warningType:'orange', createdAt:now.toISOString(), updatedAt:now.toISOString() },
+  ];
+}
+
+// ── FILTER ──
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.ftab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function getFiltered() {
+  return notifications.filter(n => {
+    if (currentFilter === 'unread') return !n.isRead && n.status !== 'paid';
+    if (currentFilter === 'warning') return n.isWarning;
+    if (currentFilter === 'liability') return n.entryType === 'liability';
+    if (currentFilter === 'asset') return n.entryType === 'asset';
+    if (currentFilter === 'nw_update') return n.type === 'nw_update';
+    return true;
+  });
+}
+
+// ── RENDER ──
+function render() {
+  const all = getFiltered();
+  const nwUpdates = all.filter(n => n.type === 'nw_update');
+  const warnings = all.filter(n => n.isWarning && n.status !== 'paid' && n.status !== 'dismissed' && n.type !== 'nw_update');
+  const active = all.filter(n => !n.isWarning && n.status !== 'paid' && n.status !== 'dismissed' && n.type !== 'nw_update');
+  const paid = all.filter(n => n.status === 'paid' && n.type !== 'nw_update');
+  const allNotPaid = notifications.filter(n => n.status !== 'paid' && n.status !== 'dismissed');
+  const unread = allNotPaid.filter(n => !n.isRead);
+
+  document.getElementById('statTotal').textContent = notifications.length;
+  document.getElementById('statUnread').textContent = unread.length;
+  document.getElementById('statWarn').textContent = notifications.filter(n => n.isWarning).length;
+  document.getElementById('statPaid').textContent = notifications.filter(n => n.status === 'paid').length;
+
+  // Update bell badge in Home.html storage
+  try { localStorage.setItem('finace_notif_count', unread.length); } catch(e) {}
+
+  const warnSec = document.getElementById('warnSection');
+  const paidSec = document.getElementById('paidSection');
+  const emptySec = document.getElementById('emptyState');
+
+  warnSec.style.display = warnings.length ? '' : 'none';
+  paidSec.style.display = paid.length ? '' : 'none';
+
+  // Inject NW Update section dynamically
+  let nwSec = document.getElementById('nwUpdateSection');
+  if (!nwSec) {
+    nwSec = document.createElement('div');
+    nwSec.id = 'nwUpdateSection';
+    // insert before warnSection
+    warnSec.parentNode.insertBefore(nwSec, warnSec);
+  }
+  if (nwUpdates.length) {
+    nwSec.innerHTML = `
+      <div class="sec-label" style="color:var(--teal)">⚖️ Net Worth Changes</div>
+      <div class="notif-list">${nwUpdates.map(n => buildCard(n)).join('')}</div>`;
+    nwSec.style.display = '';
+  } else {
+    nwSec.style.display = 'none';
+  }
+
+  document.getElementById('warnList').innerHTML = warnings.map(n => buildCard(n)).join('');
+  document.getElementById('activeList').innerHTML = active.map(n => buildCard(n)).join('');
+  document.getElementById('paidList').innerHTML = paid.map(n => buildPaidCard(n)).join('');
+
+  emptySec.style.display = (warnings.length + active.length + paid.length + nwUpdates.length === 0) ? '' : 'none';
+
+  // Mark visible as read
+  all.forEach(n => { if (!n.isRead) { n.isRead = true; } });
+  persistNotifs();
+}
+
+function fmtAmt(n) {
+  n = Math.round(parseFloat(n) || 0);
+  if (n >= 1e7) return '₹' + (n/1e7).toFixed(2) + 'Cr';
+  if (n >= 1e5) return '₹' + (n/1e5).toFixed(2) + 'L';
+  return '₹' + n.toLocaleString('en-IN');
+}
+
+function buildCard(n) {
+  // ── Net Worth Update cards ─────────────────────────────────────────────────
+  if (n.type === 'nw_update') return buildNWCard(n);
+
+  const isLiab = n.entryType === 'liability';
+  const isWarn = n.isWarning;
+  const isAssetWarn = isWarn && !isLiab;
+  const isSnoozed = n.snoozeCount > 0 && !isWarn;
+
+  let cardClass = 'notif-card';
+  if (isWarn) cardClass += isLiab ? ' warn-orange' : ' warn-yellow';
+  else cardClass += isLiab ? ' type-liab' : ' type-asset';
+  if (!n.isRead) cardClass += ' unread';
+  if (isSnoozed) cardClass += ` snooze-${n.snoozeCount}`;
+
+  const iconClass = isWarn ? (isLiab ? 'warn-o' : 'warn-y') : (isLiab ? 'liab' : 'asset');
+  const emoji = isWarn ? (isLiab ? '⚠️' : '!') : (isLiab ? '💸' : '🏦');
+
+  let warnBadge = '';
+  if (isWarn) {
+    const cls = isLiab ? 'nwb-orange' : 'nwb-yellow';
+    const label = isLiab ? '⚠ Liability warning · Unpaid this month' : '! Asset reminder · Unconfirmed this month';
+    warnBadge = `<div class="notif-warn-badge ${cls}">${label}</div>`;
+  }
+
+  const desc = isLiab
+    ? `Your <span class="name">${n.category}</span> ${n.label} of <span class="amt">${fmtAmt(n.amount)}</span> is due. Have you paid it this month?`
+    : `Your <span class="name">${n.category}</span> ${n.label} of <span class="amt">${fmtAmt(n.amount)}</span> is scheduled. Did it go through this month?`;
+
+  const metaTags = [
+    isLiab ? '<span class="meta-tag" style="color:var(--red)">Liability</span>' : '<span class="meta-tag" style="color:var(--green)">Asset</span>',
+    n.snoozeCount > 0 ? `<span class="meta-tag" style="color:var(--amber)">Reminder #${n.snoozeCount + 1}</span>` : '',
+    isWarn ? `<span class="meta-tag" style="color:var(--orange)">Escalated</span>` : '',
+  ].filter(Boolean).join('');
+
+  const noBtn = !isWarn ? `<button class="btn-no" onclick="handleNo('${n.id}')">Not yet</button>` : '';
+
+  return `
+    <div class="${cardClass}" id="card_${n.id}">
+      <div class="notif-icon ${iconClass}">${emoji}</div>
+      <div class="notif-body">
+        ${warnBadge}
+        <div class="notif-title">${n.name} — ${n.label}</div>
+        <div class="notif-desc">${desc}</div>
+        <div class="notif-actions">
+          <button class="btn-yes" onclick="handleYes('${n.id}')">✓ Yes, ${isLiab ? 'paid' : 'done'}</button>
+          ${noBtn}
+        </div>
+        <div class="notif-meta">${metaTags}</div>
+      </div>
+    </div>`;
+}
+
+function buildPaidCard(n) {
+  const isLiab = n.entryType === 'liability';
+  return `
+    <div class="notif-card" style="opacity:.6" id="card_${n.id}">
+      <div class="notif-icon" style="background:rgba(0,232,122,0.12)">✅</div>
+      <div class="notif-body">
+        <div class="notif-title">${n.name} — ${n.label}</div>
+        <div class="notif-desc"><span class="amt">${fmtAmt(n.amount)}</span> ${isLiab ? 'paid' : 'confirmed'} this month. ${isLiab ? `Remaining balance: <span class="amt">${fmtAmt(n.outstanding)}</span>` : ''}</div>
+        <div class="notif-meta"><span class="meta-tag" style="color:var(--green)">Completed this month</span></div>
+      </div>
+    </div>`;
+}
+
+// ── ACTIONS ──
+function handleYes(id) {
+  console.log('[handleYes] Called with id:', id);
+  const n = notifications.find(x => x.id === id);
+  console.log('[handleYes] Found notification:', n);
+  if (!n) {
+    console.error('[handleYes] Notification not found!');
+    return;
+  }
+  pendingYesId = id;
+  const isLiab = n.entryType === 'liability';
+  document.getElementById('confirmIcon').textContent = isLiab ? '💸' : '🏦';
+  document.getElementById('confirmTitle').textContent = isLiab ? 'Confirm payment' : 'Confirm contribution';
+  document.getElementById('confirmDesc').innerHTML = `Mark <strong>${n.name}</strong> ${n.label} of <strong>${fmtAmt(n.amount)}</strong> as ${isLiab ? 'paid' : 'done'} this month?<br><br>${isLiab ? `The outstanding balance will be reduced by <strong>${fmtAmt(n.amount)}</strong>.` : 'This confirms your investment contribution for this month.'}`;
+  console.log('[handleYes] Opening confirm modal');
+  document.getElementById('confirmOverlay').classList.add('open');
+}
+
+async function executeYes() {
+  const savedId = pendingYesId;   // save BEFORE closing
+  closeConfirm();
+  const n = notifications.find(x => x.id === savedId);
+
+  if (!n) {
+    console.error('[executeYes] ✗ Notification not found!');
+    return;
+  }
+
+  console.log('[executeYes] n.itemId:', n.itemId, 'currentUser:', currentUser?.id, 'amount:', n.amount);
+  console.log('[executeYes] URL will be:', `${API}/networth/record-payment/${n.itemId}`);
+
+  n.status = 'paid';
+  n.isWarning = false;
+  n.isRead = true;
+  n.updatedAt = new Date().toISOString();
+  console.log('[executeYes] Notification status set to paid');
+
+  // Reduce the amount from networth if logged in
+  if (currentUser && n.itemId) {
+    try {
+      const fd = new FormData();
+      fd.append('user_id', currentUser.id);
+      fd.append('amount_paid', n.amount);
+      const resp = await fetch(`${API}/networth/record-payment/${n.itemId}`, { method: 'POST', body: fd });
+      const result = await resp.json();
+      // Use the actual new value from DB, not local calculation
+      n.outstanding = result.new_value;
+      // Push net worth change notification
+      if (result.net_worth !== undefined) {
+        pushNWChangeNotif(result.net_worth + n.amount, result.net_worth, `Payment: ${n.name}`, 'payment');
+      }
+    } catch(e) {
+      console.warn('[Payment] Could not update networth:', e.message);
+      n.outstanding = Math.max(0, n.outstanding - n.amount);
+    }
+} else {
+    console.log('[executeYes] No user or itemId, updating local only');
+    n.outstanding = Math.max(0, n.outstanding - n.amount);
+  }
+
+  persistNotifs();
+  console.log('[executeYes] Notifications persisted');
+
+  showToast('✅', `Payment recorded! ${n.name} updated.`);
+  console.log('[executeYes] Toast shown');
+
+  render();
+  console.log('[executeYes] ✓ Complete - page re-rendered');
+}
+
+function handleNo(id) {
+  const n = notifications.find(x => x.id === id);
+  if (!n) return;
+
+  n.snoozeCount++;
+  n.isRead = false;
+
+  const now = new Date();
+  const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+  const daysLeft = daysInMonth - now.getDate();
+
+  if (n.snoozeCount === 1) {
+    // Snooze 15 days
+    const until = new Date();
+    until.setDate(until.getDate() + 15);
+    n.snoozeUntil = until.toISOString();
+    n.status = 'snoozed';
+    showToast('🔔', `Reminder snoozed for 15 days.`);
+  } else if (n.snoozeCount === 2) {
+    // Remind day before month end
+    const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    monthEnd.setDate(monthEnd.getDate() - 1);
+    n.snoozeUntil = monthEnd.toISOString();
+    n.status = 'snoozed';
+    showToast('🔔', `Will remind you again before month end.`);
+  } else {
+    // Escalate to warning
+    n.isWarning = true;
+    n.status = 'warned';
+    n.snoozeUntil = null;
+    showToast('⚠️', `Reminder escalated — please pay before month end!`);
+  }
+
+  persistNotifs();
+  render();
+}
+
+function closeConfirm() {
+  document.getElementById('confirmOverlay').classList.remove('open');
+  pendingYesId = null;
+}
+
+function markAllRead() {
+  notifications.forEach(n => { n.isRead = true; });
+  persistNotifs();
+  try { localStorage.setItem('finace_notif_count', 0); } catch(e) {}
+  render();
+  showToast('✅', 'All notifications marked as read.');
+}
+
+function clearDismissed() {
+  notifications = notifications.filter(n => n.status !== 'dismissed');
+  persistNotifs();
+  render();
+  showToast('🗑', 'Dismissed notifications cleared.');
+}
+
+function persistNotifs() {
+  if (currentUser) {
+    const others = loadNotifs().filter(n => n.userId !== currentUser.id);
+    saveNotifs([...others, ...notifications]);
+  }
+  // Update bell count in localStorage for Home.html
+  const unread = notifications.filter(n => !n.isRead && n.status !== 'paid' && n.status !== 'dismissed').length;
+  try { localStorage.setItem('finace_notif_count', unread); } catch(e) {}
+}
+
+function showToast(icon, msg) {
+  document.getElementById('toastIcon').textContent = icon;
+  document.getElementById('toastText').textContent = msg;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+document.getElementById('confirmOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeConfirm();
+});
+
+// ── MONTHLY SCHEDULER ──
+// Check if we need to generate reminders for a new month
+// ── NET WORTH UPDATE CARDS ───────────────────────────────────────────────────
+function buildNWCard(n) {
+  const gain = n.diff >= 0;
+  const color = gain ? 'var(--green)' : 'var(--red)';
+  const colorDim = gain ? 'rgba(0,232,122,0.10)' : 'rgba(255,77,106,0.10)';
+  const borderColor = gain ? 'rgba(0,232,122,0.25)' : 'rgba(255,77,106,0.25)';
+  const accentColor = gain ? 'var(--teal)' : 'var(--red)';
+  const arrow = gain ? '▲' : '▼';
+  const emoji = gain ? '📈' : '📉';
+  const sign = gain ? '+' : '';
+  const actionLabel = {add:'Entry Added', update:'Entry Updated', delete:'Entry Deleted', payment:'Payment Recorded'}[n.action] || 'Updated';
+  const unreadDot = !n.isRead ? `<style>#card_${n.id}.unread::after{background:${accentColor};box-shadow:0 0 8px ${accentColor}}</style>` : '';
+  return `${unreadDot}
+    <div class="notif-card${!n.isRead ? ' unread' : ''}" id="card_${n.id}"
+         style="border-color:${borderColor};background:${colorDim}">
+      <div class="notif-icon" style="background:${colorDim};color:${color};font-size:1.2rem">${emoji}</div>
+      <div class="notif-body">
+        <div style="font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-bottom:4px">Net Worth Update · ${actionLabel}</div>
+        <div class="notif-title" style="font-size:.92rem">${n.label}</div>
+        <div class="notif-desc" style="margin-top:6px">
+          Net worth changed by
+          <span style="font-weight:800;color:${color}">${arrow} ${sign}${fmtAmt(Math.abs(n.diff))}</span>
+          &nbsp;→&nbsp;
+          <span style="font-weight:700;color:var(--text)">${fmtAmt(n.newNW)}</span>
+        </div>
+        <div class="notif-meta" style="margin-top:8px">
+          <span class="meta-tag" style="color:${accentColor}">Net Worth Change</span>
+          <span class="meta-tag" style="color:var(--mu);font-size:.62rem">${new Date(n.createdAt).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})}</span>
+        </div>
+      </div>
+    </div>`;
+}
+
+function pushNWChangeNotif(prevNW, newNW, label, action) {
+  const diff = newNW - prevNW;
+  if (Math.abs(diff) < 1) return;
+  try {
+    const u = JSON.parse(localStorage.getItem('ft_user') || 'null');
+    const now = new Date();
+    const notif = {
+      id: `nw_${Date.now()}`,
+      userId: u ? u.id : null,
+      type: 'nw_update',
+      action,
+      label,
+      prevNW,
+      newNW,
+      diff,
+      isRead: false,
+      status: 'info',
+      createdAt: now.toISOString(),
+      updatedAt: now.toISOString(),
+    };
+    // Insert at the start of the user's notifications list
+    notifications.unshift(notif);
+    persistNotifs();
+    render();
+  } catch(e) { console.warn('[NW notif]', e); }
+}
+
+function checkMonthReset() {
+  const now = new Date();
+  const mk = `${now.getFullYear()}-${now.getMonth()}`;
+  const lastKey = localStorage.getItem('finace_last_month_key');
+  if (lastKey !== mk) {
+    // New month — clear paid status so reminders reset, but keep nw_update history
+    notifications = notifications.map(n => {
+      if (n.type === 'nw_update') return n; // always keep NW change history
+      if (n.status === 'paid' || n.status === 'dismissed') return null;
+      return { ...n, status: 'pending', snoozeCount: 0, snoozeUntil: null, isRead: false, isWarning: false, monthKey: mk };
+    }).filter(Boolean);
+    localStorage.setItem('finace_last_month_key', mk);
+    persistNotifs();
+  }
+}
+checkMonthReset();
+</script>
+  <!-- Notification-specific light mode extras -->
+  <style>
+    html[data-theme="light"] .notif-card { background: #ffffff !important; border-color: #e2e8f0 !important; color: #0f172a !important; }
+    html[data-theme="light"] .notif-card:hover { background: #f8fafc !important; border-color: #cbd5e1 !important; }
+    html[data-theme="light"] .notif-card.unread { border-color: rgba(8,145,178,0.3) !important; }
+    html[data-theme="light"] .notif-card.warn-orange { background: rgba(220,38,38,0.04) !important; border-color: rgba(220,38,38,0.25) !important; }
+    html[data-theme="light"] .notif-card.warn-yellow { background: rgba(217,119,6,0.04) !important; border-color: rgba(217,119,6,0.25) !important; }
+    html[data-theme="light"] .notif-title { color: #0f172a !important; }
+    html[data-theme="light"] .notif-desc { color: #64748b !important; }
+    html[data-theme="light"] .notif-desc .amt { color: #0f172a !important; }
+    html[data-theme="light"] .notif-desc .name { color: #0891b2 !important; }
+    html[data-theme="light"] .sec-label { color: #64748b !important; }
+    html[data-theme="light"] .sec-label::after { background: #e2e8f0 !important; }
+    html[data-theme="light"] .stat-pill { background: #ffffff !important; border-color: #e2e8f0 !important; }
+    html[data-theme="light"] .sp-label { color: #64748b !important; }
+    html[data-theme="light"] .ftab { background: #ffffff !important; border-color: #e2e8f0 !important; color: #64748b !important; }
+    html[data-theme="light"] .ftab:hover { border-color: #0891b2 !important; color: #0891b2 !important; }
+    html[data-theme="light"] .ftab.active { background: rgba(8,145,178,0.1) !important; border-color: #0891b2 !important; color: #0891b2 !important; }
+    html[data-theme="light"] .btn-mark-all { background: #f1f5f9 !important; border-color: #e2e8f0 !important; color: #64748b !important; }
+    html[data-theme="light"] .btn-mark-all:hover { color: #0f172a !important; border-color: #94a3b8 !important; }
+    html[data-theme="light"] .meta-tag { background: #f1f5f9 !important; border-color: #e2e8f0 !important; }
+    html[data-theme="light"] .btn-no { background: #f8fafc !important; border-color: #e2e8f0 !important; color: #64748b !important; }
+    html[data-theme="light"] .btn-no:hover { color: #0f172a !important; border-color: #94a3b8 !important; }
+    html[data-theme="light"] .confirm-box { background: #ffffff !important; border-color: #e2e8f0 !important; }
+    html[data-theme="light"] .confirm-desc { color: #64748b !important; }
+    html[data-theme="light"] .confirm-title { color: #0f172a !important; }
+    html[data-theme="light"] .cbtn-cancel { background: #f1f5f9 !important; border-color: #e2e8f0 !important; color: #64748b !important; }
+    html[data-theme="light"] .empty-state h3 { color: #0f172a !important; }
+    html[data-theme="light"] .empty-state p { color: #64748b !important; }
+  </style>
+  <script>(function(){try{if(localStorage.getItem("finace_theme")==="light")document.body.classList.add("light-theme")}catch(e){}})();</script>
+</body>
+</html>

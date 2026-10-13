@@ -1,611 +1,1583 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>My Profile — Finace</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --indigo:#4f46e5;--violet:#7c3aed;--indigo-light:#eef2ff;--indigo-mid:#c7d2fe;
-  --slate-50:#f8fafc;--slate-100:#f1f5f9;--slate-200:#e2e8f0;--slate-300:#cbd5e1;
-  --slate-500:#64748b;--slate-700:#334155;--slate-900:#0f172a;
-  --green:#16a34a;--green-bg:#dcfce7;--green-border:#86efac;
-  --amber:#d97706;--amber-bg:#fef3c7;--amber-border:#fcd34d;
-  --red:#dc2626;--red-bg:#fee2e2;--red-border:#fca5a5;
-  --white:#fff;
-  --shadow-sm:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md:0 4px 16px rgba(0,0,0,0.08),0 2px 6px rgba(0,0,0,0.04);
-  --shadow-indigo:0 8px 24px rgba(79,70,229,0.25);
-}
-html,body{height:100%;font-family:'Inter',sans-serif;background:var(--slate-100);color:var(--slate-900);overflow-x:hidden}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>My Profile — Finace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="finace-dark.css" />
+  <!-- Apply saved theme before page renders to avoid flash -->
+  <script>try{var t=localStorage.getItem('ft_theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <style>
+    :root {
+      --bg: #080c14;
+      --bg2: #0d1220;
+      --teal: #00D4C8;
+      --teal-dim: rgba(0, 212, 200, 0.12);
+      --violet: #8B5CF6;
+      --violet-dim: rgba(139, 92, 246, 0.12);
+      --green: #00E87A;
+      --green-dim: rgba(0, 232, 122, 0.1);
+      --gold: #FFB020;
+      --red: #FF4D6A;
+      --glass: rgba(255, 255, 255, 0.06);
+      --glassh: rgba(255, 255, 255, 0.1);
+      --border: rgba(255, 255, 255, 0.08);
+      --borderh: rgba(0, 212, 200, 0.35);
+      --mu: rgba(255, 255, 255, 0.5);
+      --text: #f0f4ff;
+      --sidebar-w: 260px;
+    }
 
-/* ── LAYOUT ── */
-.layout{display:flex;min-height:100vh}
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-/* ── SIDEBAR ── */
-.sidebar{width:240px;flex-shrink:0;background:var(--white);border-right:1px solid var(--slate-200);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;box-shadow:2px 0 8px rgba(0,0,0,0.04);z-index:10}
-.sb-brand{padding:22px 20px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--slate-200)}
-.sb-icon{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--violet),var(--indigo));display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#fff;flex-shrink:0;box-shadow:0 4px 12px rgba(124,58,237,0.35)}
-.sb-name{font-size:.95rem;font-weight:700;color:var(--slate-900);line-height:1.2}
-.sb-sub{font-size:.72rem;color:var(--slate-500)}
-.sb-nav{flex:1;padding:16px 12px}
-.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;font-size:.875rem;font-weight:500;color:var(--slate-500);cursor:pointer;transition:all 0.18s;margin-bottom:4px;border:none;background:none;width:100%;text-align:left;font-family:'Inter',sans-serif;text-decoration:none}
-.nav-item:hover{background:var(--slate-100);color:var(--slate-900)}
-.nav-item.active{background:linear-gradient(135deg,var(--indigo),var(--violet));color:#fff;font-weight:600;box-shadow:0 4px 14px rgba(79,70,229,0.35)}
-.nav-icon{font-size:1.1rem;width:22px;text-align:center;flex-shrink:0}
-.sb-user{padding:16px;border-top:1px solid var(--slate-200)}
-.sb-user-row{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:var(--slate-50);margin-bottom:8px}
-.sb-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--violet));display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:#fff;flex-shrink:0}
-.sb-uname{font-size:.83rem;font-weight:600;color:var(--slate-900)}
-.sb-uemail{font-size:.71rem;color:var(--slate-500);word-break:break-all}
-.sb-logout{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:.83rem;font-weight:500;color:var(--red);cursor:pointer;border:none;background:none;font-family:'Inter',sans-serif;width:100%;transition:background 0.15s}
-.sb-logout:hover{background:var(--red-bg)}
+    html,
+    body {
+      height: 100%;
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden
+    }
 
-/* ── MAIN ── */
-.main{flex:1;display:flex;flex-direction:column;min-width:0}
+    /* AURORA BACKGROUND */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden
+    }
 
-/* ── TOP BAR — BLUE (no metal rates) ── */
-.topbar{
-  background:linear-gradient(135deg,#4f46e5,#7c3aed);
-  padding:14px 28px;
-  display:flex;align-items:center;justify-content:space-between;
-  flex-shrink:0;
-  box-shadow:0 4px 20px rgba(79,70,229,0.3);
-  border-bottom:1px solid rgba(255,255,255,0.15);
-}
-.topbar-title{
-  font-size:1rem;font-weight:700;color:#fff;
-  display:flex;align-items:center;gap:10px;
-}
-.topbar-title-icon{
-  width:32px;height:32px;border-radius:9px;
-  background:rgba(255,255,255,0.2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.9rem;
-}
-.tb-back{
-  display:flex;align-items:center;gap:7px;
-  padding:7px 16px;border-radius:8px;
-  background:rgba(255,255,255,0.18);
-  border:1.5px solid rgba(255,255,255,0.45);
-  color:#fff;font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;
-  cursor:pointer;text-decoration:none;transition:all 0.18s;
-}
-.tb-back:hover{background:rgba(255,255,255,0.3)}
+    .aurora-1 {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 212, 200, 0.08) 0%, transparent 70%);
+      top: -200px;
+      left: -100px;
+      animation: drift1 18s ease-in-out infinite
+    }
 
-/* ── PAGE CONTENT ── */
-.content{padding:28px 32px;max-width:900px;width:100%}
+    .aurora-2 {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+      bottom: -150px;
+      right: -100px;
+      animation: drift2 22s ease-in-out infinite
+    }
 
-/* ── HERO CARD ── */
-.hero-card{
-  background:linear-gradient(135deg,var(--indigo) 0%,var(--violet) 100%);
-  border-radius:22px;padding:30px 32px;
-  display:flex;align-items:center;gap:24px;
-  margin-bottom:24px;position:relative;overflow:hidden;
-  box-shadow:var(--shadow-indigo);
-}
-.hero-card::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.07)}
-.hero-card::after{content:'';position:absolute;right:60px;bottom:-60px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,0.04)}
-.hero-av{width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.2);border:3px solid rgba(255,255,255,0.4);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:1.8rem;font-weight:800;color:#fff;flex-shrink:0;position:relative;z-index:1;box-shadow:0 8px 20px rgba(0,0,0,0.15)}
-.hero-info{position:relative;z-index:1;flex:1}
-.hero-name{font-family:'Sora',sans-serif;font-size:1.4rem;font-weight:800;color:#fff;margin-bottom:4px}
-.hero-email{font-size:.84rem;color:rgba(255,255,255,0.75);margin-bottom:6px;display:flex;align-items:center;gap:6px}
-.hero-badges{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.hero-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);font-size:.74rem;font-weight:600;color:rgba(255,255,255,0.9)}
-.hero-actions{position:relative;z-index:1;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
-.hero-edit-btn{padding:8px 18px;border-radius:9px;border:1.5px solid rgba(255,255,255,0.4);background:rgba(255,255,255,0.15);color:#fff;font-family:'Inter',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all 0.18s;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-.hero-edit-btn:hover{background:rgba(255,255,255,0.28)}
+    @keyframes drift1 {
 
-/* ── SECTION GRID ── */
-.section-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+      0%,
+      100% {
+        transform: translate(0, 0)
+      }
 
-/* ── CARD ── */
-.card{background:var(--white);border:1px solid var(--slate-200);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow 0.2s}
-.card:hover{box-shadow:var(--shadow-md)}
-.card-head{padding:14px 22px;background:var(--slate-50);border-bottom:1px solid var(--slate-200);display:flex;align-items:center;justify-content:space-between}
-.card-title{font-size:.88rem;font-weight:700;color:var(--slate-900);display:flex;align-items:center;gap:8px}
-.card-title-icon{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--indigo),var(--violet));display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff}
-.card-body{padding:20px 22px}
+      50% {
+        transform: translate(60px, 40px)
+      }
+    }
 
-/* ── INFO ROWS ── */
-.info-row{display:flex;flex-direction:column;gap:4px;margin-bottom:16px}
-.info-row:last-child{margin-bottom:0}
-.info-label{font-size:.7rem;font-weight:600;color:var(--slate-500);letter-spacing:.04em;text-transform:uppercase}
-.info-val{font-size:.92rem;font-weight:600;color:var(--slate-900)}
-.info-empty{font-size:.88rem;color:var(--slate-300);font-style:italic;font-weight:400}
-.info-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @keyframes drift2 {
 
-/* ── EDIT BUTTON ── */
-.edit-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:7px;border:1.5px solid var(--slate-200);background:var(--white);color:var(--indigo);font-family:'Inter',sans-serif;font-size:.76rem;font-weight:600;cursor:pointer;transition:all 0.18s}
-.edit-btn:hover{background:var(--indigo-light);border-color:var(--indigo-mid)}
-.save-btn{display:none;align-items:center;gap:5px;padding:6px 14px;border-radius:7px;border:none;background:linear-gradient(135deg,var(--indigo),var(--violet));color:#fff;font-family:'Inter',sans-serif;font-size:.76rem;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(79,70,229,0.28);transition:all 0.18s}
-.save-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(79,70,229,0.4)}
-.save-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
-.cancel-btn{display:none;align-items:center;gap:5px;padding:6px 12px;border-radius:7px;border:1.5px solid var(--slate-200);background:var(--white);color:var(--slate-500);font-family:'Inter',sans-serif;font-size:.76rem;font-weight:600;cursor:pointer;transition:all 0.18s}
-.cancel-btn:hover{border-color:var(--slate-300);background:var(--slate-50)}
-.btn-row{display:flex;align-items:center;gap:6px}
+      0%,
+      100% {
+        transform: translate(0, 0)
+      }
 
-/* ── EDITING STATE ── */
-.card.editing .info-val,.card.editing .info-empty{display:none}
-.card.editing .field-input{display:block}
-.card.editing .edit-btn{display:none}
-.card.editing .save-btn,.card.editing .cancel-btn{display:flex}
+      50% {
+        transform: translate(-50px, -30px)
+      }
+    }
 
-/* ── FORM INPUTS ── */
-.field-input{display:none;background:var(--slate-50);border:1.5px solid var(--slate-200);border-radius:8px;padding:9px 11px;color:var(--slate-900);font-family:'Inter',sans-serif;font-size:.875rem;outline:none;transition:all 0.18s;width:100%;appearance:none}
-.field-input:focus{border-color:var(--indigo);background:var(--white);box-shadow:0 0 0 3px rgba(79,70,229,.08)}
-.field-input::placeholder{color:var(--slate-300)}
-.inp-wrap{position:relative}
-.inp-pre{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:.82rem;font-weight:600;color:var(--indigo);pointer-events:none}
-.inp-wrap .field-input{padding-left:24px}
+    .layout {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1
+    }
 
-/* ── CONGRATS BANNER ── */
-.congrats{background:linear-gradient(135deg,var(--green-bg),#d1fae5);border:1px solid var(--green-border);border-radius:12px;padding:10px 14px;font-size:.8rem;color:#166534;display:flex;align-items:center;gap:8px;margin-top:12px}
+    .sidebar {
+      width: var(--sidebar-w);
+      background: rgba(10, 14, 25, 0.95);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px)
+    }
 
-/* ── LOGOUT CARD ── */
-.logout-card{background:var(--white);border:1px solid var(--slate-200);border-radius:18px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-sm);margin-bottom:24px}
-.logout-card-info{font-size:.86rem;color:var(--slate-500)}
-.logout-card-info strong{color:var(--slate-900);display:block;margin-bottom:2px;font-size:.9rem}
-.logout-red-btn{padding:9px 20px;border-radius:9px;border:1.5px solid var(--red-border);background:var(--white);color:var(--red);font-family:'Inter',sans-serif;font-size:.83rem;font-weight:600;cursor:pointer;transition:all 0.18s;display:flex;align-items:center;gap:7px;white-space:nowrap}
-.logout-red-btn:hover{background:var(--red-bg)}
+    .sb-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border)
+    }
 
-/* ── TOAST ── */
-.toast{position:fixed;bottom:22px;right:22px;z-index:9999;background:var(--slate-900);border-radius:12px;padding:11px 16px;display:flex;align-items:center;gap:9px;font-size:.82rem;font-weight:600;color:#fff;box-shadow:0 8px 30px rgba(0,0,0,0.25);transform:translateY(70px) scale(.95);opacity:0;transition:all 0.4s cubic-bezier(.34,1.56,.64,1)}
-.toast.show{transform:translateY(0) scale(1);opacity:1}
+    .sb-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--teal), #006B66);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0
+    }
 
-@media(max-width:860px){
-  .sidebar{display:none}
-  .section-grid{grid-template-columns:1fr}
-  .content{padding:20px 16px}
-  .hero-card{flex-direction:column;align-items:flex-start;gap:16px}
-  .hero-actions{align-items:flex-start;flex-direction:row}
-}
-</style>
+    .sb-name {
+      font-size: 1rem;
+      font-weight: 800
+    }
+
+    .sb-name span {
+      color: var(--teal)
+    }
+
+    .sb-sub {
+      font-size: 0.7rem;
+      color: var(--mu);
+      margin-top: 2px
+    }
+
+    .sb-nav {
+      flex: 1;
+      padding: 16px 12px
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--mu);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      text-decoration: none
+    }
+
+    .nav-item:hover {
+      background: var(--glass);
+      color: var(--text)
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--teal), #00A89E);
+      color: #000;
+      font-weight: 600
+    }
+
+    .sb-user {
+      padding: 16px;
+      border-top: 1px solid var(--border)
+    }
+
+    .sb-user-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background: var(--glass);
+      margin-bottom: 12px;
+      cursor: pointer
+    }
+
+    .sb-user-row:hover {
+      background: var(--glassh)
+    }
+
+    .sb-av {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--violet));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0
+    }
+
+    .sb-uname {
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer
+    }
+
+    .sb-uemail {
+      font-size: 0.7rem;
+      color: var(--mu);
+      word-break: break-all
+    }
+
+    .sb-logout {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 77, 106, 0.2);
+      background: rgba(255, 77, 106, 0.06);
+      color: rgba(255, 77, 106, 0.8);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px
+    }
+
+    .sb-logout:hover {
+      background: rgba(255, 77, 106, 0.12)
+    }
+
+    .sb-logout.hidden {
+      display: none !important
+    }
+
+    .main {
+      flex: 1;
+      margin-left: var(--sidebar-w);
+      display: flex;
+      flex-direction: column;
+      min-width: 0
+    }
+
+    .top-bar {
+      background: rgba(10, 14, 25, 0.9);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 50
+    }
+
+    .top-bar-title {
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .top-bar-title-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--teal), #00A89E);
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .content {
+      padding: 32px;
+      max-width: 1000px;
+      width: 100%;
+      overflow-y: auto;
+      flex: 1
+    }
+
+    /* Profile Styles */
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 32px;
+      flex-wrap: wrap
+    }
+
+    .profile-avatar {
+      position: relative
+    }
+
+    .profile-avatar-inner {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--violet));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(0, 212, 200, 0.3)
+    }
+
+    .profile-avatar-badge {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--green);
+      border: 2px solid var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem
+    }
+
+    .profile-info h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 6px
+    }
+
+    .profile-info .profile-email {
+      color: var(--mu);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .profile-stats {
+      display: flex;
+      gap: 24px;
+      margin-top: 12px
+    }
+
+    .profile-stat {
+      text-align: center
+    }
+
+    .profile-stat-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--teal)
+    }
+
+    .profile-stat-label {
+      font-size: 0.7rem;
+      color: var(--mu);
+      text-transform: uppercase
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 32px
+    }
+
+    .profile-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.2s
+    }
+
+    .profile-card:hover {
+      border-color: var(--borderh)
+    }
+
+    .profile-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .profile-card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.9rem
+    }
+
+    .profile-card-title-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: rgba(0, 212, 200, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem
+    }
+
+    .profile-card-body {
+      padding: 20px 22px
+    }
+
+    .profile-info-row {
+      display: flex;
+      margin-bottom: 16px
+    }
+
+    .profile-info-row:last-child {
+      margin-bottom: 0
+    }
+
+    .profile-info-label {
+      width: 120px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--mu);
+      text-transform: uppercase;
+      letter-spacing: 0.04em
+    }
+
+    .profile-info-value {
+      flex: 1;
+      font-size: 0.9rem;
+      font-weight: 500
+    }
+
+    .profile-info-empty {
+      color: var(--mu);
+      font-style: italic
+    }
+
+    .edit-mode .profile-info-value {
+      display: none
+    }
+
+    .edit-mode .edit-field {
+      display: block
+    }
+
+    .edit-mode .edit-btn {
+      display: none
+    }
+
+    .edit-mode .save-btn,
+    .edit-mode .cancel-btn {
+      display: inline-flex
+    }
+
+    .edit-field {
+      display: none
+    }
+
+    .edit-field input,
+    .edit-field select {
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.85rem;
+      outline: none
+    }
+
+    .edit-field input:focus,
+    .edit-field select:focus {
+      border-color: var(--teal)
+    }
+
+    .inp-wrap {
+      position: relative
+    }
+
+    .inp-pre {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--teal);
+      font-size: 0.85rem
+    }
+
+    .inp-wrap input {
+      padding-left: 32px
+    }
+
+    .edit-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--mu);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .edit-btn:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+      background: var(--glassh)
+    }
+
+    .save-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, var(--teal), #00A89E);
+      color: #000;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .save-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.9
+    }
+
+    .cancel-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--mu);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .cancel-btn:hover {
+      border-color: var(--teal);
+      color: var(--teal)
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px
+    }
+
+    .savings-bar-container {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border)
+    }
+
+    .savings-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--mu);
+      margin-bottom: 8px
+    }
+
+    .savings-bar-track {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 8px
+    }
+
+    .savings-bar-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.6s ease
+    }
+
+    .savings-percent {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--teal)
+    }
+
+    .congrats-banner {
+      background: rgba(0, 232, 122, 0.1);
+      border: 1px solid rgba(0, 232, 122, 0.2);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.8rem;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px
+    }
+
+    .logout-section {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px
+    }
+
+    .logout-info h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 4px
+    }
+
+    .logout-info p {
+      font-size: 0.75rem;
+      color: var(--mu)
+    }
+
+    .logout-btn-red {
+      padding: 10px 28px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 77, 106, 0.3);
+      background: rgba(255, 77, 106, 0.1);
+      color: var(--red);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .logout-btn-red:hover {
+      background: rgba(255, 77, 106, 0.2);
+      border-color: var(--red)
+    }
+
+    /* ========== LOGIN MODAL STYLES (Matching second image) ========== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center
+    }
+
+    .modal-overlay.open {
+      display: flex
+    }
+
+    .auth-modal {
+      background: #0d1220;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      animation: modalFadeIn 0.3s ease
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95)
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1)
+      }
+    }
+
+    .auth-close {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--mu);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 10
+    }
+
+    .auth-close:hover {
+      color: var(--red)
+    }
+
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 28px 28px 16px
+    }
+
+    .auth-logo-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--teal), #006B66);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem
+    }
+
+    .auth-logo-name {
+      font-size: 1.2rem;
+      font-weight: 800
+    }
+
+    .auth-logo-name span {
+      color: var(--teal)
+    }
+
+    .auth-logo-sub {
+      font-size: 0.65rem;
+      color: var(--mu);
+      margin-top: 2px
+    }
+
+    .auth-content {
+      padding: 0 28px 32px
+    }
+
+    .auth-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 6px
+    }
+
+    .auth-sub {
+      font-size: 0.85rem;
+      color: var(--mu);
+      text-align: center;
+      margin-bottom: 28px
+    }
+
+    .auth-field {
+      margin-bottom: 18px
+    }
+
+    .auth-field label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--mu);
+      margin-bottom: 6px
+    }
+
+    .auth-field input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s
+    }
+
+    .auth-field input:focus {
+      border-color: var(--teal);
+      background: rgba(0, 212, 200, 0.05)
+    }
+
+    .auth-field input::placeholder {
+      color: rgba(255, 255, 255, 0.3)
+    }
+
+    .auth-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--teal), #00A89E);
+      border: none;
+      color: #000;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 8px
+    }
+
+    .auth-submit:hover {
+      opacity: 0.9;
+      transform: translateY(-1px)
+    }
+
+    .auth-switch {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--mu);
+      margin-top: 20px
+    }
+
+    .auth-switch a {
+      color: var(--teal);
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 600
+    }
+
+    .auth-switch a:hover {
+      text-decoration: underline
+    }
+
+    .auth-err {
+      background: rgba(255, 77, 106, 0.1);
+      border: 1px solid rgba(255, 77, 106, 0.3);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 0.75rem;
+      color: var(--red);
+      margin-bottom: 16px;
+      display: none
+    }
+
+    .not-logged-in {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 60px 40px;
+      text-align: center
+    }
+
+    .not-logged-in-icon {
+      font-size: 4rem;
+      margin-bottom: 20px
+    }
+
+    .not-logged-in h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 10px
+    }
+
+    .not-logged-in p {
+      color: var(--mu);
+      margin-bottom: 28px
+    }
+
+    .login-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 32px;
+      background: linear-gradient(135deg, var(--teal), #00A89E);
+      border-radius: 12px;
+      color: #000;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem
+    }
+
+    .login-cta:hover {
+      transform: translateY(-1px);
+      opacity: 0.9
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      background: rgba(13, 18, 32, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #fff;
+      transform: translateY(80px) scale(0.95);
+      opacity: 0;
+      transition: all 0.4s;
+      backdrop-filter: blur(12px)
+    }
+
+    .toast.show {
+      transform: translateY(0) scale(1);
+      opacity: 1
+    }
+
+    .sb-brand {
+      padding: 22px 20px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--sl200)
+    }
+
+    @media(max-width:860px) {
+      .sidebar {
+        display: none
+      }
+
+      .main {
+        margin-left: 0
+      }
+
+      .profile-grid {
+        grid-template-columns: 1fr
+      }
+
+      .content {
+        padding: 20px
+      }
+
+      .profile-header {
+        flex-direction: column;
+        text-align: center
+      }
+
+      .profile-info-row {
+        flex-direction: column
+      }
+
+      .profile-info-label {
+        width: 100%;
+        margin-bottom: 6px
+      }
+    }
+
+    @media(max-width:500px) {
+      .profile-stats {
+        justify-content: center
+      }
+
+      .logout-section {
+        flex-direction: column;
+        text-align: center
+      }
+
+      .auth-modal {
+        width: 90%;
+        margin: 16px
+      }
+
+      .auth-content {
+        padding: 0 20px 24px
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="layout">
 
-<!-- ══ SIDEBAR ══ -->
-<aside class="sidebar">
-  <div class="sb-brand">
-    <div class="sb-icon" style="background:none;box-shadow:none;padding:0;overflow:hidden">
-      <img src="FinaceLogo.jpeg" alt="Finace" style="width:42px;height:42px;object-fit:contain;border-radius:12px"/>
-    </div>
-    <div>
-      <div class="sb-name">Finace</div>
-      <div class="sb-sub">Smart Finance Assistant</div>
-    </div>
-  </div>
-  <nav class="sb-nav">
-    <a class="nav-item" href="index.html"><span class="nav-icon">✦</span> AI Advisor</a>
-    <a class="nav-item" href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a>
-    <button class="nav-item" id="nav-invest" onclick="window.location.href = 'investment.html';setNav(this)"><span
-            class="ni-icon">📈</span> Investments</button>
-    <!-- <a class="nav-item active" href="profile.html"><span class="nav-icon">◯</span> Profile</a> -->
-  </nav>
-  <div class="sb-user">
-    <div class="sb-user-row">
-      <div class="sb-av" id="sb-av">?</div>
-      <div>
-        <div class="sb-uname" id="sb-uname">Loading…</div>
-        <div class="sb-uemail" id="sb-uemail">—</div>
-      </div>
-    </div>
-    <button class="sb-logout" onclick="doLogout()">→ Logout</button>
-  </div>
-</aside>
-
-<!-- ══ MAIN ══ -->
-<div class="main">
-
-  <!-- ── BLUE TOP BAR (no metal rates) ── -->
-  <div class="topbar">
-    <div class="topbar-title">
-      <div class="topbar-title-icon">◯</div>
-      My Profile
-    </div>
-    <a class="tb-back" href="index.html">← Back to AI Advisor</a>
+  <div class="aurora">
+    <div class="aurora-1"></div>
+    <div class="aurora-2"></div>
   </div>
 
-  <!-- Page content -->
-  <div class="content">
-
-    <!-- ── HERO ── -->
-    <div class="hero-card">
-      <div class="hero-av" id="hero-av">?</div>
-      <div class="hero-info">
-        <div class="hero-name" id="hero-name">Loading…</div>
-        <div class="hero-email"><span>✉</span> <span id="hero-email">—</span></div>
-        <div class="hero-badges">
-          <div class="hero-badge" id="hero-dob-badge">🎂 —</div>
-          <div class="hero-badge" id="hero-field-badge" style="display:none">💼 —</div>
-          <div class="hero-badge" id="hero-insurance-badge" style="display:none">🛡️ —</div>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sb-brand">
+        <div class="sb-icon" style="background:none;box-shadow:none;padding:0;overflow:hidden">
+          <img src="FinaceLogo.jpeg" alt="Finace"
+            style="width:42px;height:42px;object-fit:contain;border-radius:12px" />
+        </div>
+        <div>
+          <div class="sb-name">Finace</div>
+          <div class="sb-sub">Smart Finance Assistant</div>
         </div>
       </div>
-      <div class="hero-actions">
-        <a class="hero-edit-btn" href="index.html">← AI Advisor</a>
+      <nav class="sb-nav">
+        <button class="nav-item" onclick="window.location.href='Home.html'"><span class="ni-icon">🏠</span>
+          Home</button>
+        <a class="nav-item" href="dashboard.html"><span>📊</span> Dashboard</a>
+        <a class="nav-item" href="investment.html"><span>📈</span> Investments</a>
+        <a class="nav-item" href="suggestions.html"><span>⭐</span> Suggestions</a>
+        <a class="nav-item" href="networth.html"><span>⚖️</span> Net Worth</a>
+      </nav>
+      <div class="sb-user">
+        <div class="sb-user-row" onclick="window.location.href='profile.html'">
+          <div class="sb-av" id="sb-av">?</div>
+          <div>
+            <div class="sb-uname" id="sb-uname">Guest</div>
+            <div class="sb-uemail" id="sb-uemail">—</div>
+          </div>
+        </div>
+        <button class="sb-logout" onclick="doLogout()">→ Logout</button>
       </div>
+    </aside>
+
+    <div class="main">
+      <div class="top-bar">
+        <div class="top-bar-title">
+          <div class="top-bar-title-icon">👤</div>
+          My Profile
+        </div>
+      </div>
+      <div class="content" id="profile-content"></div>
     </div>
-
-    <!-- ── ACCOUNT DETAILS + PERSONAL INFO ── -->
-    <div class="section-grid">
-
-      <!-- Account Details (read-only) -->
-      <div class="card">
-        <div class="card-head">
-          <div class="card-title">
-            <div class="card-title-icon">👤</div>
-            Account Details
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="info-row">
-            <div class="info-label">Full Name</div>
-            <div class="info-val" id="d-name">—</div>
-          </div>
-          <div class="info-row">
-            <div class="info-label">Email Address</div>
-            <div class="info-val" id="d-email">—</div>
-          </div>
-          <div class="info-row">
-            <div class="info-label">Date of Birth</div>
-            <div class="info-val" id="d-dob">—</div>
-          </div>
-          <div class="info-row">
-            <div class="info-label">Gender</div>
-            <div class="info-val" id="d-gender"><span style="font-size:.88rem;color:#cbd5e1;font-style:italic">Not set</span></div>
-          </div>
-          <div class="info-row" style="margin-bottom:0">
-            <div class="info-label">Member Since</div>
-            <div class="info-val" id="d-joined">—</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Personal Info (editable) -->
-      <div class="card" id="card-personal">
-        <div class="card-head">
-          <div class="card-title">
-            <div class="card-title-icon">✨</div>
-            Personal Info
-          </div>
-          <div class="btn-row">
-            <button class="edit-btn" onclick="startEdit('card-personal')">✏️ Edit</button>
-            <button class="cancel-btn" onclick="cancelEdit('card-personal')">Cancel</button>
-            <button class="save-btn" onclick="savePersonal()">💾 Save</button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="info-row">
-            <div class="info-label">Working Field</div>
-            <div class="info-val" id="pv-field"><span class="info-empty">Not set</span></div>
-            <select class="field-input" id="pi-field">
-              <option value="">Select field</option>
-              <option>IT / Tech</option><option>Finance</option>
-              <option>Healthcare</option><option>Education</option>
-              <option>Business</option><option>Government</option>
-              <option>Student</option><option>Other</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ── FINANCIAL PROFILE ── -->
-    <div class="section-grid">
-
-      <!-- Income & Expenses (editable) -->
-      <div class="card" id="card-finance">
-        <div class="card-head">
-          <div class="card-title">
-            <div class="card-title-icon" style="background:linear-gradient(135deg,#059669,#10b981)">💰</div>
-            Income &amp; Expenses
-          </div>
-          <div class="btn-row">
-            <button class="edit-btn" onclick="startEdit('card-finance')">✏️ Edit</button>
-            <button class="cancel-btn" onclick="cancelEdit('card-finance')">Cancel</button>
-            <button class="save-btn" onclick="saveFinance()">💾 Save</button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="info-grid-2">
-            <div class="info-row">
-              <div class="info-label">Monthly Income</div>
-              <div class="info-val" id="fv-income"><span class="info-empty">Not filled</span></div>
-              <div class="inp-wrap"><span class="inp-pre">₹</span><input class="field-input" id="fi-income" type="number" placeholder="e.g. 50000"/></div>
-            </div>
-            <div class="info-row">
-              <div class="info-label">Monthly Expense</div>
-              <div class="info-val" id="fv-expense"><span class="info-empty">Not filled</span></div>
-              <div class="inp-wrap"><span class="inp-pre">₹</span><input class="field-input" id="fi-expense" type="number" placeholder="e.g. 30000"/></div>
-            </div>
-          </div>
-          <!-- Savings rate bar -->
-          <div id="savings-rate-row" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--slate-100)">
-            <div class="info-label" style="margin-bottom:6px">Savings Rate</div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <div style="flex:1;height:7px;background:var(--slate-100);border-radius:4px;overflow:hidden">
-                <div id="savings-bar" style="height:100%;border-radius:4px;transition:width 1s ease;background:linear-gradient(90deg,var(--indigo),var(--violet))"></div>
-              </div>
-              <span id="savings-pct" style="font-size:.82rem;font-weight:700;color:var(--indigo)"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Safety Net (editable) -->
-      <div class="card" id="card-safety">
-        <div class="card-head">
-          <div class="card-title">
-            <div class="card-title-icon" style="background:linear-gradient(135deg,#0ea5e9,#0284c7)">🛡️</div>
-            Safety Net
-          </div>
-          <div class="btn-row">
-            <button class="edit-btn" onclick="startEdit('card-safety')">✏️ Edit</button>
-            <button class="cancel-btn" onclick="cancelEdit('card-safety')">Cancel</button>
-            <button class="save-btn" onclick="saveSafety()">💾 Save</button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="info-row">
-            <div class="info-label">Insurance Coverage</div>
-            <div class="info-val" id="sv-insurance"><span class="info-empty">Not set</span></div>
-            <select class="field-input" id="si-insurance">
-              <option value="">Select</option>
-              <option>Yes — Health</option><option>Yes — Life</option>
-              <option>Both</option><option>No</option>
-            </select>
-            <div id="insurance-congrats" style="display:none" class="congrats">
-              🎉 You're on the right track with insurance coverage! Keep it up.
-            </div>
-          </div>
-          <div class="info-row" style="margin-bottom:0">
-            <div class="info-label">Emergency Fund</div>
-            <div class="info-val" id="sv-emergency"><span class="info-empty">Not set</span></div>
-            <select class="field-input" id="si-emergency">
-              <option value="">Select</option>
-              <option>Yes, 3-6 months</option><option>Yes, 6+ months</option>
-              <option>Working on it</option><option>Not yet</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ── LOGOUT CARD ── -->
-    <div class="logout-card">
-      <div class="logout-card-info">
-        <strong>Sign out of your account</strong>
-        You'll need to log in again to access personalised features.
-      </div>
-      <button class="logout-red-btn" onclick="doLogout()">→ Sign Out</button>
-    </div>
-
   </div>
-</div>
-</div>
 
-<div class="toast" id="toast"><span id="toast-icon">✅</span> <span id="toast-text">Done!</span></div>
+  <!-- LOGIN MODAL -->
+  <div class="modal-overlay" id="login-modal">
+    <div class="auth-modal">
+      <button class="auth-close" onclick="closeLoginModal()">✕</button>
+      <div class="auth-logo">
+        <div class="auth-logo-icon">💹</div>
+        <div>
+          <div class="auth-logo-name">Fin<span>ace</span></div>
+          <div class="auth-logo-sub">Smart Finance Assistant</div>
+        </div>
+      </div>
+      <div class="auth-content">
+        <div class="auth-title">Welcome back 👋</div>
+        <div class="auth-sub">Sign in to get personalised financial advice</div>
+        <div class="auth-err" id="login-err"></div>
+        <div class="auth-field">
+          <label>Email Address</label>
+          <input type="email" id="login-email" placeholder="you@example.com" />
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" />
+        </div>
+        <button class="auth-submit" onclick="doLogin()">Sign In</button>
+        <div class="auth-switch">
+          Don't have an account? <a onclick="switchToRegister()">Create one</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<script>
-const API = 'http://127.0.0.1:8000';
-let currentUser = null;
-let obAnswers   = {};
+  <!-- REGISTER MODAL -->
+  <div class="modal-overlay" id="register-modal">
+    <div class="auth-modal">
+      <button class="auth-close" onclick="closeRegisterModal()">✕</button>
+      <div class="auth-logo">
+        <div class="sb-brand">
+          <div class="sb-icon" style="background:none;box-shadow:none;padding:0;overflow:hidden">
+            <img src="FinaceLogo.jpeg" alt="Finace"
+              style="width:42px;height:42px;object-fit:contain;border-radius:12px" />
+          </div>
+          <div>
+            <div class="sb-name">Finace</div>
+            <div class="sb-sub">Smart Finance Assistant</div>
+          </div>
+        </div>
+        <div class="auth-content">
+          <div class="auth-title">Create account ✨</div>
+          <div class="auth-sub">Join Finace for personalised guidance</div>
+          <div class="auth-err" id="register-err"></div>
+          <div class="auth-field">
+            <label>Full Name</label>
+            <input type="text" id="reg-name" placeholder="Your full name" />
+          </div>
+          <div class="auth-field">
+            <label>Email Address</label>
+            <input type="email" id="reg-email" placeholder="you@example.com" />
+          </div>
+          <div class="auth-field">
+            <label>Date of Birth</label>
+            <input type="date" id="reg-dob" />
+          </div>
+          <div class="auth-field">
+            <label>Password</label>
+            <input type="password" id="reg-password" placeholder="At least 8 characters" />
+          </div>
+          <button class="auth-submit" onclick="doRegister()">Create Account</button>
+          <div class="auth-switch">
+            Already have an account? <a onclick="switchToLogin()">Sign in</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-function loadUser(){
-  try{ if(window.opener && window.opener.currentUser){ currentUser = window.opener.currentUser; obAnswers = window.opener.obAnswers || {}; } }catch(_){}
-  if(!currentUser){
-    try{
-      const stored = sessionStorage.getItem('ft_user');
-      if(stored) currentUser = JSON.parse(stored);
-      const storedOb = sessionStorage.getItem('ft_ob');
-      if(storedOb) obAnswers = JSON.parse(storedOb);
-    }catch(_){}
-  }
-  renderPage();
-}
+    <!-- OTP MODAL -->
+    <div class="modal-overlay" id="otp-modal">
+      <div class="auth-modal">
+        <button class="auth-close" onclick="closeOtpModal()">✕</button>
+        <div class="auth-logo">
+          <div class="auth-logo-icon">💹</div>
+          <div>
+            <div class="auth-logo-name">Fin<span>ace</span></div>
+            <div class="auth-logo-sub">Smart Finance Assistant</div>
+          </div>
+        </div>
+        <div class="auth-content">
+          <div class="auth-title">Verify your email 📬</div>
+          <div class="auth-sub">We sent a 6-digit code to <strong id="otp-email">your@email.com</strong></div>
+          <div class="auth-err" id="otp-err"></div>
+          <div class="auth-field">
+            <label>Enter OTP</label>
+            <input type="text" id="otp-code" placeholder="000000" maxlength="6" />
+          </div>
+          <button class="auth-submit" onclick="verifyOtp()">Verify & Continue →</button>
+          <div class="auth-switch">
+            <a onclick="resendOtp()">↺ Resend OTP</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-function renderPage(){
-  if(!currentUser){
-    document.getElementById('hero-av').textContent    = '?';
-    document.getElementById('hero-name').textContent  = 'Not logged in';
-    document.getElementById('hero-email').textContent = 'Please go back and log in';
-    document.getElementById('sb-av').textContent      = '?';
-    document.getElementById('sb-uname').textContent   = 'Guest';
-    document.getElementById('sb-uemail').textContent  = 'Not logged in';
-    return;
-  }
+    <div class="toast" id="toast"><span id="toast-icon">✅</span> <span id="toast-text">Done!</span></div>
 
-  const u = currentUser;
-  const profile = u.profile || {};
+    <script>
+      const API = 'http://127.0.0.1:8000';
+      let currentUser = null;
+      let obAnswers = {};
+      let pendingRegistration = null;
 
-  // Sidebar
-  document.getElementById('sb-av').textContent     = u.initials || '?';
-  document.getElementById('sb-uname').textContent  = u.fullName || u.name;
-  document.getElementById('sb-uemail').textContent = u.email    || '—';
+      // Modal functions
+      function openLoginModal() { document.getElementById('login-modal').classList.add('open'); }
+      function closeLoginModal() { document.getElementById('login-modal').classList.remove('open'); }
+      function openRegisterModal() { document.getElementById('register-modal').classList.add('open'); }
+      function closeRegisterModal() { document.getElementById('register-modal').classList.remove('open'); }
+      function openOtpModal() { document.getElementById('otp-modal').classList.add('open'); }
+      function closeOtpModal() { document.getElementById('otp-modal').classList.remove('open'); }
 
-  // Hero
-  document.getElementById('hero-av').textContent    = u.initials || '?';
-  document.getElementById('hero-name').textContent  = u.fullName || u.name;
-  document.getElementById('hero-email').textContent = u.email    || '—';
+      function switchToRegister() { closeLoginModal(); openRegisterModal(); }
+      function switchToLogin() { closeRegisterModal(); openLoginModal(); }
 
-  const dobFmt = u.dob
-    ? new Date(u.dob).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})
-    : 'DOB not set';
-  document.getElementById('hero-dob-badge').textContent = '🎂 ' + dobFmt;
+      function showAuthErr(modalId, msg) {
+        const errDiv = document.getElementById(modalId);
+        if (errDiv) { errDiv.textContent = msg; errDiv.style.display = 'block'; setTimeout(() => errDiv.style.display = 'none', 3000); }
+      }
 
-  const field = profile.work_field || obAnswers['ob-field'] || '';
-  if(field){ const fb = document.getElementById('hero-field-badge'); fb.textContent = '💼 ' + field; fb.style.display = 'inline-flex'; }
+      function showToast(icon, msg) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-icon').textContent = icon;
+        document.getElementById('toast-text').textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3200);
+      }
 
-  const ins = profile.has_insurance || obAnswers['ob-insurance'] || '';
-  if(ins && ins !== 'No'){ const ib = document.getElementById('hero-insurance-badge'); ib.textContent = '🛡️ ' + ins; ib.style.display = 'inline-flex'; }
+      async function doLogin() {
+        const email = document.getElementById('login-email')?.value.trim();
+        const password = document.getElementById('login-password')?.value;
+        if (!email || !password) { showAuthErr('login-err', 'Please fill in all fields.'); return; }
 
-  // Account details
-  document.getElementById('d-name').textContent  = u.fullName || u.name || '—';
-  document.getElementById('d-email').textContent = u.email    || '—';
-  document.getElementById('d-dob').textContent   = u.dob
-    ? new Date(u.dob).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})
-    : '—';
-  const gender = profile.gender || obAnswers['ob-gender'] || '';
-  const dGender = document.getElementById('d-gender');
-  if(dGender) dGender.innerHTML = gender || '<span style="font-size:.88rem;color:#cbd5e1;font-style:italic">Not set</span>';
-  const joinedEl = document.getElementById('d-joined');
-  if(joinedEl) joinedEl.textContent = currentUser.created_at || 'Finace Member';
+        const btn = document.querySelector('#login-modal .auth-submit');
+        btn.disabled = true; btn.textContent = 'Please wait...';
 
-  // Personal info
-  setVal('pv-field', field, 'pi-field', field);
+        try {
+          const fd = new FormData(); fd.append('email', email); fd.append('password', password);
+          const res = await fetch(API + '/login', { method: 'POST', body: fd });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.detail || 'Login failed');
 
-  // Finance
-  const income  = profile.monthly_income  || obAnswers['ob-income']  || '';
-  const expense = profile.monthly_expense || obAnswers['ob-expense'] || '';
-  setVal('fv-income',  income  ? '₹'+parseFloat(income).toLocaleString('en-IN')  : null, 'fi-income',  income);
-  setVal('fv-expense', expense ? '₹'+parseFloat(expense).toLocaleString('en-IN') : null, 'fi-expense', expense);
-  updateSavingsRate(income, expense);
+          currentUser = {
+            id: data.user.id,
+            name: data.user.full_name.split(' ')[0],
+            fullName: data.user.full_name,
+            email: data.user.email,
+            initials: data.user.full_name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2),
+            token: data.token,
+            profile: data.profile || {},
+            dob: data.user.dob,
+            created_at: data.user.created_at
+          };
 
-  // Safety
-  const emergency = profile.emergency_fund || obAnswers['ob-emergency'] || '';
-  setVal('sv-insurance', ins,       'si-insurance', ins);
-  setVal('sv-emergency', emergency, 'si-emergency', emergency);
-  showInsuranceCongrats(ins);
-}
+          sessionStorage.setItem('ft_user', JSON.stringify(currentUser));
+          closeLoginModal();
+          showToast('👋', `Welcome back, ${currentUser.name}!`);
+          setTimeout(() => window.location.reload(), 1000);
+        } catch (err) { showAuthErr('login-err', err.message); }
+        finally { btn.disabled = false; btn.textContent = 'Sign In'; }
+      }
 
-function setVal(displayId, displayText, inputId, inputVal){
-  const dEl = document.getElementById(displayId);
-  const iEl = document.getElementById(inputId);
-  if(dEl){ if(displayText) dEl.innerHTML = String(displayText); else dEl.innerHTML = '<span class="info-empty">Not set</span>'; }
-  if(iEl) iEl.value = inputVal || '';
-}
+      async function doRegister() {
+        const name = document.getElementById('reg-name')?.value.trim();
+        const email = document.getElementById('reg-email')?.value.trim();
+        const dob = document.getElementById('reg-dob')?.value;
+        const pass = document.getElementById('reg-password')?.value;
 
-function updateSavingsRate(income, expense){
-  if(!income || !expense) return;
-  const inc = parseFloat(income), exp = parseFloat(expense);
-  if(inc <= 0) return;
-  const savings = inc - exp;
-  const pct = Math.max(0, Math.min(100, Math.round((savings/inc)*100)));
-  const row = document.getElementById('savings-rate-row');
-  row.style.display = 'block';
-  document.getElementById('savings-bar').style.width = pct + '%';
-  document.getElementById('savings-bar').style.background =
-    pct >= 20 ? 'linear-gradient(90deg,#16a34a,#22c55e)' :
-    pct >= 10 ? 'linear-gradient(90deg,#d97706,#f59e0b)' :
-                'linear-gradient(90deg,#dc2626,#ef4444)';
-  document.getElementById('savings-pct').textContent = pct + '%';
-  document.getElementById('savings-pct').style.color = pct >= 20 ? '#16a34a' : pct >= 10 ? '#d97706' : '#dc2626';
-}
+        if (!name || !email || !dob || !pass) { showAuthErr('register-err', 'Please fill in all fields.'); return; }
+        if (pass.length < 8) { showAuthErr('register-err', 'Password must be at least 8 characters.'); return; }
 
-function showInsuranceCongrats(val){
-  const good = ['Yes — Health','Yes — Life','Both'];
-  document.getElementById('insurance-congrats').style.display = good.includes(val) ? 'flex' : 'none';
-}
+        const btn = document.querySelector('#register-modal .auth-submit');
+        btn.disabled = true; btn.textContent = 'Please wait...';
 
-function startEdit(cardId){ document.getElementById(cardId).classList.add('editing'); }
-function cancelEdit(cardId){ document.getElementById(cardId).classList.remove('editing'); renderPage(); }
+        try {
+          const fd = new FormData(); fd.append('full_name', name); fd.append('email', email); fd.append('dob', dob); fd.append('password', pass);
+          const res = await fetch(API + '/register', { method: 'POST', body: fd });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.detail || 'Registration failed');
 
-async function savePersonal(){
-  const field = document.getElementById('pi-field').value;
-  const btn = document.querySelector('#card-personal .save-btn');
-  btn.textContent = 'Saving…'; btn.disabled = true;
-  try{
-    await saveToBackend({ work_field: field });
-    if(!currentUser.profile) currentUser.profile = {};
-    currentUser.profile.work_field = field;
-    obAnswers['ob-field'] = field;
-    persistUser();
-    document.getElementById('card-personal').classList.remove('editing');
-    renderPage();
-    showToast('✅','Working field updated!');
-  }catch(err){ showToast('❌','Save failed: '+err.message); }
-  finally{ btn.textContent='💾 Save'; btn.disabled=false; }
-}
+          pendingRegistration = { name, email };
+          closeRegisterModal();
+          document.getElementById('otp-email').textContent = email;
+          openOtpModal();
+        } catch (err) { showAuthErr('register-err', err.message); }
+        finally { btn.disabled = false; btn.textContent = 'Create Account'; }
+      }
 
-async function saveFinance(){
-  const income  = document.getElementById('fi-income').value;
-  const expense = document.getElementById('fi-expense').value;
-  const btn = document.querySelector('#card-finance .save-btn');
-  btn.textContent = 'Saving…'; btn.disabled = true;
-  try{
-    await saveToBackend({ monthly_income: income||0, monthly_expense: expense||0 });
-    if(!currentUser.profile) currentUser.profile = {};
-    currentUser.profile.monthly_income  = income;
-    currentUser.profile.monthly_expense = expense;
-    obAnswers['ob-income']  = income;
-    obAnswers['ob-expense'] = expense;
-    persistUser();
-    document.getElementById('card-finance').classList.remove('editing');
-    renderPage();
-    showToast('✅','Financial info updated!');
-  }catch(err){ showToast('❌','Save failed: '+err.message); }
-  finally{ btn.textContent='💾 Save'; btn.disabled=false; }
-}
+      async function verifyOtp() {
+        const otp = document.getElementById('otp-code')?.value.trim();
+        if (!otp || otp.length < 6) { showAuthErr('otp-err', 'Please enter the 6-digit OTP.'); return; }
+        if (!pendingRegistration) { showAuthErr('otp-err', 'Session expired. Please register again.'); return; }
 
-async function saveSafety(){
-  const ins   = document.getElementById('si-insurance').value;
-  const emerg = document.getElementById('si-emergency').value;
-  const btn   = document.querySelector('#card-safety .save-btn');
-  btn.textContent = 'Saving…'; btn.disabled = true;
-  try{
-    await saveToBackend({ has_insurance: ins, emergency_fund: emerg });
-    if(!currentUser.profile) currentUser.profile = {};
-    currentUser.profile.has_insurance  = ins;
-    currentUser.profile.emergency_fund = emerg;
-    obAnswers['ob-insurance'] = ins;
-    obAnswers['ob-emergency'] = emerg;
-    persistUser();
-    document.getElementById('card-safety').classList.remove('editing');
-    renderPage();
-    showToast('✅','Safety net info updated!');
-  }catch(err){ showToast('❌','Save failed: '+err.message); }
-  finally{ btn.textContent='💾 Save'; btn.disabled=false; }
-}
+        const btn = document.querySelector('#otp-modal .auth-submit');
+        btn.disabled = true; btn.textContent = 'Verifying...';
 
-async function saveToBackend(fields){
-  if(!currentUser) throw new Error('Not logged in');
-  const profile = currentUser.profile || {};
-  const fd = new FormData();
-  fd.append('user_id',        currentUser.id);
-  fd.append('monthly_income', fields.monthly_income  ?? profile.monthly_income  ?? 0);
-  fd.append('monthly_expense',fields.monthly_expense ?? profile.monthly_expense ?? 0);
-  fd.append('gender',         fields.gender          ?? profile.gender          ?? '');
-  fd.append('work_field',     fields.work_field      ?? profile.work_field      ?? '');
-  fd.append('has_insurance',  fields.has_insurance   ?? profile.has_insurance   ?? '');
-  fd.append('emergency_fund', fields.emergency_fund  ?? profile.emergency_fund  ?? '');
-  const res  = await fetch(API+'/onboarding',{method:'POST',body:fd});
-  const data = await res.json();
-  if(!res.ok) throw new Error(data.detail||'Request failed');
-  return data;
-}
+        try {
+          const fd = new FormData(); fd.append('email', pendingRegistration.email); fd.append('otp', otp);
+          const res = await fetch(API + '/verify-otp', { method: 'POST', body: fd });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.detail || 'Verification failed');
 
-function persistUser(){
-  try{ sessionStorage.setItem('ft_user',JSON.stringify(currentUser)); sessionStorage.setItem('ft_ob',JSON.stringify(obAnswers)); }catch(_){}
-}
+          currentUser = {
+            id: data.user.id,
+            name: data.user.full_name.split(' ')[0],
+            fullName: data.user.full_name,
+            email: data.user.email,
+            initials: data.user.full_name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2),
+            token: data.token,
+            profile: {},
+            dob: data.user.dob,
+            created_at: data.user.created_at
+          };
 
-function doLogout(){
-  sessionStorage.removeItem('ft_user');
-  sessionStorage.removeItem('ft_ob');
-  currentUser = null;
-  window.location.href = 'index.html';
-}
+          sessionStorage.setItem('ft_user', JSON.stringify(currentUser));
+          closeOtpModal();
+          showToast('🎉', 'Account verified! Welcome to Finace!');
+          setTimeout(() => window.location.reload(), 1000);
+        } catch (err) { showAuthErr('otp-err', err.message); }
+        finally { btn.disabled = false; btn.textContent = 'Verify & Continue →'; }
+      }
 
-function showToast(icon,msg){
-  document.getElementById('toast-icon').textContent = icon;
-  document.getElementById('toast-text').textContent = msg;
-  const t = document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3200);
-}
+      async function resendOtp() {
+        if (!pendingRegistration) { showAuthErr('otp-err', 'Session expired. Please register again.'); return; }
+        try {
+          const fd = new FormData(); fd.append('email', pendingRegistration.email);
+          await fetch(API + '/resend-otp', { method: 'POST', body: fd });
+          showToast('📬', 'New OTP sent to your email!');
+        } catch (err) { showAuthErr('otp-err', 'Failed to resend OTP.'); }
+      }
 
-document.getElementById('si-insurance').addEventListener('change', function(){ showInsuranceCongrats(this.value); });
-['fi-income','fi-expense'].forEach(id=>{
-  document.getElementById(id).addEventListener('input',()=>{
-    updateSavingsRate(document.getElementById('fi-income').value, document.getElementById('fi-expense').value);
-  });
-});
+      function checkLoginStatus() {
+        try {
+          const stored = sessionStorage.getItem('ft_user');
+          if (stored && stored !== 'null' && stored !== 'undefined') {
+            const user = JSON.parse(stored);
+            if (user && user.id) return user;
+          }
+          const localStored = localStorage.getItem('ft_user');
+          if (localStored && localStored !== 'null') {
+            const user = JSON.parse(localStored);
+            if (user && user.id) { sessionStorage.setItem('ft_user', localStored); return user; }
+          }
+        } catch (e) { console.error('Error checking login status:', e); }
+        return null;
+      }
 
-document.addEventListener('DOMContentLoaded', loadUser);
-</script>
+      async function loadUser() {
+        currentUser = checkLoginStatus();
+        try {
+          const ob = sessionStorage.getItem('ft_ob') || localStorage.getItem('ft_ob');
+          if (ob && ob !== 'null') obAnswers = JSON.parse(ob);
+        } catch (e) { }
+
+        if (currentUser && currentUser.id) {
+          // Fetch fresh profile from backend every time
+          try {
+            const res = await fetch(API + '/get-profile?user_id=' + currentUser.id);
+            if (res.ok) {
+              const data = await res.json();
+              // Merge fresh user data
+              if (data.user) {
+                currentUser.dob = data.user.dob;
+                currentUser.created_at = data.user.created_at;
+                currentUser.email = data.user.email;
+                currentUser.fullName = data.user.full_name;
+              }
+              // Overwrite profile with fresh DB data
+              if (data.profile) {
+                currentUser.profile = data.profile;
+                // Sync obAnswers so renderProfile picks them up
+                const p = data.profile;
+                if (p.monthly_income) obAnswers['ob-income'] = String(p.monthly_income);
+                if (p.monthly_expense) obAnswers['ob-expense'] = String(p.monthly_expense);
+                if (p.gender) obAnswers['ob-gender'] = p.gender;
+                if (p.work_field) obAnswers['ob-field'] = p.work_field;
+                if (p.has_insurance) obAnswers['ob-insurance'] = p.has_insurance;
+                if (p.emergency_fund) obAnswers['ob-emergency'] = p.emergency_fund;
+              }
+              // Persist the updated user back to storage
+              try {
+                localStorage.setItem('ft_user', JSON.stringify(currentUser));
+                sessionStorage.setItem('ft_user', JSON.stringify(currentUser));
+              } catch (_) { }
+            }
+          } catch (e) { console.warn('Profile fetch failed:', e); }
+
+          updateSidebar();
+          renderProfile();
+        } else {
+          renderNotLoggedIn();
+        }
+      }
+
+      function updateSidebar() {
+        if (currentUser) {
+          const fullName = currentUser.fullName || currentUser.name || 'User';
+          const initials = currentUser.initials || (fullName ? fullName.charAt(0).toUpperCase() : 'U');
+          const email = currentUser.email || '—';
+          document.getElementById('sb-av').textContent = initials;
+          document.getElementById('sb-uname').textContent = fullName;
+          document.getElementById('sb-uemail').textContent = email;
+          const logoutBtn = document.querySelector('.sb-logout');
+          if (logoutBtn) logoutBtn.style.display = 'flex';
+        } else {
+          document.getElementById('sb-av').textContent = '?';
+          document.getElementById('sb-uname').textContent = 'Guest';
+          document.getElementById('sb-uemail').textContent = 'Not logged in';
+          const logoutBtn = document.querySelector('.sb-logout');
+          if (logoutBtn) logoutBtn.style.display = 'none';
+        }
+      }
+
+      function renderNotLoggedIn() {
+        updateSidebar();
+        document.getElementById('profile-content').innerHTML = `
+    <div class="not-logged-in">
+      <div class="not-logged-in-icon">👤</div>
+      <h2>You're not logged in</h2>
+      <p>Log in to view and manage your financial profile, update your income details, and get personalised recommendations.</p>
+      <button class="login-cta" onclick="window.location.href='auth.html'">→ Login / Register</button>
+    </div>`;
+      }
+
+      function renderProfile() {
+        if (!currentUser || !currentUser.id) { renderNotLoggedIn(); return; }
+
+        const profile = currentUser.profile || {};
+        const fullName = currentUser.fullName || currentUser.name || 'User';
+        const email = currentUser.email || '—';
+        const dob = currentUser.dob;
+        const dobFmt = dob ? new Date(dob).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Not set';
+        const memberSince = (() => {
+          const raw = currentUser.created_at;
+          if (!raw) return 'Recently';
+          // If backend already formatted it (e.g. "31 March 2026"), use it directly
+          if (typeof raw === 'string' && isNaN(Date.parse(raw)) === false) {
+            return new Date(raw).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+          }
+          // If it's already a human-readable string from the backend, use as-is
+          if (typeof raw === 'string' && raw.match(/[a-zA-Z]/)) return raw;
+          return 'Recently';
+        })();
+        const field = profile.work_field || obAnswers['ob-field'] || '';
+        const ins = profile.has_insurance || obAnswers['ob-insurance'] || '';
+        const income = profile.monthly_income || obAnswers['ob-income'] || '';
+        const expense = profile.monthly_expense || obAnswers['ob-expense'] || '';
+        const emergency = profile.emergency_fund || obAnswers['ob-emergency'] || '';
+        const gender = profile.gender || obAnswers['ob-gender'] || '';
+        const savingsRate = income && expense ? Math.max(0, Math.min(100, Math.round(((parseFloat(income) - parseFloat(expense)) / parseFloat(income)) * 100))) : 0;
+
+        document.getElementById('profile-content').innerHTML = `
+    <div class="profile-header">
+      <div class="profile-avatar"><div class="profile-avatar-inner">${fullName.charAt(0).toUpperCase()}</div><div class="profile-avatar-badge">✓</div></div>
+      <div class="profile-info"><h1>${fullName}</h1><div class="profile-email"><span>📧</span> ${email}</div>
+
+      </div>
+    </div>
+    <div class="profile-grid">
+      <div class="profile-card" id="card-account">
+        <div class="profile-card-header"><div class="profile-card-title"><div class="profile-card-title-icon">👤</div>Account Information</div></div>
+        <div class="profile-card-body">
+          <div class="profile-info-row"><div class="profile-info-label">Full Name</div><div class="profile-info-value">${fullName}</div></div>
+          <div class="profile-info-row"><div class="profile-info-label">Date of Birth</div><div class="profile-info-value">${dobFmt}</div></div>
+          <div class="profile-info-row"><div class="profile-info-label">Gender</div><div class="profile-info-value">${gender || '<span class="profile-info-empty">Not specified</span>'}</div></div>
+          <div class="profile-info-row"><div class="profile-info-label">Member Since</div><div class="profile-info-value">${memberSince}</div></div>
+        </div>
+      </div>
+      <div class="profile-card" id="card-contact-professional">
+        <div class="profile-card-header"><div class="profile-card-title"><div class="profile-card-title-icon">📇</div>Contact & Professional</div>
+          <button class="edit-btn" onclick="startEdit('contact')"><span>✏️</span> Edit</button>
+          <div class="action-buttons" style="display:none" id="contact-actions"><button class="save-btn" onclick="saveContactProfessional()"><span>💾</span> Save</button><button class="cancel-btn" onclick="cancelEdit('contact')"><span>✕</span> Cancel</button></div>
+        </div>
+        <div class="profile-card-body">
+          <div class="profile-info-row"><div class="profile-info-label">Email Address</div><div class="profile-info-value" id="display-email">${email}</div><div class="edit-field" style="width:100%"><input type="email" id="edit-email" value="${email}" placeholder="your@email.com" style="width:100%"/></div></div>
+          <div class="profile-info-row"><div class="profile-info-label">Working Field</div><div class="profile-info-value" id="display-field">${field || '<span class="profile-info-empty">Not specified</span>'}</div><div class="edit-field" style="width:100%"><select id="edit-field" style="width:100%"><option value="">Select working field</option>${['IT / Tech', 'Finance', 'Healthcare', 'Education', 'Business', 'Government', 'Student', 'Other'].map(o => `<option${field === o ? ' selected' : ''}>${o}</option>`).join('')}</select></div></div>
+        </div>
+      </div>
+      <div class="profile-card" id="card-financial">
+        <div class="profile-card-header"><div class="profile-card-title"><div class="profile-card-title-icon">💰</div>Financial Overview</div>
+          <button class="edit-btn" onclick="startEdit('financial')"><span>✏️</span> Edit</button>
+          <div class="action-buttons" style="display:none" id="financial-actions"><button class="save-btn" onclick="saveFinancial()"><span>💾</span> Save</button><button class="cancel-btn" onclick="cancelEdit('financial')"><span>✕</span> Cancel</button></div>
+        </div>
+        <div class="profile-card-body">
+          <div class="profile-info-row"><div class="profile-info-label">Monthly Income</div><div class="profile-info-value" id="display-income">${income ? '₹' + parseFloat(income).toLocaleString('en-IN') : '<span class="profile-info-empty">Not set</span>'}</div><div class="edit-field inp-wrap" style="width:100%"><span class="inp-pre">₹</span><input type="number" id="edit-income" placeholder="50000" value="${income || ''}" style="width:100%;padding-left:32px"/></div></div>
+          <div class="profile-info-row"><div class="profile-info-label">Monthly Expense</div><div class="profile-info-value" id="display-expense">${expense ? '₹' + parseFloat(expense).toLocaleString('en-IN') : '<span class="profile-info-empty">Not set</span>'}</div><div class="edit-field inp-wrap" style="width:100%"><span class="inp-pre">₹</span><input type="number" id="edit-expense" placeholder="30000" value="${expense || ''}" style="width:100%;padding-left:32px"/></div></div>
+          ${income && expense ? `<div class="savings-bar-container"><div class="savings-label">Savings Rate</div><div class="savings-bar-track"><div class="savings-bar-fill" style="width:${savingsRate}%;background:linear-gradient(90deg,var(--teal),#00A89E)"></div></div><div class="savings-percent">${savingsRate}% of income saved</div></div>` : ''}
+        </div>
+      </div>
+      <div class="profile-card" id="card-safety">
+        <div class="profile-card-header"><div class="profile-card-title"><div class="profile-card-title-icon">🛡️</div>Safety Net</div>
+          <button class="edit-btn" onclick="startEdit('safety')"><span>✏️</span> Edit</button>
+          <div class="action-buttons" style="display:none" id="safety-actions"><button class="save-btn" onclick="saveSafety()"><span>💾</span> Save</button><button class="cancel-btn" onclick="cancelEdit('safety')"><span>✕</span> Cancel</button></div>
+        </div>
+        <div class="profile-card-body">
+          <div class="profile-info-row"><div class="profile-info-label">Insurance</div><div class="profile-info-value" id="display-insurance">${ins || '<span class="profile-info-empty">Not specified</span>'}</div><div class="edit-field" style="width:100%"><select id="edit-insurance" style="width:100%"><option value="">Select insurance status</option>${['Yes — Health', 'Yes — Life', 'Both', 'No'].map(o => `<option${ins === o ? ' selected' : ''}>${o}</option>`).join('')}</select></div></div>
+          <div class="profile-info-row"><div class="profile-info-label">Emergency Fund</div><div class="profile-info-value" id="display-emergency">${emergency || '<span class="profile-info-empty">Not specified</span>'}</div><div class="edit-field" style="width:100%"><select id="edit-emergency" style="width:100%"><option value="">Select emergency fund status</option>${['Yes, 3-6 months', 'Yes, 6+ months', 'Working on it', 'Not yet'].map(o => `<option${emergency === o ? ' selected' : ''}>${o}</option>`).join('')}</select></div></div>
+          <div id="insurance-congrats" class="congrats-banner" style="${['Yes — Health', 'Yes — Life', 'Both'].includes(ins) ? 'display:flex' : 'display:none'}"><span>🎉</span> Great! You're on the right track with insurance coverage!</div>
+        </div>
+      </div>
+    </div>
+    <div class="logout-section"><div class="logout-info"><h4>Sign out of your account</h4><p>You'll need to log in again to access your data</p></div><button class="logout-btn-red" onclick="doLogout()"><span>→</span> Sign Out</button></div>
+  `;
+      }
+
+      function startEdit(section) {
+        const cardMap = { contact: 'card-contact-professional', financial: 'card-financial', safety: 'card-safety' };
+        const card = document.getElementById(cardMap[section]);
+        if (card) card.classList.add('edit-mode');
+        const actions = document.getElementById(`${section}-actions`);
+        if (actions) actions.style.display = 'flex';
+      }
+
+      function cancelEdit(section) {
+        const cardMap = { contact: 'card-contact-professional', financial: 'card-financial', safety: 'card-safety' };
+        const card = document.getElementById(cardMap[section]);
+        if (card) card.classList.remove('edit-mode');
+        const actions = document.getElementById(`${section}-actions`);
+        if (actions) actions.style.display = 'none';
+        renderProfile();
+      }
+
+      async function saveContactProfessional() {
+        if (!currentUser) { showToast('❌', 'Please log in first'); return; }
+        const email = document.getElementById('edit-email')?.value.trim();
+        const field = document.getElementById('edit-field')?.value;
+        if (!email) { showToast('❌', 'Please enter a valid email'); return; }
+        const btn = document.querySelector('#contact-actions .save-btn');
+        if (btn) { btn.disabled = true; btn.innerHTML = '<span>⏳</span> Saving...'; }
+        try {
+          const fd1 = new FormData(); fd1.append('user_id', currentUser.id); fd1.append('email', email);
+          const res1 = await fetch(API + '/update-email', { method: 'POST', body: fd1 });
+          if (!res1.ok) throw new Error('Email update failed');
+          await saveToBackend({ work_field: field });
+          currentUser.email = email;
+          if (!currentUser.profile) currentUser.profile = {};
+          currentUser.profile.work_field = field;
+          obAnswers['ob-field'] = field;
+          sessionStorage.setItem('ft_user', JSON.stringify(currentUser));
+          sessionStorage.setItem('ft_ob', JSON.stringify(obAnswers));
+          cancelEdit('contact');
+          showToast('✅', 'Contact & Professional info updated!');
+        } catch (err) { showToast('❌', 'Save failed: ' + err.message); }
+        finally { if (btn) { btn.disabled = false; btn.innerHTML = '<span>💾</span> Save'; } }
+      }
+
+      async function saveFinancial() {
+        if (!currentUser) { showToast('❌', 'Please log in first'); return; }
+        const income = document.getElementById('edit-income')?.value;
+        const expense = document.getElementById('edit-expense')?.value;
+        const btn = document.querySelector('#financial-actions .save-btn');
+        if (btn) { btn.disabled = true; btn.innerHTML = '<span>⏳</span> Saving...'; }
+        try {
+          await saveToBackend({ monthly_income: income || 0, monthly_expense: expense || 0 });
+          if (!currentUser.profile) currentUser.profile = {};
+          currentUser.profile.monthly_income = income;
+          currentUser.profile.monthly_expense = expense;
+          obAnswers['ob-income'] = income;
+          obAnswers['ob-expense'] = expense;
+          sessionStorage.setItem('ft_user', JSON.stringify(currentUser));
+          sessionStorage.setItem('ft_ob', JSON.stringify(obAnswers));
+          cancelEdit('financial');
+          showToast('✅', 'Financial info updated!');
+        } catch (err) { showToast('❌', 'Save failed: ' + err.message); }
+        finally { if (btn) { btn.disabled = false; btn.innerHTML = '<span>💾</span> Save'; } }
+      }
+
+      async function saveSafety() {
+        if (!currentUser) { showToast('❌', 'Please log in first'); return; }
+        const ins = document.getElementById('edit-insurance')?.value;
+        const emerg = document.getElementById('edit-emergency')?.value;
+        const btn = document.querySelector('#safety-actions .save-btn');
+        if (btn) { btn.disabled = true; btn.innerHTML = '<span>⏳</span> Saving...'; }
+        try {
+          await saveToBackend({ has_insurance: ins, emergency_fund: emerg });
+          if (!currentUser.profile) currentUser.profile = {};
+          currentUser.profile.has_insurance = ins;
+          currentUser.profile.emergency_fund = emerg;
+          obAnswers['ob-insurance'] = ins;
+          obAnswers['ob-emergency'] = emerg;
+          sessionStorage.setItem('ft_user', JSON.stringify(currentUser));
+          sessionStorage.setItem('ft_ob', JSON.stringify(obAnswers));
+          cancelEdit('safety');
+          showToast('✅', 'Safety net updated!');
+        } catch (err) { showToast('❌', 'Save failed: ' + err.message); }
+        finally { if (btn) { btn.disabled = false; btn.innerHTML = '<span>💾</span> Save'; } }
+      }
+
+      async function saveToBackend(fields) {
+        if (!currentUser) throw new Error('Not logged in');
+        const profile = currentUser.profile || {};
+        const fd = new FormData();
+        fd.append('user_id', currentUser.id);
+        fd.append('monthly_income', fields.monthly_income ?? profile.monthly_income ?? 0);
+        fd.append('monthly_expense', fields.monthly_expense ?? profile.monthly_expense ?? 0);
+        fd.append('gender', fields.gender ?? profile.gender ?? '');
+        fd.append('work_field', fields.work_field ?? profile.work_field ?? '');
+        fd.append('has_insurance', fields.has_insurance ?? profile.has_insurance ?? '');
+        fd.append('emergency_fund', fields.emergency_fund ?? profile.emergency_fund ?? '');
+        const res = await fetch(API + '/onboarding', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Save failed');
+        return data;
+      }
+
+      function doLogout() {
+        sessionStorage.removeItem('ft_user');
+        sessionStorage.removeItem('ft_ob');
+        sessionStorage.removeItem('ft_P');
+        localStorage.removeItem('ft_user');
+        window.location.reload();
+      }
+
+      document.addEventListener('DOMContentLoaded', loadUser);
+    </script>
+    <div
+      style="position:fixed;bottom:28px;right:28px;z-index:9000;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+
+      <button onclick="window.location.href='index.html'"
+        style="display:flex;align-items:center;gap:9px;background:linear-gradient(135deg,#00D4C8,#006B66);border:none;color:#fff;padding:11px 20px;border-radius:14px;font-size:.83rem;font-weight:700;cursor:pointer;box-shadow:0 8px 28px rgba(0,212,200,0.35);transition:all .25s;font-family:Inter,sans-serif"
+        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 36px rgba(0,212,200,0.45)'"
+        onmouseout="this.style.transform='';this.style.boxShadow='0 8px 28px rgba(0,212,200,0.35)'">🤖 Ask AI
+        Advisor</button>
+    </div>
+  <!-- Universal Light Theme -->
+  <style>body.light-theme{background:#f0f4ff!important;color:#0f172a!important}.light-theme .aurora{display:none!important}.light-theme .sidebar{background:#fff!important;border-right:1px solid #e2e8f0!important}.light-theme .sb-name{color:#0f172a!important}.light-theme .sb-sub,.light-theme .sb-uemail{color:#64748b!important}.light-theme .nav-item{color:#64748b!important}.light-theme .nav-item.active{background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;color:#fff!important}.light-theme .main,.light-theme .content,.light-theme html{background:#f0f4ff!important}.light-theme .top-nav{background:rgba(255,255,255,.95)!important;border-bottom:1px solid #e2e8f0!important}.light-theme .top-nav *{color:#0f172a!important}.light-theme .notif-card,.light-theme .card,.light-theme .sum-card{background:#fff!important;border-color:#e2e8f0!important;color:#0f172a!important}.light-theme .notif-title,.light-theme .card-title{color:#0f172a!important}.light-theme h1,.light-theme h2,.light-theme p{color:#0f172a!important}</style>
+  <script>(function(){try{if(localStorage.getItem("finace_theme")==="light")document.body.classList.add("light-theme")}catch(e){}})();</script>
 </body>
+
 </html>
